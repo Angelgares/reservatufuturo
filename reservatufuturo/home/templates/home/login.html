@@ -1,12 +1,8 @@
-<!-- home/templates/home/login.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
-</head>
-<body>
+{% extends 'home/base.html' %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
     <h2>Iniciar Sesión</h2>
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -22,5 +18,4 @@
     {% if form.errors %}
         <p style="color: red;">Usuario o contraseña incorrectos.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

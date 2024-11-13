@@ -1,26 +1,30 @@
-<!-- home/templates/home/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Reserva tu Futuro{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'home/styles.css' %}">
 </head>
 <body>
     <header>
         <nav>
-            <a href="{% url 'homepage' %}">Inicio</a>
-            {% if user.is_authenticated %}
-                <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" style="background: none; border: none; color: blue; cursor: pointer; text-decoration: underline;">
-                        Cerrar sesión
-                    </button>
-                </form>
-            {% else %}
-                <a href="{% url 'login' %}">Iniciar sesión</a>
-                <a href="{% url 'register' %}">Registrarse</a>
-            {% endif %}
+            <!-- Nombre de la empresa -->
+            <a href="{% url 'homepage' %}" class="brand">Reserva tu Futuro</a>
+            
+            <!-- Enlaces de navegación -->
+            <div class="nav-links">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">Cerrar sesión</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}">Iniciar sesión</a>
+                    <a href="{% url 'register' %}">Registrarse</a>
+                {% endif %}
+            </div>
         </nav>
     </header>
 
