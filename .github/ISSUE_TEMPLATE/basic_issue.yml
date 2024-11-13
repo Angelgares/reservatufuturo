@@ -4,6 +4,9 @@ title: "Title"
 labels: [
   "feature"
 ]
+projects: [
+  "jormunrod/ReservaTuFuturo"
+]
 body:
   - type: input
     id: activity
