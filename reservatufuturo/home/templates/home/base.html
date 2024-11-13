@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Reserva tu Futuro{% endblock %}</title>
+    <title>{% block title %}ReservaTuFuturo{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'home/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'home/favicon.ico' %}">
 </head>
 <body>
     <header>
         <nav>
             <!-- Nombre de la empresa -->
-            <a href="{% url 'homepage' %}" class="brand">Reserva tu Futuro</a>
+            <a href="{% url 'homepage' %}" class="brand">ReservaTuFuturo</a>
             
             <!-- Enlaces de navegación -->
             <div class="nav-links">

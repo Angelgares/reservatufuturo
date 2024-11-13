@@ -1,10 +1,10 @@
 {% extends 'home/base.html' %}
 
-{% block title %}Homepage{% endblock %}
+{% block title %}ReservaTuFuturo{% endblock %}
 
 {% block content %}
-    <h1>Bienvenido a Reserva tu Futuro</h1>
-    <p>Esta es la página de inicio de tu proyecto Django.</p>
+    <h1>Bienvenido a ReservaTuFuturo</h1>
+    <p>Esta es la página de inicio.</p>
 
     {% if user.is_authenticated %}
         <p>Hola, {{ user.username }}!</p>

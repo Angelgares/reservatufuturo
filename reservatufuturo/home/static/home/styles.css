@@ -53,3 +53,127 @@ nav {
 .logout-button:hover {
     color: #555;
 }
+
+/* Contenedor del formulario de login */
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Título del formulario */
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos de los grupos de formulario */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* Estilo del botón de login */
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #4cae4c;
+}
+
+/* Mensaje de error */
+.error-message {
+    color: #d9534f;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Contenedor del formulario de registro */
+.register-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa; /* Color de fondo suave */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    text-align: center;
+}
+
+/* Título del formulario */
+.register-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Estilos de los grupos de formulario */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+/* Estilo del botón de registro */
+.register-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c; /* Verde suave */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-button:hover {
+    background-color: #4cae4c; /* Verde más oscuro al pasar el ratón */
+}
+
+/* Mensaje de error */
+.error-message {
+    color: #d9534f; /* Rojo suave para el mensaje de error */
+    font-size: 0.9em;
+    margin-top: 5px;
+}
