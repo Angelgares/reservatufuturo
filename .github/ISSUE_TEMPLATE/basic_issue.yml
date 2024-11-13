@@ -1,0 +1,23 @@
+name: "🔍 Simple Feature Request"
+description: Create a basic feature request ticket
+title: "🔍 [REQUEST] - <title>"
+labels: [
+  "feature"
+]
+body:
+  - type: input
+    id: activity
+    attributes:
+      label: "Related Activity"
+      description: Mention the activity or project related to this feature
+      placeholder: "Activity name or ID"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: Provide a brief description of the feature
+      placeholder: "Describe the feature request briefly"
+    validations:
+      required: true
