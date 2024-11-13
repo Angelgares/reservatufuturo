@@ -1,0 +1,55 @@
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo de la navbar */
+header {
+    background-color: #ffddc1;
+    padding: 10px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Nombre de la empresa */
+.brand {
+    font-size: 1.5em;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Enlaces de la navbar */
+.nav-links a,
+.nav-links form {
+    margin-left: 15px;
+    font-size: 1em;
+    color: #333;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    color: #555;
+}
+
+/* Estilo del botón de cerrar sesión */
+.logout-button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: underline;
+}
+    
+.logout-button:hover {
+    color: #555;
+}
