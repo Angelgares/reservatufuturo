@@ -22,7 +22,7 @@ else
 
 commit_message=$(cat "$1")
 
-if ! echo "$commit_message" | grep -Eq '^(feat|fix|docs|test|chore|ci|style|refactor|revert): [a-z]+ '; then
+if ! echo "$commit_message" | grep -Eq '^(feat|fix|docs|test|chore|ci|style|refactor|revert): [a-z].+ |Merge '; then
   echo "\033[0;31mERROR: The commit message does not follow the required format:\033[0m"
   echo "Format: <type>: <imperative_verb> message content"
   echo "Where type can be: \033[1;33mfeat, fix, docs, test, chore, ci, style, refactor, revert\033[0m"
