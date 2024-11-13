@@ -1,1 +1,66 @@
-/venv/*
+# Entorno virtual
+venv/
+.env
+*.env
+
+# Archivos de Python
+*.py[cod]
+__pycache__/
+*.pyo
+*.pyd
+*.pyc
+
+# Base de datos local
+*.sqlite3
+
+# Configuración del entorno
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Archivos de logs
+*.log
+logs/
+
+# Archivos de Django
+/staticfiles/
+media/
+db.sqlite3
+db_*.sqlite3
+
+# Migraciones
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Archivos de compilación y cachés
+*.egg
+*.egg-info/
+.eggs/
+*.out
+*.snap
+
+# Archivos de cobertura y pruebas
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+__pycache__/
+
+# Archivos de GitHub Actions (si no los estás usando)
+.github/workflows/*
+
+# Archivos de Docker (si no estás usando Docker)
+docker-compose.yml
+Dockerfile
+
+# Archivos generados por IDEs y editores
+.idea/
+.vscode/
+*.code-workspace
+*.sublime*
+
+# Configuración de Heroku
+Procfile
