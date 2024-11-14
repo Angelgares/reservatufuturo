@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from .forms import RegistrationForm
+from django.contrib.auth.decorators import login_required
 
 class CustomLoginView(LoginView):
     template_name = 'home/login.html'
@@ -22,3 +23,7 @@ def register(request):
     else:
         form = RegistrationForm()
     return render(request, 'home/register.html', {'form': form})
+
+@login_required
+def profile(request):
+    return render(request, 'home/profile.html')

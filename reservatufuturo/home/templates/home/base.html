@@ -17,9 +17,10 @@
             <!-- Enlaces de navegación -->
             <div class="nav-links">
                 {% if user.is_authenticated %}
-                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    <a href="{% url 'profile' %}">Mi Perfil</a>
+                    <a href="#" onclick="document.getElementById('logout-form').submit();">Cerrar sesión</a>
+                    <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none;">
                         {% csrf_token %}
-                        <button type="submit" class="logout-button">Cerrar sesión</button>
                     </form>
                 {% else %}
                     <a href="{% url 'login' %}">Iniciar sesión</a>

@@ -194,14 +194,14 @@ li {
 }
 
 strong {
-    color: #ffffff;
+    color: white;
 }
 
 .cta-button {
     display: inline-block;
     padding: 10px 20px;
     background-color: #161b22;
-    color: #ffffff;
+    color: white;
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
@@ -212,5 +212,30 @@ strong {
 }
 
 .register-title {
-    color: white; /* Cambia el color del título a blanco */
+    color: white;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #21262d;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.profile-title {
+    margin-bottom: 5%;
+    text-align: center;
+    color: white;
+}
+
+.profile-details p {
+    margin-bottom: 10px;
+    color: #ecf2f8;
+}
+
+.profile-details strong {
+    color: white;
 }

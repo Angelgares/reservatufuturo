@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <h2 class="profile-title">{{ user.username }}</h2>
+        <div class="profile-details">
+            <p><strong>Nombre completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Número de teléfono:</strong> {{ user.userprofile.phone_number }}</p>
+        </div>
+    </div>
+{% endblock %}
