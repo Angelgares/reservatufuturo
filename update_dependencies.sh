@@ -22,7 +22,7 @@ else
 
 commit_message=$(cat "$1")
 
-if ! echo "$commit_message" | grep -Eq '^(feat|fix|docs|test|chore|ci|style|refactor|revert): [a-z].+ |Merge '; then
+if ! echo "$commit_message" | grep -Eq '^(feat|fix|docs|test|chore|ci|style|refactor|revert): [a-z].+ |^Merge '; then
   echo "\033[0;31mERROR: The commit message does not follow the required format:\033[0m"
   echo "Format: <type>: <imperative_verb> message content"
   echo "Where type can be: \033[1;33mfeat, fix, docs, test, chore, ci, style, refactor, revert\033[0m"
@@ -34,3 +34,18 @@ EOF
   chmod +x "$HOOK_PATH"
   echo -e "${GREEN}commit-msg hook successfully created in .git/hooks/commit-msg.${NC}"
 fi
+
+ # Python dependencies installation
+ 
+if [ -f "requirements.txt" ]; then
+  echo -e "${NC}requirements.txt found. Installing Python dependencies...${NC}"
+
+  if pip install -r requirements.txt > /dev/null 2>&1; then
+    echo -e "${GREEN}Python dependencies installed successfully.${NC}"
+  else
+    echo -e "${RED}ERROR: Failed to install some Python dependencies. Check requirements.txt.${NC}"
+  fi
+else
+  echo -e "${YELLOW}WARNING: No requirements.txt found. Skipping Python dependencies installation.${NC}"
+fi
+
