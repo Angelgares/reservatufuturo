@@ -1,13 +1,13 @@
-/* Estilo general */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #161b22;
+    color: white;
 }
 
-/* Estilo de la navbar */
 header {
-    background-color: #ffddc1;
+    background-color: #0d1117;
     padding: 10px 20px;
 }
 
@@ -15,86 +15,87 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
     margin: auto;
+    color: white;
 }
 
-/* Nombre de la empresa */
 .brand {
     font-size: 1.5em;
-    color: #333;
     text-decoration: none;
     font-weight: bold;
+    color: white;
 }
 
-/* Enlaces de la navbar */
+.brand-container {
+    display: flex;
+    align-items: center;
+}
+
 .nav-links a,
 .nav-links form {
     margin-left: 15px;
     font-size: 1em;
-    color: #333;
     text-decoration: none;
+    color: white;
 }
 
 .nav-links a:hover {
-    color: #555;
+    color: #c6cdd5;
 }
 
-/* Estilo del botón de cerrar sesión */
 .logout-button {
     background: none;
     border: none;
-    color: #333;
     cursor: pointer;
-    font-size: 1em;
-    text-decoration: underline;
+    font-size: medium;
+    color: white;
 }
     
 .logout-button:hover {
-    color: #555;
+    color: #c6cdd5;
 }
 
-/* Contenedor del formulario de login */
 .login-container {
-    max-width: 400px;
+    max-width: 20%;
     margin: 50px auto;
     padding: 20px;
     border-radius: 8px;
-    background-color: #f8f9fa;
+    background-color: #21262d;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
+    align-items: center;
 }
 
-/* Título del formulario */
 .login-container h2 {
     margin-bottom: 20px;
-    color: #333;
 }
 
-/* Estilos de los grupos de formulario */
 .form-group {
     margin-bottom: 15px;
     text-align: left;
+    max-width: 94%;
 }
 
 .form-group label {
     display: block;
     font-weight: bold;
-    color: #555;
+    color: white;
     margin-bottom: 5px;
 }
 
 .form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #444;
     border-radius: 4px;
     font-size: 1em;
+    background-color: #161b22;
+    color: white;
 }
 
-/* Estilo del botón de login */
 .login-button {
-    width: 100%;
+    width: 50%;
+    margin-top: 5%;
     padding: 10px;
     background-color: #5cb85c;
     color: white;
@@ -109,31 +110,17 @@ nav {
     background-color: #4cae4c;
 }
 
-/* Mensaje de error */
 .error-message {
     color: #d9534f;
     font-weight: bold;
     margin-top: 10px;
 }
 
-/* Contenedor del formulario de registro */
-.register-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f8f9fa; /* Color de fondo suave */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    text-align: center;
-}
-
-/* Título del formulario */
 .register-container h2 {
     margin-bottom: 20px;
     color: #333;
 }
 
-/* Estilos de los grupos de formulario */
 .form-group {
     margin-bottom: 15px;
     text-align: left;
@@ -142,7 +129,7 @@ nav {
 .form-group label {
     display: block;
     font-weight: bold;
-    color: #555;
+    color: white; /* Cambia el color del label a blanco */
     margin-bottom: 5px;
 }
 
@@ -154,11 +141,10 @@ nav {
     font-size: 1em;
 }
 
-/* Estilo del botón de registro */
 .register-button {
     width: 100%;
     padding: 10px;
-    background-color: #5cb85c; /* Verde suave */
+    background-color: #5cb85c;
     color: white;
     border: none;
     border-radius: 4px;
@@ -168,12 +154,63 @@ nav {
 }
 
 .register-button:hover {
-    background-color: #4cae4c; /* Verde más oscuro al pasar el ratón */
+    background-color: #4cae4c;
 }
 
-/* Mensaje de error */
 .error-message {
-    color: #d9534f; /* Rojo suave para el mensaje de error */
+    color: #d9534f;
     font-size: 0.9em;
     margin-top: 5px;
+}
+
+.container {
+    padding: 2%;
+    margin: 0 auto;
+}
+
+section {
+    padding: 20px;
+    margin: 1%;
+    background-color: #21262d;
+    border-radius: 8px;
+}
+
+h1, h2 {
+    color: white;
+}
+
+p {
+    color: #b0b0b0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+    color: #b0b0b0;
+}
+
+strong {
+    color: #ffffff;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #161b22;
+    color: #ffffff;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.cta-button:hover {
+    background-color: #0d1117;
+}
+
+.register-title {
+    color: white; /* Cambia el color del título a blanco */
 }
