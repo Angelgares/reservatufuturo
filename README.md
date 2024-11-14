@@ -8,5 +8,5 @@
 
 ## Running
 - cd reservatufuturo
-- python3 manage.py migrate
+- python manage.py migrate
 - python manage.py runserver
