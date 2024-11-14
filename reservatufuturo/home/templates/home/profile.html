@@ -10,6 +10,9 @@
             <p><strong>Apellidos:</strong> {{ user.last_name }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Número de teléfono:</strong> {{ user.profile.phone_number }}</p>
+            <div class="edit-button-container">
+                <a href="{% url 'edit_profile' %}" class="edit-button">Editar Perfil</a>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -43,6 +43,37 @@ nav {
     color: #c6cdd5;
 }
 
+.edit-button-container {
+    text-align: center;
+    margin-top: 5%;
+}
+
+
+.edit-button {
+    width: 35%;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    text-decoration: none;
+    text-align: center;
+}
+
+.edit-button:hover {
+    background-color: #1c86ee;
+    transform: scale(1.05);
+}
+
+.edit-button:active {
+    background-color: #1a7cd1;
+    transform: scale(1);
+}
+
 .logout-button {
     background: none;
     border: none;
@@ -217,7 +248,7 @@ strong {
 
 .profile-container {
     max-width: 600px;
-    margin: 50px auto;
+    margin: 3% auto;
     padding: 20px;
     border-radius: 8px;
     background-color: #21262d;
@@ -232,7 +263,9 @@ strong {
 }
 
 .profile-details p {
-    margin-bottom: 10px;
+    font-size: large;
+    margin-left: 10%;
+    margin-bottom: 5%;
     color: #ecf2f8;
 }
 
