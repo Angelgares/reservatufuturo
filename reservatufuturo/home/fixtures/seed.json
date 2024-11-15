@@ -38,7 +38,7 @@
         }
     },
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 1,
         "fields": {
             "name": "Python Basics",
@@ -49,7 +49,7 @@
         }
     },
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 2,
         "fields": {
             "name": "Data Science with Python",
@@ -60,7 +60,7 @@
         }
     },
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 3,
         "fields": {
             "name": "Machine Learning",
@@ -71,7 +71,7 @@
         }
     }, 
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 4,
         "fields": {
             "name": "Deep Learning",

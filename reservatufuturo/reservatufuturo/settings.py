@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     
     # Own apps
     'home',
+    'courses'
+    
 ]
 
 MIDDLEWARE = [
