@@ -16,6 +16,7 @@
             
             <!-- Enlaces de navegación -->
             <div class="nav-links">
+                <a href="{% url 'courses' %}">Catalogo</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' %}">Mi Perfil</a>
                     <a href="#" onclick="document.getElementById('logout-form').submit();">Cerrar sesión</a>

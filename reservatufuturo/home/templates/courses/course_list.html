@@ -1,0 +1,19 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <h1>Lista de Cursos</h1>
+
+    {% if object_list %}
+    <ul>
+
+      {% for course in object_list %}
+      <li>
+        <a href="/core/courses/{{ course.id }}">{{ course.name }}</a> ({{course.teacher}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>No hay cursos disponibles.</p>
+    {% endif %}
+{% endblock %}
