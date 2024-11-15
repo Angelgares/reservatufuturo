@@ -5,6 +5,8 @@
         "fields": {
             "username": "user1",
             "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
+            "first_name": "John",
+            "last_name": "Doe",
             "email": "user1@example.com"
         }
     },
@@ -14,6 +16,8 @@
         "fields": {
             "username": "user2",
             "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+            "first_name": "Jane",
+            "last_name": "Doe",
             "email": "user2@example.com"
         }
     },
@@ -34,7 +38,7 @@
         }
     },
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 1,
         "fields": {
             "name": "Python Basics",
@@ -45,7 +49,7 @@
         }
     },
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 2,
         "fields": {
             "name": "Data Science with Python",
@@ -56,7 +60,7 @@
         }
     },
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 3,
         "fields": {
             "name": "Machine Learning",
@@ -67,7 +71,7 @@
         }
     }, 
     {
-        "model": "home.course",
+        "model": "courses.course",
         "pk": 4,
         "fields": {
             "name": "Deep Learning",
@@ -123,6 +127,6 @@
             "paymentMethod": "Online"
         }
     }
-    
+
 
 ]

@@ -272,3 +272,11 @@ strong {
 .profile-details strong {
     color: white;
 }
+
+.course-box {
+    background-color:  #545666  ;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    padding-top: 2px ;
+}
