@@ -11,22 +11,37 @@
                 <div class="form-group">
                     {{ user_form.username.label_tag }}
                     {{ user_form.username }}
+                    {% if user_form.username.errors %}
+                        <div class="error-message">{{ user_form.username.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ user_form.first_name.label_tag }}
                     {{ user_form.first_name }}
+                    {% if user_form.first_name.errors %}
+                        <div class="error-message">{{ user_form.first_name.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ user_form.last_name.label_tag }}
                     {{ user_form.last_name }}
+                    {% if user_form.last_name.errors %}
+                        <div class="error-message">{{ user_form.last_name.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ user_form.email.label_tag }}
                     {{ user_form.email }}
+                    {% if user_form.email.errors %}
+                        <div class="error-message">{{ user_form.email.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ profile_form.phone_number.label_tag }}
                     {{ profile_form.phone_number }}
+                    {% if profile_form.phone_number.errors %}
+                        <div class="error-message">{{ profile_form.phone_number.errors.0 }}</div>
+                    {% endif %}
                 </div>
                 <button type="submit" class="register-button">Guardar Cambios</button>
             </div>
