@@ -1,5 +1,11 @@
 # ReservaTuFuturo
 
+## NEW! Boring Tasks Script
+Script to automate boring tasks like rebuilding the database or running the server. It's a bash script that runs the commands for you.
+```bash
+./boring_tasks.sh
+```
+
 ## Dependencies
 ```bash
 cd reservatufuro
