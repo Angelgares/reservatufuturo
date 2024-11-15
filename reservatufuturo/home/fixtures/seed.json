@@ -1,0 +1,128 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "user1",
+            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
+            "email": "user1@example.com"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "user2",
+            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+            "email": "user2@example.com"
+        }
+    },
+    {
+        "model": "home.profile",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "phone_number": 1234567890
+        }
+    },
+    {
+        "model": "home.profile",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "phone_number": 9876543210
+        }
+    },
+    {
+        "model": "home.course",
+        "pk": 1,
+        "fields": {
+            "name": "Python Basics",
+            "price": 50.0,
+            "image": "course_images/python_basics.jpg",
+            "teacher": "John Doe",
+            "capacity": 20
+        }
+    },
+    {
+        "model": "home.course",
+        "pk": 2,
+        "fields": {
+            "name": "Data Science with Python",
+            "price": 150.0,
+            "image": "course_images/data_science.jpg",
+            "teacher": "Jane Doe",
+            "capacity": 30
+        }
+    },
+    {
+        "model": "home.course",
+        "pk": 3,
+        "fields": {
+            "name": "Machine Learning",
+            "price": 200.0,
+            "image": "course_images/machine_learning.jpg",
+            "teacher": "John Doe",
+            "capacity": 25
+        }
+    }, 
+    {
+        "model": "home.course",
+        "pk": 4,
+        "fields": {
+            "name": "Deep Learning",
+            "price": 250.0,
+            "image": "course_images/deep_learning.jpg",
+            "teacher": "Jane Doe",
+            "capacity": 25
+        }
+
+    },
+    {
+        "model": "home.reservation",
+        "pk": 1,
+        "fields": {
+            "course": 1,
+            "user": 1,
+            "paymentMethod": "Online"
+        }
+    },
+    {
+        "model": "home.reservation",
+        "pk": 2,
+        "fields": {
+            "course": 2,
+            "user": 2,
+            "paymentMethod": "Cash"
+        }
+    },
+    {
+        "model": "home.reservation",
+        "pk": 3,
+        "fields": {
+            "course": 3,
+            "user": 1,
+            "paymentMethod": "Online"
+        }
+    },
+    {
+        "model": "home.reservation",
+        "pk": 4,
+        "fields": {
+            "course": 4,
+            "user": 2,
+            "paymentMethod": "Cash"
+        }
+    },
+    {
+        "model": "home.reservation",
+        "pk": 5,
+        "fields": {
+            "course": 1,
+            "user": 2,
+            "paymentMethod": "Online"
+        }
+    }
+    
+
+]
