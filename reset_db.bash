@@ -1,62 +1,133 @@
 #!/bin/bash
 set -e
+clear
+
+# Colores
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # Sin color
+
+# Capturar señal de interrupción (Ctrl+C)
+trap ctrl_c INT
+
+ctrl_c() {
+    echo -e "\n${RED}👋 Saliendo...${NC}"
+    exit 0
+}
+
+# Mostrar banner con colores y ASCII Art
+
+echo -e "${GREEN}==============================================================
+
+    ____   ______    ______           ____     ______ _    __
+   / __ \ /_  __/   / ____/          / __ \   / ____/| |  / /
+  / /_/ /  / /     / /_             / / / /  / __/   | | / / 
+ / _, _/  / /     / __/            / /_/ /  / /___   | |/ /  
+/_/ |_|  /_/     /_/              /_____/  /_____/   |___/   
+                                                             
+${YELLOW}ReservaTuFuturo Developer Settings${NC}
+${GREEN}==============================================================${NC}"
+
+
 # Rutas
 GLOBAL_PATH="$(pwd)"  # Usa el directorio actual como referencia
-echo "✅ Ruta global definida: $GLOBAL_PATH"
 DB_PATH="$GLOBAL_PATH/reservatufuturo/db.sqlite3"
-echo "✅ Ruta de la base de datos: $DB_PATH"
 VENV_DIR="$GLOBAL_PATH/venv"
-echo "✅ Ruta del entorno virtual: $VENV_DIR"
 
-# Comprobamos si existe el entorno virtual
-if [[ -d "$VENV_DIR" ]]; then
-    echo "🐍 Activando entorno virtual..."
-    source "$VENV_DIR/bin/activate"
+menu() {
+    echo "🔧 Menú de Opciones"
+    echo "1) Restablecer BD y Migraciones"
+    echo "2) Arrancar el servidor"
+    echo "3) Salir"
+    echo -n -e "${YELLOW}Elige una opción: ${NC}"
+    read opcion
+}
 
-    # Verificamos si se activó correctamente
-    if [[ -z "$VIRTUAL_ENV" ]]; then
-        echo "❌ No se pudo activar el entorno virtual, saliendo..."
-        exit 1
+activar_entorno_virtual() {
+    if [[ -d "$VENV_DIR" ]]; then
+        echo -e "${GREEN}🐍 Activando entorno virtual...${NC}"
+        source "$VENV_DIR/bin/activate"
+        if [[ -z "$VIRTUAL_ENV" ]]; then
+            echo -e "${RED}❌ No se pudo activar el entorno virtual, saliendo...${NC}"
+            exit 1
+        else
+            echo -e "${GREEN}✅ Entorno virtual activado: $VIRTUAL_ENV${NC}"
+        fi
     else
-        echo "✅ Entorno virtual activado: $VIRTUAL_ENV"
+        echo -e "${RED}ℹ️ No se encontró un entorno virtual. Crea uno con 'python3.12 -m venv $VENV_DIR'.${NC}"
+        exit 1
     fi
-else
-    echo "ℹ️ No se encontró un entorno virtual, puedes crear uno con 'python3.12 -m venv $VENV_DIR'"
-    exit 1
-fi
+}
 
-# Usar pip del entorno virtual
-echo "📦 Instalando dependencias..."
-"$VENV_DIR/bin/pip3" install -r requirements.txt
+instalar_dependencias() {
+    echo -e "${GREEN}📦 Instalando dependencias...${NC}"
+    "$VENV_DIR/bin/pip3" install -r requirements.txt
+}
 
-# Eliminar el archivo de base de datos SQLite si existe
-if [[ -f "$DB_PATH" ]]; then
-    echo "🗑️  Eliminando $DB_PATH..."
-    rm "$DB_PATH"
-else
-    echo "ℹ️  No se encontró $DB_PATH, continuando..."
-fi
+eliminar_base_datos() {
+    if [[ -f "$DB_PATH" ]]; then
+        echo -e "${GREEN}🗑️  Eliminando base de datos en $DB_PATH...${NC}"
+        rm "$DB_PATH"
+    else
+        echo -e "${RED}ℹ️  No se encontró $DB_PATH, continuando...${NC}"
+    fi
+}
 
-# Eliminar archivos de migraciones en todas las apps, EXCEPTO __init__.py
-echo "🗑️  Eliminando archivos de migraciones..."
-find $GLOBAL_PATH/reservatufuturo -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find $GLOBAL_PATH/reservatufuturo -path "*/migrations/*.pyc"  -delete
+eliminar_migraciones() {
+    echo -e "${GREEN}🗑️  Eliminando archivos de migraciones...${NC}"
+    find $GLOBAL_PATH/reservatufuturo -path "*/migrations/*.py" -not -name "__init__.py" -delete
+    find $GLOBAL_PATH/reservatufuturo -path "*/migrations/*.pyc" -delete
+}
 
-# Crear migraciones desde cero usando python del entorno virtual
-echo "⚙️  Creando nuevas migraciones..."
-cd $GLOBAL_PATH/reservatufuturo
-python manage.py makemigrations
+crear_migraciones() {
+    echo -e "${GREEN}⚙️  Creando nuevas migraciones...${NC}"
+    cd $GLOBAL_PATH/reservatufuturo
+    python manage.py makemigrations
+}
 
-# Aplicar las migraciones
-echo "⚙️  Aplicando migraciones..."
-python manage.py migrate
+aplicar_migraciones() {
+    echo -e"${GREEN}⚙️  Aplicando migraciones...${NC}"
+    cd $GLOBAL_PATH/reservatufuturo
+    python manage.py migrate
+}
 
-# Opcional: Cargar datos iniciales si existe un archivo seed.json
-if [[ -f "seed.json" ]]; then
-    echo "📂 Cargando datos iniciales desde seed.json..."
-    python manage.py loaddata seed.json
-else
-    echo "ℹ️  No se encontró seed.json, saltando este paso..."
-fi
+cargar_datos_iniciales() {
+    if [[ -f "$GLOBAL_PATH/reservatufuturo/home/fixtures/seed.json" ]]; then
+        echo -e "${GREEN}📂 Cargando datos iniciales desde seed.json...${NC}"
+        cd $GLOBAL_PATH/reservatufuturo
+        python manage.py loaddata seed.json
+    else
+        echo -e "${RED}ℹ️  No se encontró seed.json, saltando este paso...${NC}"
+    fi
+}
 
-echo "🚀 ¡Base de datos restablecida y lista para usar!"
+restablecer_bd_y_migraciones() {
+    activar_entorno_virtual
+    instalar_dependencias
+    eliminar_base_datos
+    eliminar_migraciones
+    crear_migraciones
+    aplicar_migraciones
+    cargar_datos_iniciales
+    echo -e "${GREEN}🚀 ¡Base de datos restablecida y lista para usar!${NC}"
+}
+
+arrancar_servidor() {
+    activar_entorno_virtual
+    echo -e"${GREEN}🚀 Arrancando el servidor...${NC}"
+    cd $GLOBAL_PATH/reservatufuturo
+    python manage.py runserver
+}
+
+# Ciclo del menú
+while true; do
+    menu
+    case $opcion in
+        1) restablecer_bd_y_migraciones ; exit 0 ;;
+        2) arrancar_servidor ; exit 0 ;;
+        3) echo -e "${RED}👋 Saliendo..."; exit 0 ;;
+        *) echo -e "${RED}❌ Opción inválida, intenta de nuevo.${NC}" ; clear ;;
+    esac
+done
