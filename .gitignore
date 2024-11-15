@@ -68,3 +68,4 @@ Procfile
 # Migrations
 
 reservatufuturo/home/migrations/
+reservatufuturo/courses/migrations/
