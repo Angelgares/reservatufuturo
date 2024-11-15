@@ -5,6 +5,8 @@
         "fields": {
             "username": "user1",
             "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
+            "first_name": "John",
+            "last_name": "Doe",
             "email": "user1@example.com"
         }
     },
@@ -14,6 +16,8 @@
         "fields": {
             "username": "user2",
             "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+            "first_name": "Jane",
+            "last_name": "Doe",
             "email": "user2@example.com"
         }
     },
@@ -123,6 +127,6 @@
             "paymentMethod": "Online"
         }
     }
-    
+
 
 ]
