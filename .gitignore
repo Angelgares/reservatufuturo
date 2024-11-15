@@ -64,3 +64,9 @@ Dockerfile
 
 # Configuración de Heroku
 Procfile
+
+# Migrations
+
+reservatufuturo/home/migrations/*
+reservatufuturo/courses/migrations/*
+

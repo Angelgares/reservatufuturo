@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+
+{% block title %}ReservaTuFuturo - Lista de Cursos{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Lista de Cursos</h1>
+
+        {% if object_list %}
+            <div class="course-container">
+                {% for course in object_list %}
+                    <div class="course-box">
+                        <h2>
+                            <a href="{% url 'course_detail' course.id %}">{{ course.name }}"</a>
+                        </h2>
+                        <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+                        <p><strong>Precio:</strong> {{ course.price }}€</p>
+                        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+                        {% if course.image %}
+                            <div class="course-image">
+                                <img src="{{ course.image.url }}" alt="Imagen de {{ course.name }}">
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No hay cursos disponibles.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <h2 class="profile-title">{{ user.username }}</h2>
+        <div class="profile-details">
+            <p><strong>Nombres:</strong> {{ user.first_name }}</p>
+            <p><strong>Apellidos:</strong> {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Número de teléfono:</strong> {{ user.profile.phone_number }}</p>
+            <div class="edit-button-container">
+                <a href="{% url 'edit_profile' %}" class="edit-button">Editar Perfil</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
