@@ -40,7 +40,9 @@ menu() {
     echo "🔧 Menú de Opciones"
     echo "1) Restablecer BD y Migraciones"
     echo "2) Arrancar el servidor"
-    echo "3) Salir"
+    echo "3) Crear superusuario de Django (admin/admin)"
+    echo "4) Crear entorno virtual"
+    echo "5) Salir"
     echo -n -e "${YELLOW}Elige una opción: ${NC}"
     read opcion
 }
@@ -111,14 +113,40 @@ restablecer_bd_y_migraciones() {
     crear_migraciones
     aplicar_migraciones
     cargar_datos_iniciales
+    crear_superusuario
     echo -e "${GREEN}🚀 ¡Base de datos restablecida y lista para usar!${NC}"
 }
 
 arrancar_servidor() {
     activar_entorno_virtual
+    instalar_dependencias
     echo -e"${GREEN}🚀 Arrancando el servidor...${NC}"
     cd $GLOBAL_PATH/reservatufuturo
     python manage.py runserver
+}
+
+# Crear superusuario de Django
+crear_superusuario() {
+    activar_entorno_virtual
+    if [[ $(python $GLOBAL_PATH/reservatufuturo/manage.py shell -c "from django.contrib.auth.models import User; print(User.objects.filter(username='admin').exists())") == "True" ]]; then
+        echo -e "${YELLOW}ℹ️ El superusuario admin ya existe, saltando este paso...${NC}"
+        return
+    fi
+    echo -e "${GREEN}👤 Creando superusuario...${NC}"
+    cd $GLOBAL_PATH/reservatufuturo
+    echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@admin.com', 'admin')" | python manage.py shell
+    echo -e "${GREEN}✅ Superusuario creado: admin/admin${NC}"
+}
+
+# Crear entorno virtual
+crear_entorno_virtual() {
+    if [[ -d "$VENV_DIR" ]]; then
+        echo -e "${YELLOW}ℹ️ El entorno virtual ya existe, saltando este paso...${NC}"
+        return
+    fi
+    echo -e "${GREEN}🐍 Creando entorno virtual...${NC}"
+    python3.12 -m venv $VENV_DIR
+    echo -e "${GREEN}✅ Entorno virtual creado en $VENV_DIR${NC}"
 }
 
 # Ciclo del menú
@@ -127,7 +155,9 @@ while true; do
     case $opcion in
         1) restablecer_bd_y_migraciones ; exit 0 ;;
         2) arrancar_servidor ; exit 0 ;;
-        3) echo -e "${RED}👋 Saliendo..."; exit 0 ;;
+        3) crear_superusuario ; exit 0 ;;
+        4) crear_entorno_virtual ; exit 0 ;;
+        5) echo -e "${RED}👋 Saliendo..."; exit 0 ;;
         *) echo -e "${RED}❌ Opción inválida, intenta de nuevo.${NC}" ; clear ;;
     esac
 done
