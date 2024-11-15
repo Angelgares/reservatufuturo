@@ -38,6 +38,8 @@ VENV_DIR="$GLOBAL_PATH/venv"
 
 menu() {
     echo "🔧 Menú de Opciones"
+    echo "-----------------"
+    echo "0) All in One (Puede tardar un poco)"
     echo "1) Restablecer BD y Migraciones"
     echo "2) Arrancar el servidor"
     echo "3) Crear superusuario de Django (admin/admin)"
@@ -119,8 +121,7 @@ restablecer_bd_y_migraciones() {
 
 arrancar_servidor() {
     activar_entorno_virtual
-    instalar_dependencias
-    echo -e"${GREEN}🚀 Arrancando el servidor...${NC}"
+    echo -e "${GREEN}🚀 Arrancando el servidor...${NC}"
     cd $GLOBAL_PATH/reservatufuturo
     python manage.py runserver
 }
@@ -149,10 +150,18 @@ crear_entorno_virtual() {
     echo -e "${GREEN}✅ Entorno virtual creado en $VENV_DIR${NC}"
 }
 
+all_in_one() {
+    crear_entorno_virtual
+    restablecer_bd_y_migraciones
+    echo -e "${GREEN}🚀 ¡Todo listo! Arrancando servidor...${NC}"
+    arrancar_servidor
+}
+
 # Ciclo del menú
 while true; do
     menu
     case $opcion in
+        0) all_in_one ; exit 0 ;;
         1) restablecer_bd_y_migraciones ; exit 0 ;;
         2) arrancar_servidor ; exit 0 ;;
         3) crear_superusuario ; exit 0 ;;

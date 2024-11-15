@@ -67,5 +67,6 @@ Procfile
 
 # Migrations
 
-reservatufuturo/home/migrations/
-reservatufuturo/courses/migrations/
+reservatufuturo/home/migrations/*
+reservatufuturo/courses/migrations/*
+
