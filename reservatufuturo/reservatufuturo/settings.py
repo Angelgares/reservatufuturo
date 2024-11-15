@@ -27,9 +27,6 @@ SECRET_KEY = 'django-insecure-b*dwjcd56ipb=*i6aqjn+8zare)5ysys#sscce(!suhy$m*3w2
 DEBUG = False
 ALLOWED_HOSTS = ['reservatufuturo.onrender.com', '127.0.0.1', 'localhost']
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
