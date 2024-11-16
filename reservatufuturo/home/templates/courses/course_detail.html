@@ -1,19 +1,33 @@
 {% extends 'home/base.html' %}
 
-
 {% block content %}
-  <h1>Curso: {{ course.name }}</h1>
+  {% load static %}
 
-  {% if course.image %}
-    <img src="{{ course.image.url }}" alt="Imagen del curso {{ course.name }}" style="max-width: 300px; margin-bottom: 20px;">
-  {% endif %}
+  <div class="course-detail-container">
+    <h1 class="course-detail-title">{{ course.name }}</h1>
 
-  <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-  <p><strong>Precio:</strong> ${{ course.price }}</p>
-  <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+    <div class="course-detail-grid">
+      <!-- Columna Izquierda: Imagen -->
+      <div class="course-detail-image">
+        {% if course.image %}
+          <img class="course-detail-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
+        {% else %}
+          <img class="course-detail-img" src="{% static 'home/default_course_image.jpg' %}" alt="Imagen no disponible">
+        {% endif %}
+      </div>
 
-  <div style="margin-left:20px;margin-top:20px">
-    <h4>Descripción del curso</h4>
-    <p>Aquí puedes añadir más información sobre el curso en el futuro.</p>
+      <!-- Columna Derecha: Información del Curso -->
+      <div class="course-detail-info">
+        <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+        <p><strong>Precio:</strong> ${{ course.price }}</p>
+        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+      </div>
+    </div>
+
+    <!-- Descripción del Curso -->
+    <div class="course-detail-description">
+      <h4 class="course-detail-description-title">Descripción del curso</h4>
+      <p class="course-detail-description-text">Aquí puedes añadir más información sobre el curso en el futuro.</p>
+    </div>
   </div>
 {% endblock %}
