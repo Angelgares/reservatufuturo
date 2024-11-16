@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
@@ -37,7 +38,16 @@ class RegistrationForm(UserCreationForm):
         model = User
         fields = ["username", "email", "first_name", "last_name", "phone_number", "password1", "password2"]
 
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if not phone_number.isdigit():
+            raise ValidationError("El número de teléfono solo debe contener dígitos.")
+        if len(phone_number) > 15:
+            raise ValidationError("El número de teléfono debe tener menos de 15 dígitos.")
+        return phone_number
+
     def save(self, commit=True):
+        self.full_clean()
         user = super().save(commit=False)
         user.email = self.cleaned_data['email']
         if commit:
@@ -81,6 +91,15 @@ class ProfileUpdateForm(forms.ModelForm):
         label="Número de teléfono",
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Número de teléfono'})
     )
+
     class Meta:
         model = Profile
         fields = ['phone_number']
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data.get('phone_number')
+        if not phone_number.isdigit():
+            raise ValidationError("El número de teléfono solo debe contener dígitos.")
+        if len(phone_number) > 15:
+            raise ValidationError("El número de teléfono debe tener menos de 15 dígitos.")
+        return phone_number

@@ -3,27 +3,32 @@
 {% block title %}ReservaTuFuturo - Lista de Cursos{% endblock %}
 
 {% block content %}
+    {% load static %}
+
     <div class="container">
         <h1>Lista de Cursos</h1>
 
         {% if object_list %}
-            <div class="course-container">
-                {% for course in object_list %}
-                    <div class="course-box">
-                        <h2>
-                            <a href="{% url 'course_detail' course.id %}">{{ course.name }}"</a>
-                        </h2>
-                        <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-                        <p><strong>Precio:</strong> {{ course.price }}€</p>
-                        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
-                        {% if course.image %}
-                            <div class="course-image">
-                                <img src="{{ course.image.url }}" alt="Imagen de {{ course.name }}">
-                            </div>
-                        {% endif %}
+        <div class="course-container">
+            {% for course in object_list %}
+                <div class="course-box">
+                    <div class="course-row">
+                        <div class="course-image-column">
+                            {% if course.image %}
+                                <img class="course-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="course-details-column">
+                            <h2>
+                                <a href="{% url 'course_detail' course.id %}" class="course-name">{{ course.name }}</a>                            </h2>
+                            <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+                            <p><strong>Precio:</strong> {{ course.price }}€</p>
+                            <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+                        </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
+        </div>
         {% else %}
             <p>No hay cursos disponibles.</p>
         {% endif %}
