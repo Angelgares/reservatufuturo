@@ -280,3 +280,13 @@ strong {
     padding: 10px;
     padding-top: 2px ;
 }
+
+.course-img {
+    width: 10%;
+    height: 10%;
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+}
+
