@@ -16,7 +16,7 @@
     <td>{{ reservation.course.name }}</td>
     <td>${{ reservation.course.price }}</td>
     <td>
-      <a href="">Eliminar</a>
+      <a href="{% url 'cart:remove_from_cart' reservation.id %}">Eliminar</a>
     </td>
   </tr>
   {% endfor %}
