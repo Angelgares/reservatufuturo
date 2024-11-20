@@ -1,6 +1,6 @@
 from home.models import Reservation
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from courses.models import Course
 from django.contrib import messages
 import stripe
@@ -79,3 +79,12 @@ def checkout(request):
         return JsonResponse({"id": session.id})
     except Exception as e:
         return JsonResponse({"error": str(e)})
+    
+@login_required
+def payment_success(request):
+    # Actualiza las reservas en el carrito del usuario
+    reservations = Reservation.objects.filter(user=request.user, cart=True)
+    reservations.update(cart=False, paymentMethod="Online")  # Actualiza el estado a "pagado"
+
+    # Renderiza la plantilla de éxito
+    return render(request, "cart/payment_success.html")

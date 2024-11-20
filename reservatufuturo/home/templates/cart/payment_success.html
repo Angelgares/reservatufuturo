@@ -1,7 +1,11 @@
-{% extends 'home/base.html' %} 
-{% block title %}ReservaTuFuturo - Pago correcto{% endblock %} {% block content %}
-<h1>Pago realizado con éxito</h1>
-<p>¡Gracias por tu compra! Esto solo fue una prueba.</p>
+{% extends 'home/base.html' %}
+
+{% block title %}Pago Exitoso{% endblock %}
+
+{% block content %}
+<div class="payment-success-container">
+  <h1>¡Pago Completado con Éxito!</h1>
+  
+  <a href="{% url 'courses' %}" class="btn btn-primary">Volver al Catálogo</a>
+</div>
 {% endblock %}
-
-

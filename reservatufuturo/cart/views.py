@@ -21,6 +21,8 @@ class CartView(LoginRequiredMixin, generic.TemplateView):
         context['stripe_publishable_key'] = settings.STRIPE_PUBLISHABLE_KEY  # Clave pública de Stripe
 
         return context
+    
+
 
     
     
