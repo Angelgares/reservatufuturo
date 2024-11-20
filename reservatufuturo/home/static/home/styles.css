@@ -384,3 +384,8 @@ strong {
     font-size: 1rem;
     line-height: 1.6;
 }
+
+.cart-container {
+    padding: 2%;
+    margin: 0 auto;
+}
