@@ -32,10 +32,10 @@
       <h4 class="course-detail-description-title">Descripción del curso</h4>
       <p class="course-detail-description-text">{{course.description}}</p>
       {% if not user_in_academy %}
-      <form action="" method="post">
+      <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Añadir al carrito</button>
-      </form>
+      </form>      
       {% endif %}
     </div>
   </div>
