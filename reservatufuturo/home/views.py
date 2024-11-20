@@ -4,9 +4,12 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, authenticate
 from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from .forms import EmailAuthenticationForm
 
 
 class CustomLoginView(LoginView):
+    authentication_form = EmailAuthenticationForm
     template_name = 'home/login.html'
 
 def homepage(request):

@@ -3,7 +3,29 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, get_user_model
 
+class EmailAuthenticationForm(AuthenticationForm):
+    username = forms.EmailField(label="Correo electrónico", widget=forms.EmailInput(attrs={'autofocus': True}))
+
+    def clean(self):
+        email = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if email and password:
+            UserModel = get_user_model()
+            try:
+                user = UserModel.objects.get(email=email)
+                self.confirm_login_allowed(user)
+            except UserModel.DoesNotExist:
+                raise forms.ValidationError("Correo electrónico o contraseña incorrectos.", code='invalid_login')
+
+            self.user_cache = authenticate(self.request, username=user.username, password=password)
+            if self.user_cache is None:
+                raise forms.ValidationError("Correo electrónico o contraseña incorrectos.", code='invalid_login')
+        return self.cleaned_data
+    
 class RegistrationForm(UserCreationForm):
     username = forms.CharField(
         max_length=30,
