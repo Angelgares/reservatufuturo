@@ -15,7 +15,9 @@
                     <div class="course-row">
                         <div class="course-image-column">
                             {% if course.image %}
-                                <img class="course-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
+                                <img class="course-detail-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
+                            {% else %}
+                                <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible">
                             {% endif %}
                         </div>
                         <div class="course-details-column">
