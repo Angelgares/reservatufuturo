@@ -384,3 +384,194 @@ strong {
     font-size: 1rem;
     line-height: 1.6;
 }
+
+.cart-container {
+    padding: 2%;
+    margin: 0 auto;
+}
+
+.messages-container {
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 800px;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+}
+
+.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Título del carrito */
+.cart-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  /* Contenedor del carrito */
+  .cart-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #21262d; /* Fondo más claro para destacar del fondo */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Tabla del carrito */
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .cart-table th {
+    background-color: #21262d; /* Encabezado con contraste */
+    color: #ffffff;
+    padding: 15px;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 2px solid #21262d;
+  }
+  
+  .cart-table td {
+    padding: 15px;
+    border-bottom: 1px solid #21262d;
+    color: #d0d0e0; /* Texto más claro */
+    vertical-align: middle;
+  }
+  
+  .cart-table tr:hover {
+    background-color: #161b22; /* Color de fondo al pasar el ratón */
+  }
+  
+  /* Botón de eliminar */
+  .cart-table a.btn-danger {
+    background-color: #ff6b6b; /* Rojo suave */
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .cart-table a.btn-danger:hover {
+    background-color: #e55757; /* Rojo más intenso al pasar el ratón */
+  }
+  
+  /* Resumen del carrito */
+  .cart-summary {
+    text-align: right;
+    margin-top: 20px;
+  }
+  
+  .cart-summary .cart-total {
+    font-size: 1.5rem;
+    color: #d0d0e0;
+    margin-bottom: 10px;
+  }
+  
+  /* Botón de pagar */
+  .cart-summary a.btn-primary {
+    background-color: #4caf50; /* Verde suave */
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  
+  .cart-summary a.btn-primary:hover {
+    background-color: #43a047; /* Verde más intenso */
+  }
+  
+  /* Mensaje de carrito vacío */
+  .cart-empty {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #b0b0c0; /* Texto más claro */
+    margin-top: 50px;
+  }
+
+  /* Contenedor para la fila del resumen del carrito */
+.cart-summary-row {
+    display: flex;
+    justify-content: space-between; /* Espacia el precio y el botón */
+    align-items: center; /* Centra verticalmente el texto y el botón */
+    margin-top: 20px;
+  }
+  
+  /* Texto del total */
+  .cart-total {
+    font-size: 1.5rem;
+    color: #d0d0e0;
+    margin: 0; /* Elimina márgenes alrededor del texto */
+  }
+  
+  /* Botón de pagar */
+  .cart-summary .btn-primary {
+    background-color: #4caf50; /* Verde suave */
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-left: 20px; /* Espaciado entre el precio y el botón */
+  }
+  
+  .cart-summary .btn-primary:hover {
+    background-color: #43a047; /* Verde más intenso */
+  }
+
+/* Botón "Añadir a la cesta" */
+.btn-add-to-cart {
+    background-color: #4caf50; /* Color verde suave */
+    color: #fff; /* Texto blanco */
+    padding: 12px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Icono de mano al pasar el ratón */
+    transition: all 0.3s ease; /* Animación suave */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .btn-add-to-cart:hover {
+    background-color: #43a047; /* Verde más oscuro al pasar el ratón */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+  }
+  
+  .btn-add-to-cart:active {
+    background-color: #388e3c; /* Verde aún más oscuro al hacer clic */
+    transform: translateY(0); /* Elimina la elevación */
+  }
+  
