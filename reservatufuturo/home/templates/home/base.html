@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}ReservaTuFuturo{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'home/styles.css' %}" />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="{% static 'home/favicon.ico' %}"
-    />
+    <link rel="icon" type="image/x-icon" href="{% static 'home/favicon.ico' %}" />
   </head>
   <body>
     <header>
@@ -21,32 +17,38 @@
         <!-- Enlaces de navegación -->
         <div class="nav-links">
           <a href="{% url 'courses' %}">Catálogo</a>
-          {% if user.is_authenticated %} {% if not user_in_academy %}
-          <a href="{% url 'cart:cart' %}">Carrito</a>
-          {% endif %}
-          <a href="{% url 'profile' %}">Mi Perfil</a>
-          <a
-            href="#"
-            onclick="document.getElementById('logout-form').submit();"
-          >
-            Cerrar sesión
-          </a>
-          <form
-            id="logout-form"
-            method="post"
-            action="{% url 'logout' %}"
-            style="display: none"
-          >
-            {% csrf_token %}
-          </form>
+          {% if user.is_authenticated %}
+            {% if not user_in_academy %}
+              <a href="{% url 'cart:cart' %}">Cesta</a>
+            {% endif %}
+            <a href="{% url 'profile' %}">Mi Perfil</a>
+            <a href="#" onclick="document.getElementById('logout-form').submit();">
+              Cerrar sesión
+            </a>
+            <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: none">
+              {% csrf_token %}
+            </form>
           {% else %}
-          <a href="{% url 'login' %}">Iniciar sesión</a>
-          <a href="{% url 'register' %}">Registrarse</a>
+            <a href="{% url 'login' %}">Iniciar sesión</a>
+            <a href="{% url 'register' %}">Registrarse</a>
           {% endif %}
         </div>
       </nav>
     </header>
 
-    <main>{% block content %}{% endblock %}</main>
+    <!-- Sección para mostrar mensajes -->
+    {% if messages %}
+      <div class="messages-container">
+        <ul class="messages">
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
   </body>
 </html>

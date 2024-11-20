@@ -1,29 +1,40 @@
-{% extends 'home/base.html' %} 
-{% block title %}ReservaTuFuturo - Carrito{%endblock %} 
-{% block content %} {% load static %}
-
-<h1>Carrito de Compras</h1>
+{% extends 'home/base.html' %} {% block title %}ReservaTuFuturo - Cesta de la
+compra{% endblock %} {% block content %}
+<h1 class="cart-title">Cesta de la compra</h1>
 
 {% if reservations %}
-<table>
-  <tr>
-    <th>Curso</th>
-    <th>Precio</th>
-    <th>Acciones</th>
-  </tr>
-  {% for reservation in reservations %}
-  <tr>
-    <td>{{ reservation.course.name }}</td>
-    <td>${{ reservation.course.price }}</td>
-    <td>
-      <a href="{% url 'cart:remove_from_cart' reservation.id %}">Eliminar</a>
-    </td>
-  </tr>
-  {% endfor %}
-</table>
-
-<p>Total: ${{ total_price }}</p>
-<a href="">Finalizar Compra</a>
+<div class="cart-container">
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Curso</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.course.name }}</td>
+        <td>{{ reservation.course.price }}€</td>
+        <td>
+          <a
+            href="{% url 'cart:remove_from_cart' reservation.id %}"
+            class="btn btn-danger"
+            >Eliminar</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="cart-summary">
+    <div class="cart-summary-row">
+      <p class="cart-total">Total: <strong>{{ total_price }}€</strong></p>
+      <a href="#" class="btn btn-primary">Pagar</a>
+    </div>
+  </div>
+</div>
 {% else %}
-<p>Tu carrito está vacío.</p>
+<p class="cart-empty">Tu carrito está vacío.</p>
 {% endif %} {% endblock %}

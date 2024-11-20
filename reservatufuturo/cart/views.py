@@ -4,6 +4,7 @@ from home.models import Reservation
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 from courses.models import Course
+from django.contrib import messages
 
 class CartView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'cart/cart.html'
@@ -31,27 +32,30 @@ def remove_from_cart(request, reservation_id):
     # Cambiar el estado del carrito a False (eliminar del carrito)
     reservation.cart = False
     reservation.save()
+    
+    messages.success(request, f'El curso "{reservation.course.name}" ha sido eliminado del carrito.')
 
     # Redirigir al carrito
     return redirect('cart:cart')
 
 @login_required
 def add_to_cart(request, course_id):
-    # Obtén el curso por su ID
     course = get_object_or_404(Course, id=course_id)
 
-    # Verifica si ya existe una reserva para este curso y usuario en el carrito
     reservation, created = Reservation.objects.get_or_create(
         user=request.user,
         course=course,
         defaults={'cart': True, 'paymentMethod': 'Pending'}
     )
 
-    # Si ya existe y no está en el carrito, actualiza el estado
-    if not created and not reservation.cart:
+    if created:
+        messages.success(request, f'El curso "{course.name}" ha sido añadido al carrito.')
+    elif not reservation.cart:
         reservation.cart = True
         reservation.paymentMethod = 'Pending'
         reservation.save()
+        messages.success(request, f'El curso "{course.name}" ha sido añadido al carrito.')
+    else:
+        messages.info(request, f'El curso "{course.name}" ya está en el carrito.')
 
-    # Redirige al carrito o a la página de detalles del curso con un mensaje
     return redirect('cart:cart')
