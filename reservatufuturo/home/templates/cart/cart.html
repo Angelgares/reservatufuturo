@@ -1,11 +1,29 @@
-{% extends 'home/base.html' %}
+{% extends 'home/base.html' %} 
+{% block title %}ReservaTuFuturo - Carrito{%endblock %} 
+{% block content %} {% load static %}
 
-{% block title %}ReservaTuFuturo - Carrito{% endblock %}
+<h1>Carrito de Compras</h1>
 
-{% block content %}
-    {% load static %}
+{% if reservations %}
+<table>
+  <tr>
+    <th>Curso</th>
+    <th>Precio</th>
+    <th>Acciones</th>
+  </tr>
+  {% for reservation in reservations %}
+  <tr>
+    <td>{{ reservation.course.name }}</td>
+    <td>${{ reservation.course.price }}</td>
+    <td>
+      <a href="">Eliminar</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
-    <div class="cart-container">
-        <h1>Carrito de compra</h1>
-    </div>
-{% endblock %}
+<p>Total: ${{ total_price }}</p>
+<a href="">Finalizar Compra</a>
+{% else %}
+<p>Tu carrito está vacío.</p>
+{% endif %} {% endblock %}

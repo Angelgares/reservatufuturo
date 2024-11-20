@@ -22,7 +22,7 @@
         <div class="nav-links">
           <a href="{% url 'courses' %}">Catálogo</a>
           {% if user.is_authenticated %} {% if not user_in_academy %}
-          <a href="{% url 'cart' %}">Carrito</a>
+          <a href="{% url 'cart:cart' %}">Carrito</a>
           {% endif %}
           <a href="{% url 'profile' %}">Mi Perfil</a>
           <a
