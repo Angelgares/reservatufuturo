@@ -334,7 +334,13 @@ strong {
 .course-detail-title {
     text-align: center;
     font-size: 2rem;
+}
+
+.course-detail-type{
+    text-align: center;
+    font: 1.5rem;
     margin-bottom: 5%;
+    color:#b0b0b0
 }
 
 .course-detail-grid {

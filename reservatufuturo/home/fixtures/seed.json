@@ -41,46 +41,181 @@
         "model": "courses.course",
         "pk": 1,
         "fields": {
-            "name": "Python Basics",
+            "name": "Fundamentos de Python",
             "price": 50.0,
             "image": "course_images/python_basics.jpg",
-            "teacher": "John Doe",
-            "capacity": 20
+            "teacher": "Juan Pérez",
+            "capacity": 20,
+            "description": "Este curso está diseñado para principiantes que desean aprender el lenguaje de programación Python.",
+            "starting_date": "2021-09-01",
+            "ending_date": "2021-09-30",
+            "type": "INF"
         }
     },
     {
         "model": "courses.course",
         "pk": 2,
         "fields": {
-            "name": "Data Science with Python",
+            "name": "Ciencia de Datos con Python",
             "price": 150.0,
             "image": "course_images/data_science.jpg",
-            "teacher": "Jane Doe",
-            "capacity": 30
+            "teacher": "Ana López",
+            "capacity": 30,
+            "description": "Curso para aprender ciencia de datos utilizando Python.",
+            "starting_date": "2021-10-01",
+            "ending_date": "2021-10-30",
+            "type": "INF"
         }
     },
     {
         "model": "courses.course",
         "pk": 3,
         "fields": {
-            "name": "Machine Learning",
+            "name": "Aprendizaje Automático",
             "price": 200.0,
             "image": "course_images/machine_learning.jpg",
-            "teacher": "John Doe",
-            "capacity": 25
+            "teacher": "Juan Pérez",
+            "capacity": 25,
+            "description": "Curso diseñado para quienes desean aprender sobre aprendizaje automático.",
+            "starting_date": "2021-11-01",
+            "ending_date": "2021-11-30",
+            "type": "INF"
         }
-    }, 
+    },
     {
         "model": "courses.course",
         "pk": 4,
         "fields": {
-            "name": "Deep Learning",
+            "name": "Aprendizaje Profundo",
             "price": 250.0,
             "image": "course_images/deep_learning.jpg",
-            "teacher": "Jane Doe",
-            "capacity": 25
+            "teacher": "Ana López",
+            "capacity": 25,
+            "description": "Curso avanzado para aprender sobre aprendizaje profundo.",
+            "starting_date": "2021-12-01",
+            "ending_date": "2021-12-30",
+            "type": "INF"
         }
-
+    },
+    {
+        "model": "courses.course",
+        "pk": 5,
+        "fields": {
+            "name": "Biología Molecular",
+            "price": 180.0,
+            "image": "course_images/molecular_biology.jpg",
+            "teacher": "María Fernández",
+            "capacity": 20,
+            "description": "Curso diseñado para explorar los conceptos fundamentales de la biología molecular.",
+            "starting_date": "2022-01-10",
+            "ending_date": "2022-02-10",
+            "type": "BIO"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 6,
+        "fields": {
+            "name": "Historia del Arte",
+            "price": 120.0,
+            "image": "course_images/art_history.jpg",
+            "teacher": "Carlos García",
+            "capacity": 15,
+            "description": "Curso introductorio sobre la evolución del arte a lo largo de la historia.",
+            "starting_date": "2022-02-15",
+            "ending_date": "2022-03-15",
+            "type": "ART"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 7,
+        "fields": {
+            "name": "Química Orgánica",
+            "price": 160.0,
+            "image": "course_images/organic_chemistry.jpg",
+            "teacher": "Laura Méndez",
+            "capacity": 25,
+            "description": "Curso detallado sobre los fundamentos de la química orgánica.",
+            "starting_date": "2022-03-01",
+            "ending_date": "2022-03-31",
+            "type": "QUI"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 8,
+        "fields": {
+            "name": "Inglés para Negocios",
+            "price": 100.0,
+            "image": "course_images/business_english.jpg",
+            "teacher": "Elena Morales",
+            "capacity": 20,
+            "description": "Curso especializado en inglés para situaciones empresariales y negocios.",
+            "starting_date": "2022-04-01",
+            "ending_date": "2022-04-30",
+            "type": "IDI"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 9,
+        "fields": {
+            "name": "Introducción a la Psicología",
+            "price": 90.0,
+            "image": "course_images/psychology_intro.jpg",
+            "teacher": "Luis Martínez",
+            "capacity": 30,
+            "description": "Este curso ofrece una visión general de los conceptos básicos de la psicología y el comportamiento humano.",
+            "starting_date": "2022-05-01",
+            "ending_date": "2022-05-31",
+            "type": "PSI"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 10,
+        "fields": {
+            "name": "Física Cuántica para Principiantes",
+            "price": 200.0,
+            "image": "course_images/quantum_physics.jpg",
+            "teacher": "Clara Rojas",
+            "capacity": 20,
+            "description": "Curso introductorio para comprender los fundamentos de la física cuántica.",
+            "starting_date": "2022-06-01",
+            "ending_date": "2022-06-30",
+            "type": "FIS"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 11,
+        "fields": {
+            "name": "Matemáticas Avanzadas",
+            "price": 150.0,
+            "image": "course_images/advanced_math.jpg",
+            "teacher": "Fernando Álvarez",
+            "capacity": 25,
+            "description": "Curso avanzado que cubre conceptos matemáticos complejos y su aplicación.",
+            "starting_date": "2022-07-01",
+            "ending_date": "2022-07-31",
+            "type": "MAT"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 12,
+        "fields": {
+            "name": "Historia Contemporánea",
+            "price": 100.0,
+            "image": "course_images/contemporary_history.jpg",
+            "teacher": "Andrea Gómez",
+            "capacity": 20,
+            "description": "Curso que explora los eventos y cambios clave de la historia contemporánea.",
+            "starting_date": "2022-08-01",
+            "ending_date": "2022-08-31",
+            "type": "HIS"
+        }
     },
     {
         "model": "home.reservation",
