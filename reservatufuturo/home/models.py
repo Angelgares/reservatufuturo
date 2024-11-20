@@ -18,7 +18,8 @@ class Reservation(models.Model):
     
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    paymentMethod = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='Online')
+    paymentMethod = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='Pending')
+    cart = models.BooleanField(default=True)
     
     def __str__(self):
         return f'{self.user.username} - {self.course.name}'
