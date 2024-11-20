@@ -8,18 +8,23 @@
         <form method="post" action="{% url 'login' %}" class="login-form">
             {% csrf_token %}
             <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" name="username" id="username" required>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <p class="error-message">{{ form.username.errors }}</p>
+                {% endif %}
             </div>
             <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" name="password" id="password" required>
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <p class="error-message">{{ form.password.errors }}</p>
+                {% endif %}
             </div>
+            {% if form.errors %}
+            <p class="error-message">Email o contraseña incorrectos.</p>
+            {% endif %}
             <button type="submit" class="login-button">Ingresar</button>
         </form>
-
-        {% if form.errors %}
-            <p class="error-message">Usuario o contraseña incorrectos.</p>
-        {% endif %}
     </div>
 {% endblock %}
