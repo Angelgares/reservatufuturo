@@ -1,12 +1,14 @@
 from typing import Any
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.views import generic
 from .models import Course
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from home.models import Reservation
 from django.views import generic
 from itertools import groupby
 from operator import itemgetter
+from .forms import CourseForm
+from django.http import HttpResponseForbidden
 
 class CourseListView(generic.ListView):
     model = Course
@@ -23,7 +25,6 @@ class CourseListView(generic.ListView):
 
         context['courses_grouped'] = grouped_courses
         return context
-
 
 
 class CourseDetailView(generic.DetailView):
@@ -70,3 +71,29 @@ def add_to_cart(request, course_id):
 
     # Redirige al carrito
     return redirect('cart')
+
+@login_required
+def create_course(request):
+    if not request.user.groups.filter(name='academy').exists():
+        return HttpResponseForbidden("No tienes permisos para acceder a esta página")
+    
+    if request.method == 'POST':
+        form = CourseForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            
+            Course.objects.create(
+                name=form.cleaned_data["name"],
+                price=form.cleaned_data["price"],
+                image=form.cleaned_data["image"],
+                teacher=form.cleaned_data["teacher"],
+                capacity=form.cleaned_data["capacity"],
+                description=form.cleaned_data["description"],
+                starting_date=form.cleaned_data["starting_date"],
+                ending_date=form.cleaned_data["ending_date"],
+                type=form.cleaned_data["type"])
+            
+            return redirect('courses')
+        else:
+            return render(request, 'courses/create_course.html', {'form': form, 'error': "Formulario inválido"})
+    return render(request, 'courses/create_course.html', {'form': CourseForm()})
