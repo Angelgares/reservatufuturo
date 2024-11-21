@@ -654,3 +654,42 @@ strong {
     background-color: #43a047; /* Verde más oscuro al pasar */
   }
     
+  .payment-success-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #21262d; /* Fondo oscuro para destacar */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+    text-align: center; /* Centrar el contenido */
+    color: #d0d0e0; /* Color de texto consistente */
+  }
+  
+  .payment-success-title {
+    font-size: 2.5rem;
+    color: #ffffff; /* Blanco para el título */
+    margin-bottom: 20px;
+  }
+  
+  .payment-success-message {
+    font-size: 1.2rem;
+    color: #b0b0b0; /* Texto más claro */
+    margin-bottom: 30px;
+  }
+  
+  .payment-success-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background-color: #4caf50; /* Verde suave */
+    color: #ffffff; /* Texto blanco */
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-success-button:hover {
+    background-color: #43a047; /* Verde más oscuro al pasar el ratón */
+  }
+  
