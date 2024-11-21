@@ -1,4 +1,11 @@
 [
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "academy"
+        }
+    },
 {
     "model": "auth.user",
     "pk": 1,
@@ -22,6 +29,25 @@
     }
 },
 {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "username": "academy1",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+        "first_name": "Armando",
+        "last_name": "Paredes",
+        "email": "academy1@example.com"
+    }
+},
+{
+    "model": "auth.user_groups",
+    "pk": 1,
+    "fields": {
+        "user": 3,
+        "group": 1
+    }
+},
+{
     "model": "home.profile",
     "pk": 1,
     "fields": {
@@ -35,6 +61,14 @@
     "fields": {
         "user": 2,
         "phone_number": 9876543210
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "phone_number": 12121212121
     }
 },
     {
