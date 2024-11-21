@@ -2,26 +2,29 @@
 
 {% block content %}
 <div class="quick-purchase-container">
-  <h1>Compra rápida: {{ course.name }}</h1>
-  <p>Precio: {{ course.price }}€</p>
+  <h1 class="quick-purchase-title">Compra rápida</h1>
+  <p class="quick-purchase-course">Curso: <strong>{{ course.name }}</strong></p>
+  <p class="quick-purchase-price">Precio: <strong>{{ course.price }}€</strong></p>
 
   <!-- Formulario para ingresar el correo electrónico -->
-  <form action="{% url 'cart:quick_purchase' course.id %}" method="post" id="email-form">
+  <form action="{% url 'cart:quick_purchase' course.id %}" method="post" id="email-form" class="quick-purchase-form">
     {% csrf_token %}
     <div class="form-group">
-      <label for="email">Correo electrónico:</label>
+      <label for="email" class="form-label">Correo electrónico:</label>
       <input
         type="email"
         id="email"
         name="email"
-        class="form-control"
+        class="form-input"
         placeholder="Ingresa tu correo electrónico"
         required
+        style="width: 100%"
       />
     </div>
-    <button type="submit" class="btn btn-primary">Proceder al pago</button>
+    <button type="submit" class="btn-add-to-cart">Proceder al pago</button>
   </form>
 </div>
+
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>

@@ -81,8 +81,8 @@ class QuickPurchaseView(View):
                     }
                 ],
                 mode="payment",
-                success_url="http://localhost:8000/cart/success/",
-                cancel_url="http://localhost:8000/cart/cancel/",
+                success_url="http://localhost:8000/",
+                cancel_url="http://localhost:8000/",
             )
             return JsonResponse({"id": session.id})
         except Exception as e:

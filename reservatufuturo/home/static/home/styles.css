@@ -597,3 +597,60 @@ strong {
     background-color: #0056b3;
   }
   
+.quick-purchase-container {
+    max-width: 400px;
+    margin: 50px auto; /* Centrar horizontalmente y dar espacio vertical */
+    padding: 20px;
+    background-color: #21262d; /* Mismo fondo que el carrito */
+    border-radius: 10px; /* Bordes redondeados consistentes */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra igual que el carrito */
+    text-align: center; /* Centrado del texto */
+    color: #d0d0e0; /* Color de texto consistente */
+  }
+  
+  .quick-purchase-title {
+    font-size: 2rem;
+    color: #ffffff; /* Blanco como en el carrito */
+    margin-bottom: 20px;
+  }
+  
+  .quick-purchase-course,
+  .quick-purchase-price {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .quick-purchase-course strong,
+  .quick-purchase-price strong {
+    color: #ffffff; /* Destacar los valores */
+  }
+  .quick-purchase-form .form-group label {
+    color: #d0d0e0; /* Etiquetas consistentes */
+    font-weight: bold;
+  }
+  
+  .quick-purchase-form .form-group input {
+    background-color: #161b22; /* Fondo oscuro como en el carrito */
+    color: white; /* Texto blanco */
+    border: 1px solid #444; /* Bordes oscuros */
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .quick-purchase-button {
+    background-color: #4caf50; /* Verde suave del carrito */
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quick-purchase-button:hover {
+    background-color: #43a047; /* Verde más oscuro al pasar */
+  }
+    
