@@ -14,11 +14,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def remove_from_cart(request, reservation_id):
     # Obtener la reserva por ID y asegurar que pertenece al usuario autenticado
-    reservation = get_object_or_404(Reservation, id=reservation_id, user=request.user)
+    reservation = get_object_or_404(Reservation, id=reservation_id, user=request.user, cart=True)
 
-    # Cambiar el estado del carrito a False (eliminar del carrito)
-    reservation.cart = False
-    reservation.save()
+    # Eliminar la reserva del carrito
+    reservation.delete()
     
     messages.success(request, f'El curso "{reservation.course.name}" ha sido eliminado del carrito.')
 

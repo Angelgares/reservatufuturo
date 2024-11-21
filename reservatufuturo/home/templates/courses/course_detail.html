@@ -1,11 +1,12 @@
 {% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}{{ course.name }} - ReservaTuFuturo{% endblock %}
 
 {% block content %}
-  {% load static %}
-
   <div class="course-detail-container">
     <h1 class="course-detail-title">{{ course.name }}</h1>
-    <h3 class="course-detail-type">{{course.get_type_display}}</h3>
+    <h3 class="course-detail-type">{{ course.get_type_display }}</h3>
 
     <div class="course-detail-grid">
       <!-- Columna Izquierda: Imagen -->
@@ -30,17 +31,18 @@
     <!-- Descripción del Curso -->
     <div class="course-detail-description">
       <h4 class="course-detail-description-title">Descripción del curso</h4>
-      <p class="course-detail-description-text">{{course.description}}</p>
+      <p class="course-detail-description-text">{{ course.description }}</p>
+
       {% if user.is_authenticated %}
-      {% if not user_in_academy%}
-      <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-add-to-cart">Añadir a la cesta</button>
-      </form>      
-      {% endif %}
+        {% if not user_in_academy and not has_reservation %}
+          <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-add-to-cart">Añadir a la cesta</button>
+          </form>
+        {% elif has_reservation %}
+          <p>Ya tienes una reserva para este curso.</p>
+        {% endif %}
       {% endif %}
     </div>
-  </div>
-    
   </div>
 {% endblock %}
