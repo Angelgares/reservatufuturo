@@ -1,0 +1,44 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="text-center">Crear un Nuevo Curso</h1>
+
+    <!-- Mostrar errores si existen -->
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
+    
+    <form action="" method="post" enctype="multipart/form-data" class="mt-4">
+        {% csrf_token %}
+        <table class="table table-bordered">
+            <!-- Renderizar el formulario con etiquetas -->
+            {% for field in form %}
+            <tr>
+                <th>{{ field.label_tag }}</th>
+                <td>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-danger">{{ error }}</div>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary me-2">Crear Curso</button>
+            <a href="{% url 'homepage' %}" class="course-name">Volver</a>
+
+
+        </div>
+    </form>
+</div>
+{% endblock %}

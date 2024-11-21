@@ -19,6 +19,9 @@
           <a href="{% url 'courses' %}">Catálogo</a>
           <a href="{% url 'about_us' %}">Sobre nosotros</a>
           {% if user.is_authenticated %}
+            {% if user_in_academy %}
+              <a href="{% url 'create_course' %}">Crear Curso</a>
+            {% endif %}
             {% if not user_in_academy %}
               <a href="{% url 'cart:cart' %}">Cesta</a>
               <a href="{% url 'my_courses' %}">Mis Cursos</a>

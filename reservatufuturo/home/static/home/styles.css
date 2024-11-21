@@ -706,3 +706,16 @@ strong {
     flex-direction: row;
     gap: 20px;
   }
+
+  .form-container {
+    max-width: 20%;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #21262d;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    align-items: center;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
