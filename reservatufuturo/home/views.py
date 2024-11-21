@@ -66,5 +66,5 @@ def edit_profile(request):
 @login_required
 def my_courses(request):
     reservas = Reservation.objects.filter(user=request.user).exclude(paymentMethod='Pending')
-    cursos = [reserva.course for reserva in reservas]
+    cursos = [reserva.course for reserva in reservas if reserva.cart == False]
     return render(request, 'courses/my_courses.html', {'cursos': cursos})

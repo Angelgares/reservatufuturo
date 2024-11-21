@@ -4,19 +4,19 @@ from django.db import models
 
 class Course(models.Model):
     TYPE_CHOICES = [
-        ('ADM', 'Administración General'),
-        ('JUD', 'Justicia'),
-        ('EDU', 'Educación'),
-        ('SAN', 'Sanidad'),
-        ('POL', 'Policía'),
-        ('BOM', 'Bomberos'),
-        ('PRI', 'Prisiones'),
-        ('HAC', 'Hacienda'),
-        ('INS', 'Inspector de Trabajo'),
-        ('TEC', 'Técnicos de Ayuntamientos'),
-        ('INF', 'Informática'),
-        ('TEL', 'Telecomunicaciones'),
-        ('IT', 'Tecnologías de la Información'),
+        ('Admnistrición General', 'Administración General'),
+        ('Justicia', 'Justicia'),
+        ('Educación', 'Educación'),
+        ('Sanidad', 'Sanidad'),
+        ('Policía', 'Policía'),
+        ('Bomberos', 'Bomberos'),
+        ('Prisiones', 'Prisiones'),
+        ('Hacienda', 'Hacienda'),
+        ('Inspecto de Trabajo', 'Inspector de Trabajo'),
+        ('Técnicos de Ayuntamientos', 'Técnicos de Ayuntamientos'),
+        ('Informática', 'Informática'),
+        ('Telecomunicaciones', 'Telecomunicaciones'),
+        ('Tecnología de la Información', 'Tecnologías de la Información'),
     ]
 
 
@@ -30,7 +30,7 @@ class Course(models.Model):
     description = models.TextField()
     starting_date = models.DateField()
     ending_date = models.DateField()
-    type = models.CharField(max_length=15, choices=TYPE_CHOICES, default='Magisterio')
+    type = models.CharField(max_length=50, choices=TYPE_CHOICES, default='Magisterio')
     
     
     def __str__(self):
