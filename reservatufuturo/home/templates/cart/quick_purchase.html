@@ -1,0 +1,69 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="quick-purchase-container">
+  <h1 class="quick-purchase-title">Compra rápida</h1>
+  <p class="quick-purchase-course">Curso: <strong>{{ course.name }}</strong></p>
+  <p class="quick-purchase-price">Precio: <strong>{{ course.price }}€</strong></p>
+
+  <!-- Formulario para ingresar el correo electrónico -->
+  <form action="{% url 'cart:quick_purchase' course.id %}" method="post" id="email-form" class="quick-purchase-form">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="email" class="form-label">Correo electrónico:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-input"
+        placeholder="Ingresa tu correo electrónico"
+        required
+        style="width: 100%"
+      />
+    </div>
+    <button type="submit" class="btn-add-to-cart">Proceder al pago</button>
+  </form>
+  <p class="quick-purchase-disclaimer">
+    <strong>Nota:</strong> La compra rápida no vincula el curso a un usuario registrado. Sin embargo, recibirás un correo electrónico con la confirmación de tu compra.
+  </p>
+</div>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  document.getElementById("email-form").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Detiene el envío tradicional del formulario
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const email = formData.get("email");
+
+    try {
+      // Enviar solicitud al servidor
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: new URLSearchParams({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.id) {
+        // Redirige a Stripe Checkout
+        const stripe = Stripe("{{ stripe_publishable_key }}");
+        stripe.redirectToCheckout({ sessionId: data.id });
+      } else {
+        alert("Hubo un error al procesar tu compra. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error al procesar la solicitud:", error);
+      alert("Hubo un error inesperado. Por favor, inténtalo de nuevo.");
+    }
+  });
+</script>
+
+
+
+{% endblock %}

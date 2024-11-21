@@ -1,11 +1,15 @@
 {% extends 'home/base.html' %}
+{% load static %}
+
 
 {% block title %}Pago Exitoso{% endblock %}
 
 {% block content %}
 <div class="payment-success-container">
-  <h1>¡Pago Completado con Éxito!</h1>
-  
-  <a href="{% url 'courses' %}" class="btn btn-primary">Volver al Catálogo</a>
+  <h1 class="payment-success-title">¡Pago Completado con Éxito!</h1>
+  <p class="payment-success-message">
+    Gracias por tu compra. Tu reserva ha sido confirmada.
+  </p>
+  <a href="{% url 'courses' %}" class="btn btn-primary payment-success-button">Volver al Catálogo</a>
 </div>
 {% endblock %}
