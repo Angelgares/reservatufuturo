@@ -23,3 +23,16 @@ python manage.py loaddata seed.json
 python manage.py runserver
 ```
 
+## Test Users
+### User1
+- **user:** user1
+- **email:** user1@example.com
+- **password:** pass_user_1
+### User2
+- **user:** user2
+- **email:** user2@example.com
+- **password:** pass_user_1
+### Academy1 (group academy)
+- **user:** academy1
+- **email:** academy1@example.com
+- **password:** pass_user_1

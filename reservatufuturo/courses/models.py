@@ -4,17 +4,22 @@ from django.db import models
 
 class Course(models.Model):
     TYPE_CHOICES = [
+        ('ADM', 'Administración General'),
+        ('JUD', 'Justicia'),
+        ('EDU', 'Educación'),
+        ('SAN', 'Sanidad'),
+        ('POL', 'Policía'),
+        ('BOM', 'Bomberos'),
+        ('PRI', 'Prisiones'),
+        ('HAC', 'Hacienda'),
+        ('INS', 'Inspector de Trabajo'),
+        ('TEC', 'Técnicos de Ayuntamientos'),
         ('INF', 'Informática'),
-        ('BIO', 'Biología'),
-        ('QUI', 'Química'),
-        ('FIS', 'Física'),
-        ('MAT', 'Matemáticas'),
-        ('HIS', 'Historia'),
-        ('ECO', 'Economía'),
-        ('PSI', 'Psicología'),
-        ('ART', 'Arte'),
-        ('IDI', 'Idiomas'),
+        ('TEL', 'Telecomunicaciones'),
+        ('IT', 'Tecnologías de la Información'),
     ]
+
+
 
     
     name = models.CharField(max_length=100, help_text='Course name')

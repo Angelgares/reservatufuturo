@@ -14,7 +14,7 @@
         {% if course.image %}
           <img class="course-detail-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
         {% else %}
-          <img class="course-detail-img" src="{% static 'home/default_course_image.jpg' %}" alt="Imagen no disponible">
+        <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible">
         {% endif %}
       </div>
 

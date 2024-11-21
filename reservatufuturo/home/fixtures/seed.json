@@ -1,55 +1,88 @@
 [
     {
-        "model": "auth.user",
+        "model": "auth.group",
         "pk": 1,
         "fields": {
-            "username": "user1",
-            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "user1@example.com"
+            "name": "academy"
         }
     },
-    {
-        "model": "auth.user",
-        "pk": 2,
-        "fields": {
-            "username": "user2",
-            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
-            "first_name": "Jane",
-            "last_name": "Doe",
-            "email": "user2@example.com"
-        }
-    },
-    {
-        "model": "home.profile",
-        "pk": 1,
-        "fields": {
-            "user": 1,
-            "phone_number": 1234567890
-        }
-    },
-    {
-        "model": "home.profile",
-        "pk": 2,
-        "fields": {
-            "user": 2,
-            "phone_number": 9876543210
-        }
-    },
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "username": "user1",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "user1@example.com"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "username": "user2",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "email": "user2@example.com"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "username": "academy1",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+        "first_name": "Armando",
+        "last_name": "Paredes",
+        "email": "academy1@example.com"
+    }
+},
+{
+    "model": "auth.user_groups",
+    "pk": 1,
+    "fields": {
+        "user": 3,
+        "group": 1
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "phone_number": 1234567890
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "phone_number": 9876543210
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "phone_number": 12121212121
+    }
+},
     {
         "model": "courses.course",
         "pk": 1,
         "fields": {
-            "name": "Fundamentos de Python",
+            "name": "Administración Pública Avanzada",
             "price": 50.0,
-            "image": "course_images/python_basics.jpg",
             "teacher": "Juan Pérez",
             "capacity": 20,
-            "description": "Este curso está diseñado para principiantes que desean aprender el lenguaje de programación Python.",
+            "description": "Este curso está diseñado para los que quieran opositar para algun puesto de la administracion pública.",
             "starting_date": "2021-09-01",
             "ending_date": "2021-09-30",
-            "type": "INF"
+            "type": "ADM"
         }
     },
     {
@@ -71,152 +104,121 @@
         "model": "courses.course",
         "pk": 3,
         "fields": {
-            "name": "Aprendizaje Automático",
-            "price": 200.0,
-            "image": "course_images/machine_learning.jpg",
-            "teacher": "Juan Pérez",
+            "name": "Administración Pública para Oposiciones",
+            "price": 120.0,
+            "image": "course_images/public_administration.jpg",
+            "teacher": "Carlos García",
             "capacity": 25,
-            "description": "Curso diseñado para quienes desean aprender sobre aprendizaje automático.",
+            "description": "Curso enfocado en los fundamentos para oposiciones de administración general.",
             "starting_date": "2021-11-01",
             "ending_date": "2021-11-30",
-            "type": "INF"
+            "type": "ADM"
         }
     },
     {
         "model": "courses.course",
         "pk": 4,
         "fields": {
-            "name": "Aprendizaje Profundo",
-            "price": 250.0,
-            "image": "course_images/deep_learning.jpg",
-            "teacher": "Ana López",
-            "capacity": 25,
-            "description": "Curso avanzado para aprender sobre aprendizaje profundo.",
+            "name": "Técnicos de Ayuntamientos",
+            "price": 180.0,
+            "image": "course_images/municipal_technicians.jpg",
+            "teacher": "Laura Méndez",
+            "capacity": 20,
+            "description": "Curso para preparación de oposiciones a técnicos de ayuntamientos.",
             "starting_date": "2021-12-01",
             "ending_date": "2021-12-30",
-            "type": "INF"
+            "type": "TEC"
         }
     },
     {
         "model": "courses.course",
         "pk": 5,
         "fields": {
-            "name": "Biología Molecular",
-            "price": 180.0,
-            "image": "course_images/molecular_biology.jpg",
+            "name": "Educación Primaria para Oposiciones",
+            "price": 100.0,
+            "image": "course_images/primary_education.jpg",
             "teacher": "María Fernández",
-            "capacity": 20,
-            "description": "Curso diseñado para explorar los conceptos fundamentales de la biología molecular.",
+            "capacity": 30,
+            "description": "Curso diseñado para opositores al cuerpo de maestros de educación primaria.",
             "starting_date": "2022-01-10",
             "ending_date": "2022-02-10",
-            "type": "BIO"
+            "type": "EDU"
         }
     },
     {
         "model": "courses.course",
         "pk": 6,
         "fields": {
-            "name": "Historia del Arte",
-            "price": 120.0,
-            "image": "course_images/art_history.jpg",
-            "teacher": "Carlos García",
-            "capacity": 15,
-            "description": "Curso introductorio sobre la evolución del arte a lo largo de la historia.",
+            "name": "Policía Nacional - Temario Completo",
+            "price": 200.0,
+            "image": "course_images/police_training.jpg",
+            "teacher": "Luis Martínez",
+            "capacity": 25,
+            "description": "Curso completo para oposiciones al cuerpo de Policía Nacional.",
             "starting_date": "2022-02-15",
             "ending_date": "2022-03-15",
-            "type": "ART"
+            "type": "POL"
         }
     },
     {
         "model": "courses.course",
         "pk": 7,
         "fields": {
-            "name": "Química Orgánica",
-            "price": 160.0,
-            "image": "course_images/organic_chemistry.jpg",
-            "teacher": "Laura Méndez",
-            "capacity": 25,
-            "description": "Curso detallado sobre los fundamentos de la química orgánica.",
+            "name": "Sanidad - Preparación Oposiciones",
+            "price": 150.0,
+            "image": "course_images/healthcare.jpg",
+            "teacher": "Andrea Gómez",
+            "capacity": 20,
+            "description": "Curso para preparación de oposiciones al sector sanitario.",
             "starting_date": "2022-03-01",
             "ending_date": "2022-03-31",
-            "type": "QUI"
+            "type": "SAN"
         }
     },
     {
         "model": "courses.course",
         "pk": 8,
         "fields": {
-            "name": "Inglés para Negocios",
-            "price": 100.0,
-            "image": "course_images/business_english.jpg",
+            "name": "Informática Básica para Oposiciones",
+            "price": 130.0,
+            "image": "course_images/python_basics.jpg",
             "teacher": "Elena Morales",
             "capacity": 20,
-            "description": "Curso especializado en inglés para situaciones empresariales y negocios.",
+            "description": "Curso para adquirir conocimientos básicos de informática para oposiciones.",
             "starting_date": "2022-04-01",
             "ending_date": "2022-04-30",
-            "type": "IDI"
+            "type": "INF"
         }
     },
     {
         "model": "courses.course",
         "pk": 9,
         "fields": {
-            "name": "Introducción a la Psicología",
-            "price": 90.0,
-            "image": "course_images/psychology_intro.jpg",
-            "teacher": "Luis Martínez",
-            "capacity": 30,
-            "description": "Este curso ofrece una visión general de los conceptos básicos de la psicología y el comportamiento humano.",
+            "name": "Telecomunicaciones y Redes",
+            "price": 170.0,
+            "teacher": "Clara Rojas",
+            "capacity": 15,
+            "description": "Curso técnico sobre redes y telecomunicaciones.",
             "starting_date": "2022-05-01",
             "ending_date": "2022-05-31",
-            "type": "PSI"
+            "type": "TEL"
         }
     },
     {
         "model": "courses.course",
         "pk": 10,
         "fields": {
-            "name": "Física Cuántica para Principiantes",
+            "name": "Inspector de Trabajo - Fundamentos",
             "price": 200.0,
-            "image": "course_images/quantum_physics.jpg",
-            "teacher": "Clara Rojas",
+            "image": "course_images/labor_inspector.jpg",
+            "teacher": "Fernando Álvarez",
             "capacity": 20,
-            "description": "Curso introductorio para comprender los fundamentos de la física cuántica.",
+            "description": "Curso básico para preparación de oposiciones a inspector de trabajo.",
             "starting_date": "2022-06-01",
             "ending_date": "2022-06-30",
-            "type": "FIS"
+            "type": "INS"
         }
-    },
-    {
-        "model": "courses.course",
-        "pk": 11,
-        "fields": {
-            "name": "Matemáticas Avanzadas",
-            "price": 150.0,
-            "image": "course_images/advanced_math.jpg",
-            "teacher": "Fernando Álvarez",
-            "capacity": 25,
-            "description": "Curso avanzado que cubre conceptos matemáticos complejos y su aplicación.",
-            "starting_date": "2022-07-01",
-            "ending_date": "2022-07-31",
-            "type": "MAT"
-        }
-    },
-    {
-        "model": "courses.course",
-        "pk": 12,
-        "fields": {
-            "name": "Historia Contemporánea",
-            "price": 100.0,
-            "image": "course_images/contemporary_history.jpg",
-            "teacher": "Andrea Gómez",
-            "capacity": 20,
-            "description": "Curso que explora los eventos y cambios clave de la historia contemporánea.",
-            "starting_date": "2022-08-01",
-            "ending_date": "2022-08-31",
-            "type": "HIS"
-        }
-    },
+    },    
     {
         "model": "home.reservation",
         "pk": 1,
