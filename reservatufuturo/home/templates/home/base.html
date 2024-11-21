@@ -17,6 +17,7 @@
         <!-- Enlaces de navegación -->
         <div class="nav-links">
           <a href="{% url 'courses' %}">Catálogo</a>
+          <a href="{% url 'about_us' %}">Sobre nosotros</a>
           {% if user.is_authenticated %}
             {% if not user_in_academy %}
               <a href="{% url 'cart:cart' %}">Cesta</a>

@@ -1,7 +1,6 @@
 {% extends 'home/base.html' %}
-{% load static %}
 
-{% block title %}ReservaTuFuturo - Tu Mejor Oportunidad para Aprobar Oposiciones{% endblock %}
+{% block title %}Sobre nosotros{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -9,33 +8,6 @@
         <section class="welcome-section">
             <h1>Bienvenido a ReservaTuFuturo</h1>
             <p>ReservaTuFuturo es tu aliado en el camino hacia una carrera pública exitosa. Ofrecemos una amplia gama de cursos especializados para oposiciones, diseñados para ayudarte a conseguir la plaza que deseas.</p>
-        </section>
-
-        <!-- Sección del catálogo de cursos -->
-        <section class="courses-section">
-            <h2>Catálogo de Cursos</h2>
-            <div class="courses-grid">
-                {% for course in courses %}
-                <div class="course-box">
-                    <div class="course-row">
-                        <div class="course-image-column">
-                            {% if course.image %}
-                                <a href="{% url 'course_detail' course.id %}" class="course-name">
-                                    <img class="course-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
-                                </a>
-                            {% endif %}
-                        </div>
-                        <div class="course-details-column">
-                            <h2>
-                                <a href="{% url 'course_detail' course.id %}" class="course-name">{{ course.name }}</a>                            </h2>
-                            <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-                            <p><strong>Precio:</strong> {{ course.price }}€</p>
-                            <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
         </section>
 
         <!-- Sección de información sobre la empresa -->

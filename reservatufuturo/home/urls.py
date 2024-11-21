@@ -12,4 +12,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('editMyProfile/', views.edit_profile, name='edit_profile'),
     path('myCourses/', views.my_courses, name='my_courses'),
+    path('aboutUs/', views.about_us, name='about_us'),
 ]
