@@ -1,13 +1,29 @@
+from typing import Any
 from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
 from .models import Course
 from django.contrib.auth.decorators import login_required
 from home.models import Reservation
+from django.views import generic
+from itertools import groupby
+from operator import itemgetter
 
 class CourseListView(generic.ListView):
-    modle = Course
-    context_object_name = "courses_list"
+    model = Course
+    context_object_name = "courses_grouped"
     queryset = Course.objects.all()
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        courses = Course.objects.all().values('type', 'id', 'name', 'teacher', 'price', 'capacity', 'image')
+        grouped_courses = {}
+        for key, group in groupby(courses.order_by('type'), key=itemgetter('type')):
+            grouped_courses[key] = list(group)
+
+        context['courses_grouped'] = grouped_courses
+        return context
+
 
 
 class CourseDetailView(generic.DetailView):
