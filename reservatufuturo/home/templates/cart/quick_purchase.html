@@ -1,0 +1,63 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="quick-purchase-container">
+  <h1>Compra rápida: {{ course.name }}</h1>
+  <p>Precio: {{ course.price }}€</p>
+
+  <!-- Formulario para ingresar el correo electrónico -->
+  <form action="{% url 'cart:quick_purchase' course.id %}" method="post" id="email-form">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="email">Correo electrónico:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="form-control"
+        placeholder="Ingresa tu correo electrónico"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Proceder al pago</button>
+  </form>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  document.getElementById("email-form").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Detiene el envío tradicional del formulario
+
+    const form = event.target;
+    const formData = new FormData(form);
+    const email = formData.get("email");
+
+    try {
+      // Enviar solicitud al servidor
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: new URLSearchParams({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.id) {
+        // Redirige a Stripe Checkout
+        const stripe = Stripe("{{ stripe_publishable_key }}");
+        stripe.redirectToCheckout({ sessionId: data.id });
+      } else {
+        alert("Hubo un error al procesar tu compra. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error al procesar la solicitud:", error);
+      alert("Hubo un error inesperado. Por favor, inténtalo de nuevo.");
+    }
+  });
+</script>
+
+
+
+{% endblock %}

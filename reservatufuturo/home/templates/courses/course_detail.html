@@ -31,16 +31,24 @@
     <div class="course-detail-description">
       <h4 class="course-detail-description-title">Descripción del curso</h4>
       <p class="course-detail-description-text">{{course.description}}</p>
-      {% if user.is_authenticated %}
-      {% if not user_in_academy%}
-      <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-add-to-cart">Añadir a la cesta</button>
-      </form>      
-      {% endif %}
+      
+      {% if not user_in_academy %}
+        <div class="button-container">
+          {% if user.is_authenticated %}
+          <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-add-to-cart">Añadir a la cesta</button>
+          </form>      
+          {% endif %}
+          <div class="button-container">
+            <form action="{% url 'cart:quick_purchase' course.id %}" method="get">
+              <button type="submit" class="btn btn-add-to-cart">Compra rápida</button>
+            </form>
+          </div>
+        </div>
       {% endif %}
     </div>
-  </div>
+    
     
   </div>
 {% endblock %}
