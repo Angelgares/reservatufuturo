@@ -6,6 +6,7 @@ from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from .forms import EmailAuthenticationForm
+from .models import Reservation
 
 
 class CustomLoginView(LoginView):
@@ -53,3 +54,9 @@ def edit_profile(request):
         'profile_form': profile_form
     }
     return render(request, 'home/edit_profile.html', context)
+
+@login_required
+def my_courses(request):
+    reservas = Reservation.objects.filter(user=request.user).exclude(paymentMethod='Pending')
+    cursos = [reserva.course for reserva in reservas]
+    return render(request, 'courses/my_courses.html', {'cursos': cursos})

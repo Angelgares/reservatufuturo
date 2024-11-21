@@ -20,6 +20,7 @@
           {% if user.is_authenticated %}
             {% if not user_in_academy %}
               <a href="{% url 'cart:cart' %}">Cesta</a>
+              <a href="{% url 'my_courses' %}">Mis Cursos</a>
             {% endif %}
             <a href="{% url 'profile' %}">Mi Perfil</a>
             <a href="#" onclick="document.getElementById('logout-form').submit();">
