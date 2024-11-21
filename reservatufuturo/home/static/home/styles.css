@@ -281,6 +281,7 @@ strong {
 
 .course-container {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 20px;
 }
@@ -699,3 +700,9 @@ strong {
     background-color: #43a047; /* Verde más oscuro al pasar el ratón */
   }
   
+  .type-group {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 20px;
+  }
