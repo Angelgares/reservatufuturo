@@ -17,7 +17,8 @@ class Reservation(models.Model):
     ]
     
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)  # Usuarios registrados opcionales
+    email = models.EmailField(null=True, blank=True)  # Email para usuarios anónimos
     paymentMethod = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='Pending')
     cart = models.BooleanField(default=True)
     

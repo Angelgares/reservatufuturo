@@ -45,7 +45,6 @@ class QuickPurchaseView(View):
     template_name = "cart/quick_purchase.html"
 
     def get(self, request, course_id):
-        # Muestra el formulario para ingresar el email
         course = get_object_or_404(Course, id=course_id)
         return render(request, self.template_name, {
             "course": course,
@@ -53,7 +52,6 @@ class QuickPurchaseView(View):
         })
 
     def post(self, request, course_id):
-        # Procesa el formulario y crea la sesión de Stripe
         email = request.POST.get("email")
         course = get_object_or_404(Course, id=course_id)
 
@@ -64,6 +62,18 @@ class QuickPurchaseView(View):
             })
 
         try:
+            # Crear o actualizar una reserva basada en el correo electrónico
+            reservation, created = Reservation.objects.get_or_create(
+                course=course,
+                email=email,
+                defaults={"cart": False, "paymentMethod": "Online"}
+            )
+
+            if not created:
+                reservation.paymentMethod = "Online"
+                reservation.cart = False
+                reservation.save()
+
             # Crear sesión de Stripe Checkout
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -81,8 +91,8 @@ class QuickPurchaseView(View):
                     }
                 ],
                 mode="payment",
-                success_url="http://localhost:8000/",
-                cancel_url="http://localhost:8000/",
+                success_url="http://localhost:8000/cart/quick/success/",
+                cancel_url="http://localhost:8000/cart/quick/cancel/",
             )
             return JsonResponse({"id": session.id})
         except Exception as e:

@@ -88,3 +88,7 @@ def payment_success(request):
 
     # Renderiza la plantilla de éxito
     return render(request, "cart/payment_success.html")
+
+def quick_payment_success(request):
+
+    return render(request, "cart/payment_success.html")
