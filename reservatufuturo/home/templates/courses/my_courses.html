@@ -1,0 +1,37 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Mis Cursos{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Mis Cursos</h2>
+        {% if cursos %}
+            <div class="course-container">
+                {% for curso in cursos %}
+                    <div class="course-box">
+                        <div class="course-row">
+                            <div class="course-image-column">
+                                {% if curso.image %}
+                                    <a href="{% url 'course_detail' curso.id %}" class="course-name">
+                                        <img class="course-img" src="{% static 'home/' %}{{ curso.image }}" alt="Imagen de {{ curso.name }}">
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="course-details-column">
+                                <h2>
+                                    <a href="{% url 'course_detail' curso.id %}" class="course-name">{{ curso.name }}</a>
+                                </h2>
+                                <p><strong>Profesor:</strong> {{ curso.teacher }}</p>
+                                <p><strong>Precio:</strong> {{ curso.price }}€</p>
+                                <p><strong>Capacidad:</strong> {{ curso.capacity }} estudiantes</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No tienes cursos reservados.</p>
+        {% endif %}
+    </div>
+{% endblock %}

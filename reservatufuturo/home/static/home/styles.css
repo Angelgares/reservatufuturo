@@ -269,6 +269,12 @@ strong {
     color: #ecf2f8;
 }
 
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+}
+
 .profile-details strong {
     color: white;
 }

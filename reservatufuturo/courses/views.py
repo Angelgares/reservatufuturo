@@ -4,7 +4,6 @@ from .models import Course
 from django.contrib.auth.decorators import login_required
 from home.models import Reservation
 
-
 class CourseListView(generic.ListView):
     modle = Course
     context_object_name = "courses_list"
@@ -15,6 +14,24 @@ class CourseDetailView(generic.DetailView):
     model = Course
     context_object_name = "course"
     template_name = "courses/course_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        if user.is_authenticated:
+            user_in_academy = user.groups.filter(name='academy').exists()
+            has_reservation = Reservation.objects.filter(
+                user=user,
+                course=self.object
+            ).exists()
+        else:
+            user_in_academy = False
+            has_reservation = False
+
+        context['user_in_academy'] = user_in_academy
+        context['has_reservation'] = has_reservation
+        return context
 
 
 @login_required
