@@ -31,8 +31,8 @@
                     <p class="no-image">No hay imagen disponible</p>
                 {% endif %}
                 <div class="form-group">
-                    {{ form.image.label_tag }}
-                    {{ form.image }}
+                    <label for="id_image" class="image-label">Subir nueva imagen</label>
+                    <input type="file" name="image" id="id_image" class="file-input">
                 </div>
             </div>
             <div class="form-group">

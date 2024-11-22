@@ -847,3 +847,58 @@ strong {
   text-align: center;
   margin-bottom: 10px;
 }
+
+/* Grupo de previsualización de imagen */
+.image-preview-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-preview-group label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #d0d0e0;
+}
+
+.image-preview {
+  width: 150px; /* Tamaño de la imagen */
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.no-image {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Estilo del input de archivo */
+.file-input {
+  display: none; /* Ocultar el input de archivo */
+}
+
+.image-label {
+  display: inline-block;
+  background-color: #4caf50; /* Color del botón */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.image-label:hover {
+  background-color: #43a047; /* Color más oscuro al pasar el ratón */
+}
+
+/* Botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
