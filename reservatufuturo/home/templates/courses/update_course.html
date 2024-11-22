@@ -1,18 +1,60 @@
 {% extends 'home/base.html' %}
 
+{% load static %}
+
 {% block title %}Editar curso - {{ course.name }}{% endblock %}
 
 {% block content %}
-  <div class="update-course-container">
-    <h1>Editar Curso: {{ course.name }}</h1>
+  <div class="form-container">
+    <h1 class="form-title">Editar Curso: {{ course.name }}</h1>
+
     {% if error %}
       <p class="error-message">{{ error }}</p>
     {% endif %}
-    <form method="post" enctype="multipart/form-data">
+
+    <form method="post" enctype="multipart/form-data" class="edit-course-form">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="btn btn-primary">Guardar cambios</button>
+      <div class="form-group">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+      </div>
+      <div class="form-group">
+        {{ form.price.label_tag }}
+        {{ form.price }}
+      </div>
+      <div class="form-group">
+        {{ form.image.label_tag }}
+        {{ form.image }}
+      </div>
+      <div class="form-group">
+        {{ form.teacher.label_tag }}
+        {{ form.teacher }}
+      </div>
+      <div class="form-group">
+        {{ form.capacity.label_tag }}
+        {{ form.capacity }}
+      </div>
+      <div class="form-group">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+      <div class="form-group">
+        {{ form.starting_date.label_tag }}
+        {{ form.starting_date }}
+      </div>
+      <div class="form-group">
+        {{ form.ending_date.label_tag }}
+        {{ form.ending_date }}
+      </div>
+      <div class="form-group">
+        {{ form.type.label_tag }}
+        {{ form.type }}
+      </div>
+
+      <div class="button-container">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Cancelar</a>
+      </div>
     </form>
-    <a href="{% url 'course_detail' course.pk %}">Cancelar</a>
   </div>
 {% endblock %}
