@@ -49,9 +49,23 @@
             <p>Ya tienes una reserva para este curso.</p>
           </div>
         </div>
+      
+      {% elif user_in_academy %}
+        <div class="button-container">
+          <form action="{% url 'update_course' course.id %}" method="get">
+            <button type="submit" class="btn btn-add-to-cart">Editar curso</button>
+          </form>
+          <form action="{% url 'delete_course' course.id %}" method="post" onsubmit="return confirmDelete()">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-add-to-cart">Eliminar curso</button>
+        </form>        
+        </div>
       {% endif %}
     </div>
-    
-    
   </div>
+  <script>
+    function confirmDelete() {
+        return confirm("¿Estás seguro de que quieres eliminar este curso? Esta acción no se puede deshacer.");
+    }
+</script>
 {% endblock %}
