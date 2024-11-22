@@ -36,3 +36,9 @@ python manage.py runserver
 - **user:** academy1
 - **email:** academy1@example.com
 - **password:** pass_user_1
+
+## Example Credit Card
+- **number:** 4242424242424242
+- **expiracy date:** any date in the future
+- **cvc:** any 3 digits
+
