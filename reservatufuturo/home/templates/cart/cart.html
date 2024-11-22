@@ -1,0 +1,64 @@
+{% extends 'home/base.html' %} {% block title %}ReservaTuFuturo - Cesta de la
+compra{% endblock %} {% block content %}
+<h1 class="cart-title">Cesta de la compra</h1>
+
+{% if reservations %}
+<div class="cart-container">
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Curso</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reservation in reservations %}
+      <tr>
+        <td>{{ reservation.course.name }}</td>
+        <td>{{ reservation.course.price }}€</td>
+        <td>
+          <a
+            href="{% url 'cart:remove_from_cart' reservation.id %}"
+            class="btn btn-danger"
+            >Eliminar</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="cart-summary">
+    <div class="cart-summary-row">
+      <p class="cart-total">Total: <strong>{{ total_price }}€</strong></p>
+      <form action="{% url 'cart:checkout' %}" method="post" id="payment-form">
+        {% csrf_token %}
+        <button type="button" id="checkout-button" class="btn btn-primary">Pagar</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% else %}
+<p class="cart-empty">Tu carrito está vacío.</p>
+{% endif %} 
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const stripe = Stripe("{{ stripe_publishable_key }}");
+
+  document.getElementById("checkout-button").addEventListener("click", function () {
+    fetch("{% url 'cart:checkout' %}", {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        stripe.redirectToCheckout({ sessionId: data.id });
+      })
+      .catch((error) => console.error("Error:", error));
+  });
+</script>
+{% endblock %}
+
+

@@ -269,12 +269,19 @@ strong {
     color: #ecf2f8;
 }
 
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+}
+
 .profile-details strong {
     color: white;
 }
 
 .course-container {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 20px;
 }
@@ -334,7 +341,13 @@ strong {
 .course-detail-title {
     text-align: center;
     font-size: 2rem;
+}
+
+.course-detail-type{
+    text-align: center;
+    font: 1.5rem;
     margin-bottom: 5%;
+    color:#b0b0b0
 }
 
 .course-detail-grid {
@@ -377,4 +390,574 @@ strong {
 .course-detail-description-text {
     font-size: 1rem;
     line-height: 1.6;
+}
+
+.cart-container {
+    padding: 2%;
+    margin: 0 auto;
+}
+
+.messages-container {
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 800px;
+}
+
+.messages {
+    list-style-type: none;
+    padding: 0;
+}
+
+.messages li {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Título del carrito */
+.cart-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  /* Contenedor del carrito */
+  .cart-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #21262d; /* Fondo más claro para destacar del fondo */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Tabla del carrito */
+  .cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .cart-table th {
+    background-color: #21262d; /* Encabezado con contraste */
+    color: #ffffff;
+    padding: 15px;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 2px solid #21262d;
+  }
+  
+  .cart-table td {
+    padding: 15px;
+    border-bottom: 1px solid #21262d;
+    color: #d0d0e0; /* Texto más claro */
+    vertical-align: middle;
+  }
+  
+  .cart-table tr:hover {
+    background-color: #161b22; /* Color de fondo al pasar el ratón */
+  }
+  
+  /* Botón de eliminar */
+  .cart-table a.btn-danger {
+    background-color: #ff6b6b; /* Rojo suave */
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .cart-table a.btn-danger:hover {
+    background-color: #e55757; /* Rojo más intenso al pasar el ratón */
+  }
+  
+  /* Resumen del carrito */
+  .cart-summary {
+    text-align: right;
+    margin-top: 20px;
+  }
+  
+  .cart-summary .cart-total {
+    font-size: 1.5rem;
+    color: #d0d0e0;
+    margin-bottom: 10px;
+  }
+  
+  /* Botón de pagar */
+  .cart-summary a.btn-primary {
+    background-color: #4caf50; /* Verde suave */
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  
+  .cart-summary a.btn-primary:hover {
+    background-color: #43a047; /* Verde más intenso */
+  }
+  
+  /* Mensaje de carrito vacío */
+  .cart-empty {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #b0b0c0; /* Texto más claro */
+    margin-top: 50px;
+  }
+
+  /* Contenedor para la fila del resumen del carrito */
+.cart-summary-row {
+    display: flex;
+    justify-content: space-between; /* Espacia el precio y el botón */
+    align-items: center; /* Centra verticalmente el texto y el botón */
+    margin-top: 20px;
+  }
+  
+  /* Texto del total */
+  .cart-total {
+    font-size: 1.5rem;
+    color: #d0d0e0;
+    margin: 0; /* Elimina márgenes alrededor del texto */
+  }
+  
+  /* Botón de pagar */
+  .cart-summary .btn-primary {
+    background-color: #4caf50; /* Verde suave */
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-left: 20px; /* Espaciado entre el precio y el botón */
+  }
+  
+  .cart-summary .btn-primary:hover {
+    background-color: #43a047; /* Verde más intenso */
+  }
+
+/* Botón "Añadir a la cesta" */
+.btn-add-to-cart {
+    background-color: #4caf50; /* Color verde suave */
+    color: #fff; /* Texto blanco */
+    padding: 12px 20px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 25px; /* Bordes redondeados */
+    font-size: 1rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    cursor: pointer; /* Icono de mano al pasar el ratón */
+    transition: all 0.3s ease; /* Animación suave */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  }
+  
+  .btn-add-to-cart:hover {
+    background-color: #43a047; /* Verde más oscuro al pasar el ratón */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Sombra más intensa */
+    transform: translateY(-2px); /* Pequeño efecto de elevación */
+  }
+  
+  .btn-add-to-cart:active {
+    background-color: #388e3c; /* Verde aún más oscuro al hacer clic */
+    transform: translateY(0); /* Elimina la elevación */
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 10px; /* Espaciado horizontal entre botones */
+  }
+  
+  .button-container form {
+    margin: 0;
+  }
+  
+  .btn.btn-add-to-cart {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn.btn-add-to-cart:hover {
+    background-color: #0056b3;
+  }
+  
+.quick-purchase-container {
+    max-width: 400px;
+    margin: 50px auto; /* Centrar horizontalmente y dar espacio vertical */
+    padding: 20px;
+    background-color: #21262d; /* Mismo fondo que el carrito */
+    border-radius: 10px; /* Bordes redondeados consistentes */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra igual que el carrito */
+    text-align: center; /* Centrado del texto */
+    color: #d0d0e0; /* Color de texto consistente */
+  }
+  
+  .quick-purchase-title {
+    font-size: 2rem;
+    color: #ffffff; /* Blanco como en el carrito */
+    margin-bottom: 20px;
+  }
+  
+  .quick-purchase-course,
+  .quick-purchase-price {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .quick-purchase-course strong,
+  .quick-purchase-price strong {
+    color: #ffffff; /* Destacar los valores */
+  }
+  .quick-purchase-form .form-group label {
+    color: #d0d0e0; /* Etiquetas consistentes */
+    font-weight: bold;
+  }
+  
+  .quick-purchase-form .form-group input {
+    background-color: #161b22; /* Fondo oscuro como en el carrito */
+    color: white; /* Texto blanco */
+    border: 1px solid #444; /* Bordes oscuros */
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .quick-purchase-button {
+    background-color: #4caf50; /* Verde suave del carrito */
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quick-purchase-button:hover {
+    background-color: #43a047; /* Verde más oscuro al pasar */
+  }
+    
+  .payment-success-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #21262d; /* Fondo oscuro para destacar */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+    text-align: center; /* Centrar el contenido */
+    color: #d0d0e0; /* Color de texto consistente */
+  }
+  
+  .payment-success-title {
+    font-size: 2.5rem;
+    color: #ffffff; /* Blanco para el título */
+    margin-bottom: 20px;
+  }
+  
+  .payment-success-message {
+    font-size: 1.2rem;
+    color: #b0b0b0; /* Texto más claro */
+    margin-bottom: 30px;
+  }
+  
+  .payment-success-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    background-color: #4caf50; /* Verde suave */
+    color: #ffffff; /* Texto blanco */
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-success-button:hover {
+    background-color: #43a047; /* Verde más oscuro al pasar el ratón */
+  }
+  
+  .type-group {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .form-container {
+    max-width: 20%;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #21262d;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    align-items: center;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+/* Contenedor del formulario */
+.form-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #21262d; /* Fondo oscuro */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Sombra */
+  color: #d0d0e0; /* Texto claro */
+  text-align: left;
+}
+
+/* Título del formulario */
+.form-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Estilo de los grupos del formulario */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #d0d0e0;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #161b22;
+  color: #ffffff;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+/* Botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Mensaje de error */
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Grupo de previsualización de imagen */
+.image-preview-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-preview-group label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #d0d0e0;
+}
+
+.image-preview {
+  width: 150px; /* Ajusta el tamaño de la imagen */
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.no-image {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Grupo de previsualización de imagen */
+.image-preview-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.image-preview-group label {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #d0d0e0;
+}
+
+.image-preview {
+  width: 150px; /* Tamaño de la imagen */
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.no-image {
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Estilo del input de archivo */
+.file-input {
+  display: none; /* Ocultar el input de archivo */
+}
+
+.image-label {
+  display: inline-block;
+  background-color: #4caf50; /* Color del botón */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.image-label:hover {
+  background-color: #43a047; /* Color más oscuro al pasar el ratón */
+}
+
+/* Botones */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+/* Botón */
+.btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #43a047;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-danger {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #e63939;
+}
+
+/* Tabla */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table th, .table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #21262d;
+  color: white;
+}
+
+.table tr:hover {
+  background-color: #161b22;
 }

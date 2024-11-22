@@ -1,0 +1,63 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Crear un Nuevo Curso{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="form-title">Crear un Nuevo Curso</h1>
+
+    <!-- Mostrar errores si existen -->
+    {% if error %}
+        <p class="error-message">{{ error }}</p>
+    {% endif %}
+
+    <form action="" method="post" enctype="multipart/form-data" class="create-course-form">
+        {% csrf_token %}
+        <div class="form-grid">
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                {{ form.price.label_tag }}
+                {{ form.price }}
+            </div>
+            <div class="form-group image-preview-group">
+                <label for="id_image" class="image-label">Subir imagen</label>
+                <input type="file" name="image" id="id_image" class="file-input">
+            </div>
+            <div class="form-group">
+                {{ form.teacher.label_tag }}
+                {{ form.teacher }}
+            </div>
+            <div class="form-group">
+                {{ form.capacity.label_tag }}
+                {{ form.capacity }}
+            </div>
+            <div class="form-group">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
+            <div class="form-group">
+                {{ form.starting_date.label_tag }}
+                {{ form.starting_date }}
+            </div>
+            <div class="form-group">
+                {{ form.ending_date.label_tag }}
+                {{ form.ending_date }}
+            </div>
+            <div class="form-group">
+                {{ form.type.label_tag }}
+                {{ form.type }}
+            </div>
+        </div>
+
+        <!-- Botones de acción -->
+        <div class="button-container">
+            <button type="submit" class="btn btn-primary">Crear Curso</button>
+            <a href="{% url 'homepage' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

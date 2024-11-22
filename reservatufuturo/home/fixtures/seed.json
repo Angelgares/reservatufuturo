@@ -1,86 +1,225 @@
 [
     {
-        "model": "auth.user",
+        "model": "auth.group",
         "pk": 1,
         "fields": {
-            "username": "user1",
-            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "user1@example.com"
+            "name": "academy"
         }
     },
-    {
-        "model": "auth.user",
-        "pk": 2,
-        "fields": {
-            "username": "user2",
-            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
-            "first_name": "Jane",
-            "last_name": "Doe",
-            "email": "user2@example.com"
-        }
-    },
-    {
-        "model": "home.profile",
-        "pk": 1,
-        "fields": {
-            "user": 1,
-            "phone_number": 1234567890
-        }
-    },
-    {
-        "model": "home.profile",
-        "pk": 2,
-        "fields": {
-            "user": 2,
-            "phone_number": 9876543210
-        }
-    },
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "username": "user1",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "user1@example.com"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "username": "user2",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "email": "user2@example.com"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "username": "academy1",
+        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+        "first_name": "Armando",
+        "last_name": "Paredes",
+        "email": "academy1@example.com"
+    }
+},
+{
+    "model": "auth.user_groups",
+    "pk": 1,
+    "fields": {
+        "user": 3,
+        "group": 1
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "phone_number": 1234567890
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "phone_number": 9876543210
+    }
+},
+{
+    "model": "home.profile",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "phone_number": 12121212121
+    }
+},
     {
         "model": "courses.course",
         "pk": 1,
         "fields": {
-            "name": "Python Basics",
+            "name": "Administración Pública Básica para Oposiciones",
             "price": 50.0,
-            "image": "course_images/python_basics.jpg",
-            "teacher": "John Doe",
-            "capacity": 20
+            "image": "course_images/administracionpublica.jpg",
+            "teacher": "Juan Pérez",
+            "capacity": 20,
+            "description": "Curso introductorio para opositores interesados en plazas de la administración pública.",
+            "starting_date": "2021-09-01",
+            "ending_date": "2021-09-30",
+            "type": "Administración General"
         }
     },
     {
         "model": "courses.course",
         "pk": 2,
         "fields": {
-            "name": "Data Science with Python",
+            "name": "Técnicas de Ofimática para Oposiciones",
             "price": 150.0,
-            "image": "course_images/data_science.jpg",
-            "teacher": "Jane Doe",
-            "capacity": 30
+            "image": "course_images/ofimatica.jpg",
+            "teacher": "Ana López",
+            "capacity": 1,
+            "description": "Curso diseñado para dominar las herramientas informáticas esenciales para oposiciones.",
+            "starting_date": "2021-10-01",
+            "ending_date": "2021-10-30",
+            "type": "Informática"
         }
     },
     {
         "model": "courses.course",
         "pk": 3,
         "fields": {
-            "name": "Machine Learning",
-            "price": 200.0,
-            "image": "course_images/machine_learning.jpg",
-            "teacher": "John Doe",
-            "capacity": 25
+            "name": "Gestión Administrativa en Oposiciones",
+            "price": 120.0,
+            "image": "course_images/administrador.jpg",
+            "teacher": "Carlos García",
+            "capacity": 25,
+            "description": "Curso avanzado para oposiciones en administración pública.",
+            "starting_date": "2021-11-01",
+            "ending_date": "2021-11-30",
+            "type": "Administración General"
         }
-    }, 
+    },
     {
         "model": "courses.course",
         "pk": 4,
         "fields": {
-            "name": "Deep Learning",
-            "price": 250.0,
-            "image": "course_images/deep_learning.jpg",
-            "teacher": "Jane Doe",
-            "capacity": 25
+            "name": "Preparación de Oposiciones para Técnicos Municipales",
+            "price": 180.0,
+            "image": "course_images/tecnico.jpg",
+            "teacher": "Laura Méndez",
+            "capacity": 20,
+            "description": "Curso completo para opositores a técnicos de ayuntamientos.",
+            "starting_date": "2021-12-01",
+            "ending_date": "2021-12-30",
+            "type": "Técnicos de Ayuntamientos"
         }
-
+    },
+    {
+        "model": "courses.course",
+        "pk": 5,
+        "fields": {
+            "name": "Maestros de Educación Primaria: Preparación Integral",
+            "price": 100.0,
+            "image": "course_images/teacher.jpg",
+            "teacher": "María Fernández",
+            "capacity": 30,
+            "description": "Curso enfocado en oposiciones al cuerpo de maestros de educación primaria.",
+            "starting_date": "2022-01-10",
+            "ending_date": "2022-02-10",
+            "type": "Educación"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 6,
+        "fields": {
+            "name": "Policía Nacional: Temario y Pruebas Completas",
+            "price": 200.0,
+            "image": "course_images/cnp.jpg",
+            "teacher": "Luis Martínez",
+            "capacity": 25,
+            "description": "Preparación intensiva para oposiciones al cuerpo de Policía Nacional.",
+            "starting_date": "2022-02-15",
+            "ending_date": "2022-03-15",
+            "type": "Policía"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 7,
+        "fields": {
+            "name": "Sanidad Pública: Preparación para Oposiciones",
+            "price": 150.0,
+            "image": "course_images/medico.jpg",
+            "teacher": "Andrea Gómez",
+            "capacity": 20,
+            "description": "Curso dirigido a opositores del sector sanitario.",
+            "starting_date": "2022-03-01",
+            "ending_date": "2022-03-31",
+            "type": "Sanidad"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 8,
+        "fields": {
+            "name": "Informática Avanzada para Oposiciones TIC",
+            "price": 130.0,
+            "image": "course_images/informatico.jpg",
+            "teacher": "Elena Morales",
+            "capacity": 20,
+            "description": "Preparación para plazas relacionadas con tecnologías de la información.",
+            "starting_date": "2022-04-01",
+            "ending_date": "2022-04-30",
+            "type": "Informática"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 9,
+        "fields": {
+            "name": "Telecomunicaciones y Redes para Oposiciones",
+            "price": 170.0,
+            "image": "course_images/teleco.jpg",
+            "teacher": "Clara Rojas",
+            "capacity": 15,
+            "description": "Curso técnico sobre telecomunicaciones enfocado en oposiciones.",
+            "starting_date": "2022-05-01",
+            "ending_date": "2022-05-31",
+            "type": "Telecomunicaciones"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 10,
+        "fields": {
+            "name": "Inspector de Trabajo: Preparación Integral",
+            "price": 200.0,
+            "image": "course_images/inspector.jpg",
+            "teacher": "Fernando Álvarez",
+            "capacity": 20,
+            "description": "Preparación completa para oposiciones al cuerpo de inspectores de trabajo.",
+            "starting_date": "2022-06-01",
+            "ending_date": "2022-06-30",
+            "type": "Inspector de Trabajo"
+        }
     },
     {
         "model": "home.reservation",

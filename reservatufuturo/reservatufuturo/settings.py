@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     
     # Own apps
     'home',
-    'courses'
+    'courses',
+    'cart',
     
 ]
 
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'home.context_processors.user_group_context',
             ],
         },
     },
@@ -141,4 +143,9 @@ LOGIN_REDIRECT_URL = '/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY = "pk_test_51QNFsTDa96JdQYrGZhmNc6sqEqOAurnVW19mUg2c7ISP5QARaPewtnrxP14Tmki1GZoEp3CdDPrMkyBxOazrMXXi00DKeAgK1P"
+STRIPE_SECRET_KEY = "sk_test_51QNFsTDa96JdQYrGM4fjR2iy0QojamRw6E0ZTUEwIeYl6JFRf6LhU9D616ZAAS67s3Wg2xyc31eZEE1Nc1B56dhC00O6YPAfmc"
+
 

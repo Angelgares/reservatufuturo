@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Sobre nosotros{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <!-- Sección de bienvenida -->
+        <section class="welcome-section">
+            <h1>Bienvenido a ReservaTuFuturo</h1>
+            <p>ReservaTuFuturo es tu aliado en el camino hacia una carrera pública exitosa. Ofrecemos una amplia gama de cursos especializados para oposiciones, diseñados para ayudarte a conseguir la plaza que deseas.</p>
+        </section>
+
+        <!-- Sección de información sobre la empresa -->
+        <section class="about-section">
+            <h2>Sobre ReservaTuFuturo</h2>
+            <p>En ReservaTuFuturo, estamos comprometidos a brindarte el mejor apoyo y recursos para que puedas superar tus oposiciones. Nuestros cursos están diseñados por expertos en el área, con materiales actualizados y simulaciones de exámenes para que llegues a la meta con confianza.</p>
+            <p>Ofrecemos cursos personalizados y recursos exclusivos en áreas como justicia, educación, administración y muchos más. Cada curso está cuidadosamente estructurado para cubrir todo lo necesario para el éxito en tu oposición.</p>
+        </section>
+
+        <!-- Sección de beneficios de los cursos -->
+        <section class="benefits-section">
+            <h2>¿Por qué elegir ReservaTuFuturo?</h2>
+            <ul>
+                <li><strong>Experiencia y calidad:</strong> Cursos diseñados por profesionales con años de experiencia en oposiciones.</li>
+                <li><strong>Presencial:</strong> Todos nuestros cursos se imparten de manera presencial en nuestra academia.</li>
+                <li><strong>Simulaciones de exámenes:</strong> Realiza simulaciones de exámenes y practica con preguntas reales.</li>
+                <li><strong>Soporte personalizado:</strong> Acceso a tutores y orientación individual para resolver tus dudas.</li>
+            </ul>
+        </section>
+
+        <!-- Llamado a la acción -->
+        <section class="cta-section">
+            <h2>¡Reserva tu futuro hoy mismo!</h2>
+            <p>No pierdas la oportunidad de comenzar tu preparación con los mejores. Inscríbete en uno de nuestros cursos y da el primer paso hacia tu plaza soñada.</p>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="cta-button">Registrarse</a>
+            {% endif %}
+        </section>
+    </div>
+{% endblock %}
