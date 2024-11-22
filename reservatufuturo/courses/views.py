@@ -119,3 +119,52 @@ def create_course(request):
         else:
             return render(request, 'courses/create_course.html', {'form': form, 'error': "Formulario inválido"})
     return render(request, 'courses/create_course.html', {'form': CourseForm()})
+
+def delete_course(request, pk):
+    if not request.user.groups.filter(name='academy').exists():
+        return HttpResponseForbidden("No tienes permisos para acceder a esta página")
+    
+    course = get_object_or_404(Course, pk=pk)
+    course.delete()
+    return redirect('courses')
+
+@login_required
+def update_course(request, pk):
+    if not request.user.groups.filter(name='academy').exists():
+        return HttpResponseForbidden("No tienes permisos para acceder a esta página")
+    
+    course = get_object_or_404(Course, pk=pk)
+
+    if request.method == 'POST':
+        form = CourseForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Actualizar los campos manualmente
+            course.name = form.cleaned_data['name']
+            course.price = form.cleaned_data['price']
+            if 'image' in request.FILES:
+                course.image = request.FILES['image']
+            course.teacher = form.cleaned_data['teacher']
+            course.capacity = form.cleaned_data['capacity']
+            course.description = form.cleaned_data['description']
+            course.starting_date = form.cleaned_data['starting_date']
+            course.ending_date = form.cleaned_data['ending_date']
+            course.type = form.cleaned_data['type']
+            course.save()
+            
+            return redirect('course_detail', pk=course.pk)
+        else:
+            return render(request, 'courses/update_course.html', {'form': form, 'course': course, 'error': "Formulario inválido"})
+
+    # Poblar el formulario con los valores actuales del curso
+    form = CourseForm(initial={
+        'name': course.name,
+        'price': course.price,
+        'image': course.image,
+        'teacher': course.teacher,
+        'capacity': course.capacity,
+        'description': course.description,
+        'starting_date': course.starting_date,
+        'ending_date': course.ending_date,
+        'type': course.type,
+    })
+    return render(request, 'courses/update_course.html', {'form': form, 'course': course})

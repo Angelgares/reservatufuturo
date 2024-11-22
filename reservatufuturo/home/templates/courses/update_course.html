@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Editar curso - {{ course.name }}{% endblock %}
+
+{% block content %}
+  <div class="update-course-container">
+    <h1>Editar Curso: {{ course.name }}</h1>
+    {% if error %}
+      <p class="error-message">{{ error }}</p>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    </form>
+    <a href="{% url 'course_detail' course.pk %}">Cancelar</a>
+  </div>
+{% endblock %}
