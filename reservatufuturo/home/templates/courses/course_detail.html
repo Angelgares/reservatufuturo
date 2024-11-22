@@ -58,7 +58,8 @@
           <form action="{% url 'delete_course' course.id %}" method="post" onsubmit="return confirmDelete()">
             {% csrf_token %}
             <button type="submit" class="btn btn-add-to-cart">Eliminar curso</button>
-        </form>        
+        </form>
+        <a href="{% url 'course_inscriptions' course.id %}" class="btn btn-secondary">Ver inscritos</a>        
         </div>
       {% endif %}
     </div>

@@ -1,0 +1,48 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Inscritos - {{ course.name }}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1 class="form-title">Inscritos en el curso: {{ course.name }}</h1>
+
+    {% if inscriptions %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Email</th>
+                <th>Método de Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inscription in inscriptions %}
+            <tr>
+                <td>
+                    {% if inscription.user %}
+                        {{ inscription.user.username }}
+                    {% else %}
+                        Usuario Anónimo
+                    {% endif %}
+                </td>
+                <td>
+                    {% if inscription.user %}
+                        {{ inscription.user.email }}
+                    {% else %}
+                        {{ inscription.email }}
+                    {% endif %}
+                </td>
+                <td>{{ inscription.get_paymentMethod_display }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay inscritos en este curso.</p>
+    {% endif %}
+
+    <div class="button-container">
+        <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Volver al curso</a>
+    </div>
+</div>
+{% endblock %}
