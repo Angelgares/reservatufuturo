@@ -4,69 +4,72 @@
 {% block title %}{{ course.name }} - ReservaTuFuturo{% endblock %}
 
 {% block content %}
-  <div class="course-detail-container">
-    <h1 class="course-detail-title">{{ course.name }}</h1>
-    <h3 class="course-detail-type">{{ course.get_type_display }}</h3>
 
-    <div class="course-detail-grid">
-      <div class="course-detail-image">
-        {% if course.image %}
-          <img class="course-detail-img" src="{{ course.image.url }}" alt="Imagen de {{ course.name }}">
-        {% else %}
-          <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible">
-        {% endif %}
-      </div>
-    
+<div class="course-detail-container">
+  <h1 class="course-detail-title">{{ course.name }}</h1>
+  <h3 class="course-detail-type">{{ course.get_type_display }}</h3>
 
-      <!-- Columna Derecha: Información del Curso -->
-      <div class="course-detail-info">
-        <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-        <p><strong>Precio:</strong> {{ course.price }}€</p>
-        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
-        <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
-        <p><strong>Fecha de fin:</strong> {{ course.ending_date }}</p>
-      </div>
+  <div class="course-detail-grid">
+    <div class="course-detail-image">
+      <img
+        class="course-detail-img"
+        src="{{ course.image.url}}"
+        alt="Imagen de {{ course.name }}"
+      />
     </div>
 
-    <!-- Descripción del Curso -->
-    <div class="course-detail-description">
-      <h4 class="course-detail-description-title">Descripción del curso</h4>
-      <p class="course-detail-description-text">{{course.description}}</p>
-      
-      {% if not user_in_academy and not has_reservation %}
-        <div class="button-container">
-          {% if user.is_authenticated %}
+    <!-- Columna Derecha: Información del Curso -->
+    <div class="course-detail-info">
+      <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+      <p><strong>Precio:</strong> {{ course.price }}€</p>
+      <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+      <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
+      <p><strong>Fecha de fin:</strong> {{ course.ending_date }}</p>
+    </div>
+  </div>
+
+  <!-- Descripción del Curso -->
+  <div class="course-detail-description">
+    <h4 class="course-detail-description-title">Descripción del curso</h4>
+    <p class="course-detail-description-text">{{ course.description }}</p>
+
+    <div class="button-container">
+      {% if user_in_academy %}
+        <!-- Opciones para administradores -->
+        <form action="{% url 'update_course' course.id %}" method="get">
+          <button type="submit" class="btn btn-add-to-cart">Editar curso</button>
+        </form>
+        <form action="{% url 'delete_course' course.id %}" method="post" onsubmit="return confirmDelete()">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-add-to-cart">Eliminar curso</button>
+        </form>
+        <a href="{% url 'course_inscriptions' course.id %}" class="btn btn-secondary">Ver inscritos</a>
+      {% elif not has_reservation %}
+        <!-- Opciones para usuarios -->
+        {% if not course.is_full %}
           <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-add-to-cart">Añadir a la cesta</button>
-          </form>      
-          {% endif %}
-          <div class="button-container">
-            <form action="{% url 'cart:quick_purchase' course.id %}" method="get">
-              <button type="submit" class="btn btn-add-to-cart">Compra rápida</button>
-            </form>
-            {% elif has_reservation %}
-            <p>Ya tienes una reserva para este curso.</p>
-          </div>
-        </div>
-      
-      {% elif user_in_academy %}
-        <div class="button-container">
-          <form action="{% url 'update_course' course.id %}" method="get">
-            <button type="submit" class="btn btn-add-to-cart">Editar curso</button>
           </form>
-          <form action="{% url 'delete_course' course.id %}" method="post" onsubmit="return confirmDelete()">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-add-to-cart">Eliminar curso</button>
-        </form>
-        <a href="{% url 'course_inscriptions' course.id %}" class="btn btn-secondary">Ver inscritos</a>        
-        </div>
+          <form action="{% url 'cart:quick_purchase' course.id %}" method="get">
+            <button type="submit" class="btn btn-add-to-cart">Compra rápida</button>
+          </form>
+        {% else %}
+          <p>Este curso ya no tiene plazas disponibles.</p>
+        {% endif %}
+      {% else %}
+        <p>Ya tienes una reserva para este curso.</p>
       {% endif %}
     </div>
+    
   </div>
-  <script>
-    function confirmDelete() {
-        return confirm("¿Estás seguro de que quieres eliminar este curso? Esta acción no se puede deshacer.");
-    }
+</div>
+
+<script>
+  function confirmDelete() {
+    return confirm(
+      "¿Estás seguro de que quieres eliminar este curso? Esta acción no se puede deshacer."
+    );
+  }
 </script>
 {% endblock %}
