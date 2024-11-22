@@ -26,6 +26,7 @@ logs/
 
 # Archivos de Django
 /staticfiles/
+/media/
 db.sqlite3
 db_*.sqlite3
 
