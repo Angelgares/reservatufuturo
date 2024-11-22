@@ -91,3 +91,6 @@ def payment_success(request):
 def quick_payment_success(request):
 
     return render(request, "cart/payment_success.html")
+
+def payment_cancel(request):
+    return render(request, "cart/payment_cancel.html")
