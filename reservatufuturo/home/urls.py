@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from .views import CustomLoginView, register
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -14,3 +16,6 @@ urlpatterns = [
     path('myCourses/', views.my_courses, name='my_courses'),
     path('aboutUs/', views.about_us, name='about_us'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

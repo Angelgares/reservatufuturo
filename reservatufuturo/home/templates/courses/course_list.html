@@ -1,44 +1,53 @@
 {% extends 'home/base.html' %}
+{% load static %}
 
-{% block title %}ReservaTuFuturo - Lista de Cursos{% endblock %}
+{% block title %}Lista de Cursos - ReservaTuFuturo{% endblock %}
 
 {% block content %}
-    {% load static %}
+<div class="container">
+  <h1>Cursos ofertados</h1>
 
-    <div class="container">
-        <h1>Cursos ofertados</h1>
-
-        {% if courses_grouped %}
-            <div class="course-container">
-                {% for type, courses in courses_grouped.items %}
-                    <h2>{{ type }}</h2>
-                    <div class="type-group">
-                        {% for course in courses %}
-                            <div class="course-box">
-                                <div class="course-row">
-                                    <div class="course-image-column">
-                                        {% if course.image %}
-                                            <img class="course-detail-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
-                                        {% else %}
-                                            <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible">
-                                        {% endif %}
-                                    </div>
-                                    <div class="course-details-column">
-                                        <h2>
-                                            <a href="{% url 'course_detail' course.id %}" class="course-name">{{ course.name }}</a>
-                                        </h2>
-                                        <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-                                        <p><strong>Precio:</strong> {{ course.price }}€</p>
-                                        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endfor %}
+  {% if courses_grouped %}
+    <div class="course-container">
+      {% for type, courses in courses_grouped.items %}
+        <h2>{{ type }}</h2>
+        <div class="type-group">
+          {% for course in courses %}
+            <div class="course-box">
+              <div class="course-row">
+                <div class="course-image-column">
+                  {% if course.image_url %}
+                    <img
+                      class="course-detail-img"
+                      src="{{ course.image_url }}"
+                      alt="Imagen de {{ course.name }}"
+                    />
+                  {% else %}
+                    <img
+                      class="course-detail-img"
+                      src="{% static 'home/course_images/default_course_image.jpg' %}"
+                      alt="Imagen no disponible"
+                    />
+                  {% endif %}
+                </div>
+                <div class="course-details-column">
+                  <h3>
+                    <a href="{% url 'course_detail' course.id %}" class="course-name">
+                      {{ course.name }}
+                    </a>
+                  </h3>
+                  <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+                  <p><strong>Precio:</strong> {{ course.price }}€</p>
+                  <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+                </div>
+              </div>
             </div>
-        {% else %}
-            <p>No hay cursos disponibles.</p>
-        {% endif %}
+          {% endfor %}
+        </div>
+      {% endfor %}
     </div>
+  {% else %}
+    <p>No hay cursos disponibles.</p>
+  {% endif %}
+</div>
 {% endblock %}

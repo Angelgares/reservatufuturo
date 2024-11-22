@@ -21,7 +21,7 @@
                         <div class="course-image-column">
                             {% if course.image %}
                                 <a href="{% url 'course_detail' course.id %}" class="course-name">
-                                    <img class="course-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
+                                    <img class="course-img" src="{{ course.image_url }}" alt="Imagen de {{ course.name }}">
                                 </a>
                             {% endif %}
                         </div>

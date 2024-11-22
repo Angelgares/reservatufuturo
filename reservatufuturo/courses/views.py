@@ -9,22 +9,44 @@ from itertools import groupby
 from operator import itemgetter
 from .forms import CourseForm
 from django.http import HttpResponseForbidden
+from django.conf import settings
 
 class CourseListView(generic.ListView):
     model = Course
     context_object_name = "courses_grouped"
+    template_name = "courses/course_list.html"
     queryset = Course.objects.all()
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        courses = Course.objects.all().values('type', 'id', 'name', 'teacher', 'price', 'capacity', 'image')
+        # Obtener solo los campos necesarios para optimizar la consulta
+        courses = Course.objects.all().values(
+            'type', 'id', 'name', 'teacher', 'price', 'capacity', 'image'
+        )
+
+        # Agrupar cursos por tipo
         grouped_courses = {}
         for key, group in groupby(courses.order_by('type'), key=itemgetter('type')):
-            grouped_courses[key] = list(group)
+            grouped_courses[key] = [
+                {
+                    **course,
+                    # Asegúrate de incluir la URL completa de la imagen
+                    'image_url': self.get_image_url(course['image']),
+                }
+                for course in group
+            ]
 
         context['courses_grouped'] = grouped_courses
         return context
+
+    def get_image_url(self, image):
+        """
+        Devuelve la URL completa de la imagen o la predeterminada si no hay imagen.
+        """
+        if image:
+            return f"{settings.MEDIA_URL}{image}"
+        return f"{settings.STATIC_URL}home/course_images/default_course_image.jpg"
 
 
 class CourseDetailView(generic.DetailView):

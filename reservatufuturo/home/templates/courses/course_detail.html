@@ -9,14 +9,14 @@
     <h3 class="course-detail-type">{{ course.get_type_display }}</h3>
 
     <div class="course-detail-grid">
-      <!-- Columna Izquierda: Imagen -->
       <div class="course-detail-image">
         {% if course.image %}
-          <img class="course-detail-img" src="{% static 'home/' %}{{ course.image }}" alt="Imagen de {{ course.name }}">
+          <img class="course-detail-img" src="{{ course.image.url }}" alt="Imagen de {{ course.name }}">
         {% else %}
-        <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible">
+          <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible">
         {% endif %}
       </div>
+    
 
       <!-- Columna Derecha: Información del Curso -->
       <div class="course-detail-info">
