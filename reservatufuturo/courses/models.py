@@ -38,3 +38,9 @@ class Course(models.Model):
     
     def __str__(self):
         return self.name
+    
+    @property
+    def is_full(self):
+        """Returns True if the course is full based on confirmed reservations."""
+        confirmed_reservations = self.reservations.exclude(paymentMethod='Pending').count()
+        return confirmed_reservations >= self.capacity
