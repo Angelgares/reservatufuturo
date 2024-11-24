@@ -47,10 +47,12 @@
       {% elif not has_reservation %}
         <!-- Opciones para usuarios -->
         {% if not course.is_full %}
+          {% if user.is_authenticated %}
           <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-add-to-cart">Añadir a la cesta</button>
           </form>
+          {% endif %}
           <form action="{% url 'cart:quick_purchase' course.id %}" method="get">
             <button type="submit" class="btn btn-add-to-cart">Compra rápida</button>
           </form>
