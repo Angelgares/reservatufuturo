@@ -4,10 +4,11 @@ from .views import CustomLoginView, register
 from django.contrib.auth.views import LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
+from courses.views import CourseListView
 
 
 urlpatterns = [
-    path("", views.homepage, name="homepage"),
+    path("", CourseListView.as_view(), name="homepage"),
     path('login/', CustomLoginView.as_view(), name='login'),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("register/", register, name="register"),

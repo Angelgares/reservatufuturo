@@ -52,9 +52,6 @@ __pycache__/
 # Archivos de GitHub Actions (si no los estás usando)
 .github/workflows/*
 
-# Archivos de Docker (si no estás usando Docker)
-docker-compose.yml
-Dockerfile
 
 # Archivos generados por IDEs y editores
 .idea/

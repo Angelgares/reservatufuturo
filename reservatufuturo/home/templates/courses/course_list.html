@@ -7,6 +7,12 @@
 <div class="container">
   <h1>Cursos ofertados</h1>
 
+  <form method="get" action="{% url 'courses' %}" class="search-form">
+    <input type="text" name="search" placeholder="Nombre, Profesor o Categoría" value="{{ request.GET.search }}">
+    <button type="submit" class="btn btn-search">Buscar</button>
+  </form>
+
+
   {% if courses_grouped %}
     <div class="course-container">
       {% for type, courses in courses_grouped.items %}
@@ -17,11 +23,13 @@
               <div class="course-row">
                 <div class="course-image-column">
                   {% if course.image_url %}
-                    <img
-                      class="course-detail-img"
-                      src="{{ course.image_url }}"
-                      alt="Imagen de {{ course.name }}"
-                    />
+                    <a href="{% url 'course_detail' course.id %}">
+                      <img
+                          class="course-detail-img"
+                          src="{{ course.image_url }}"
+                          alt="Imagen de {{ course.name }}"
+                        />
+                    </a>
                   {% else %}
                     <img
                       class="course-detail-img"
