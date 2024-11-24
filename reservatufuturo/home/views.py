@@ -19,7 +19,6 @@ def homepage(request):
     template_name = 'home/homepage.html'
     courses = Course.objects.all()
 
-    # Agregar la URL de la imagen al contexto
     courses_with_images = [
         {
             **course.__dict__,
