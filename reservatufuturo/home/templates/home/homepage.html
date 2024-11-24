@@ -18,22 +18,33 @@
                 {% for course in courses %}
                 <div class="course-box">
                     <div class="course-row">
-                        <div class="course-image-column">
-                            {% if course.image %}
-                                <a href="{% url 'course_detail' course.id %}" class="course-name">
-                                    <img class="course-img" src="{{ course.image_url }}" alt="Imagen de {{ course.name }}">
-                                </a>
-                            {% endif %}
-                        </div>
-                        <div class="course-details-column">
-                            <h2>
-                                <a href="{% url 'course_detail' course.id %}" class="course-name">{{ course.name }}</a>                            </h2>
-                            <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-                            <p><strong>Precio:</strong> {{ course.price }}€</p>
-                            <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
-                        </div>
+                      <div class="course-image-column">
+                        {% if course.image_url %}
+                          <img
+                            class="course-detail-img"
+                            src="{{ course.image_url }}"
+                            alt="Imagen de {{ course.name }}"
+                          />
+                        {% else %}
+                          <img
+                            class="course-detail-img"
+                            src="{% static 'home/course_images/default_course_image.jpg' %}"
+                            alt="Imagen no disponible"
+                          />
+                        {% endif %}
+                      </div>
+                      <div class="course-details-column">
+                        <h3>
+                          <a href="{% url 'course_detail' course.id %}" class="course-name">
+                            {{ course.name }}
+                          </a>
+                        </h3>
+                        <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+                        <p><strong>Precio:</strong> {{ course.price }}€</p>
+                        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+                      </div>
                     </div>
-                </div>
+                  </div>
                 {% endfor %}
             </div>
         </section>

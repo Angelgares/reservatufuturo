@@ -10,6 +10,7 @@ from operator import itemgetter
 from .forms import CourseForm
 from django.http import HttpResponseForbidden
 from django.conf import settings
+from django.db.models import Q
 
 class CourseListView(generic.ListView):
     model = Course
@@ -19,15 +20,21 @@ class CourseListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        search_query = self.request.GET.get('search', '')
         # Obtener solo los campos necesarios para optimizar la consulta
         courses = Course.objects.all().values(
             'type', 'id', 'name', 'teacher', 'price', 'capacity', 'image'
         )
+        
+        filtered_courses = courses.filter(
+            Q(name__icontains=search_query) |
+            Q(teacher__icontains=search_query) |
+            Q(type__icontains=search_query)
+        )
 
         # Agrupar cursos por tipo
         grouped_courses = {}
-        for key, group in groupby(courses.order_by('type'), key=itemgetter('type')):
+        for key, group in groupby(filtered_courses.order_by('type'), key=itemgetter('type')):
             grouped_courses[key] = [
                 {
                     **course,
@@ -38,6 +45,7 @@ class CourseListView(generic.ListView):
             ]
 
         context['courses_grouped'] = grouped_courses
+        context['search_query'] = self.request.GET.get('search', '')
         return context
 
     def get_image_url(self, image):
