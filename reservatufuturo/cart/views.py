@@ -122,6 +122,6 @@ class QuickCashPurchaseView(View):
                 reservation.save()
 
             # Redirigir a la página de éxito
-            return JsonResponse({"success_url": "/cart/quick/success/"})
+            return JsonResponse({"success_url": "/cart/cash/success"})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)

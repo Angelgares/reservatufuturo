@@ -102,3 +102,6 @@ def cash(request):
 
     # Renderiza la plantilla de éxito
     return render(request, "cart/cash_success.html")
+
+def cash_success(request):
+    return render(request, "cart/cash_success.html")
