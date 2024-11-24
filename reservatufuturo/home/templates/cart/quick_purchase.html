@@ -6,8 +6,8 @@
   <p class="quick-purchase-course">Curso: <strong>{{ course.name }}</strong></p>
   <p class="quick-purchase-price">Precio: <strong>{{ course.price }}€</strong></p>
 
-  <!-- Formulario para ingresar el correo electrónico -->
-  <form action="{% url 'cart:quick_purchase' course.id %}" method="post" id="email-form" class="quick-purchase-form">
+  <!-- Formulario compartido para ambas acciones -->
+  <form id="quick-purchase-form" class="quick-purchase-form">
     {% csrf_token %}
     <div class="form-group">
       <label for="email" class="form-label">Correo electrónico:</label>
@@ -21,26 +21,30 @@
         style="width: 100%"
       />
     </div>
-    <button type="submit" class="btn-add-to-cart">Proceder al pago</button>
+
+    <!-- Botones separados para cada acción -->
+    <button type="button" id="online-payment" class="btn-add-to-cart">Proceder al pago online</button>
+    <br>
+    <button type="button" id="cash-payment" class="btn-add-to-cart">Proceder al pago en efectivo</button>
   </form>
+
   <p class="quick-purchase-disclaimer">
     <strong>Nota:</strong> La compra rápida no vincula el curso a un usuario registrado. Sin embargo, recibirás un correo electrónico con la confirmación de tu compra.
   </p>
 </div>
 
-
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-  document.getElementById("email-form").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Detiene el envío tradicional del formulario
+  document.getElementById("online-payment").addEventListener("click", async function () {
+    const email = document.getElementById("email").value;
 
-    const form = event.target;
-    const formData = new FormData(form);
-    const email = formData.get("email");
+    if (!email) {
+      alert("Por favor, ingresa un correo válido.");
+      return;
+    }
 
     try {
-      // Enviar solicitud al servidor
-      const response = await fetch(form.action, {
+      const response = await fetch("{% url 'cart:quick_purchase' course.id %}", {
         method: "POST",
         headers: {
           "X-CSRFToken": "{{ csrf_token }}",
@@ -51,11 +55,40 @@
       const data = await response.json();
 
       if (data.id) {
-        // Redirige a Stripe Checkout
         const stripe = Stripe("{{ stripe_publishable_key }}");
         stripe.redirectToCheckout({ sessionId: data.id });
       } else {
-        alert("Hubo un error al procesar tu compra. Intenta nuevamente.");
+        alert("Hubo un error al procesar tu compra online. Intenta nuevamente.");
+      }
+    } catch (error) {
+      console.error("Error al procesar la solicitud:", error);
+      alert("Hubo un error inesperado. Por favor, inténtalo de nuevo.");
+    }
+  });
+
+  document.getElementById("cash-payment").addEventListener("click", async function () {
+    const email = document.getElementById("email").value;
+
+    if (!email) {
+      alert("Por favor, ingresa un correo válido.");
+      return;
+    }
+
+    try {
+      const response = await fetch("{% url 'cart:cash_purchase' course.id %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
+        body: new URLSearchParams({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success_url) {
+        window.location.href = data.success_url;
+      } else {
+        alert("Hubo un error al procesar tu compra en efectivo. Intenta nuevamente.");
       }
     } catch (error) {
       console.error("Error al procesar la solicitud:", error);
@@ -63,7 +96,6 @@
     }
   });
 </script>
-
 
 
 {% endblock %}

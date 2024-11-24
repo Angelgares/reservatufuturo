@@ -97,3 +97,31 @@ class QuickPurchaseView(View):
             return JsonResponse({"id": session.id})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+        
+class QuickCashPurchaseView(View):
+    template_name = "cart/quick_purchase.html"
+
+    def post(self, request, course_id):
+        email = request.POST.get("email")
+        course = get_object_or_404(Course, id=course_id)
+
+        if not email:
+            return JsonResponse({"error": "Por favor, ingresa un correo válido."}, status=400)
+
+        try:
+            # Crear o actualizar una reserva basada en el correo electrónico
+            reservation, created = Reservation.objects.get_or_create(
+                course=course,
+                email=email,
+                defaults={"cart": False, "paymentMethod": "Cash"}
+            )
+
+            if not created:
+                reservation.paymentMethod = "Cash"
+                reservation.cart = False
+                reservation.save()
+
+            # Redirigir a la página de éxito
+            return JsonResponse({"success_url": "/cart/quick/success/"})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
