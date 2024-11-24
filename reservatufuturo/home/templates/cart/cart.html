@@ -31,34 +31,40 @@ compra{% endblock %} {% block content %}
   <div class="cart-summary">
     <div class="cart-summary-row">
       <p class="cart-total">Total: <strong>{{ total_price }}€</strong></p>
+
+      <a href="{% url 'cart:cash' %}" class="btn btn-primary"
+        >Pagar en efectivo</a
+      >
       <form action="{% url 'cart:checkout' %}" method="post" id="payment-form">
         {% csrf_token %}
-        <button type="button" id="checkout-button" class="btn btn-primary">Pagar</button>
+        <button type="button" id="checkout-button" class="btn btn-primary">
+          Pagar online
+        </button>
       </form>
     </div>
   </div>
 </div>
 {% else %}
 <p class="cart-empty">Tu carrito está vacío.</p>
-{% endif %} 
+{% endif %}
 <script src="https://js.stripe.com/v3/"></script>
 <script>
   const stripe = Stripe("{{ stripe_publishable_key }}");
 
-  document.getElementById("checkout-button").addEventListener("click", function () {
-    fetch("{% url 'cart:checkout' %}", {
-      method: "POST",
-      headers: {
-        "X-CSRFToken": "{{ csrf_token }}",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        stripe.redirectToCheckout({ sessionId: data.id });
+  document
+    .getElementById("checkout-button")
+    .addEventListener("click", function () {
+      fetch("{% url 'cart:checkout' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+        },
       })
-      .catch((error) => console.error("Error:", error));
-  });
+        .then((response) => response.json())
+        .then((data) => {
+          stripe.redirectToCheckout({ sessionId: data.id });
+        })
+        .catch((error) => console.error("Error:", error));
+    });
 </script>
 {% endblock %}
-
-
