@@ -55,7 +55,7 @@ def checkout(request):
         total_price = sum(
             reservation.course.price for reservation in Reservation.objects.filter(user=request.user, cart=True)
         )
-
+        
         # Crear una sesión de Stripe Checkout
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
