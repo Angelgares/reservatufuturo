@@ -74,6 +74,15 @@ class QuickPurchaseView(View):
                 reservation.paymentMethod = "Online"
                 reservation.cart = False
                 reservation.save()
+                
+            # Enviar un correo de confirmación
+            destinatario = email
+            asunto = "Confirmación de compra de tu curso"
+            mensaje = f"¡Hola! Has reservado el curso:"
+            mensaje += f"\n- {course.name} por {course.price} €"
+            mensaje += "\n\n¡Esperamos que disfrutes de tu curso!"
+            mensaje += "\n\nEquipo de ReservaTuFuturo."
+            enviar_notificacion_email(destinatario, asunto, mensaje)
 
             # Crear sesión de Stripe Checkout
             session = stripe.checkout.Session.create(
@@ -224,7 +233,8 @@ def payment_success(request):
     for course in purchased_courses:
         message += f"- {course.name} por {course.price} €\n"
 
-    message += "\n¡Esperamos que disfrutes de tus cursos! Si tienes alguna duda, no dudes en contactarnos."
+    message += "\n¡Esperamos que disfrutes de tus cursos!"
+    message += "\n\nEquipo de ReservaTuFuturo."
 
     enviar_notificacion_email(destinatario, subject, message)
 
@@ -262,6 +272,7 @@ def cash(request):
         message += f"- {course.name} por {course.price} €\n"
         
     message += "\n¡Esperamos que disfrutes de tus cursos! Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
+    message += "\n\nEquipo de ReservaTuFuturo."
     
     enviar_notificacion_email(destinatario, subject, message)
     reservations.update(cart=False, paymentMethod="Cash")  # Actualiza el estado a "pagado"
@@ -275,7 +286,10 @@ def cash_success(request, course_id, email):
     course = get_object_or_404(Course, id=course_id)
     destinatario = email
     asunto = f"Confirmación de compra de tu curso"
-    mensaje = f"¡Hola! Has reservado el curso {course.name} con éxito. Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
+    mensaje = f"¡Hola! Has reservado el curso:"
+    mensaje += f"\n- {course.name} por {course.price} €"
+    mensaje += "\n\n¡Esperamos que disfrutes de tu curso! Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
+    mensaje += "\n\nEquipo de ReservaTuFuturo."
     enviar_notificacion_email(destinatario, asunto, mensaje)
     return render(request, "cart/cash_success.html")
 
