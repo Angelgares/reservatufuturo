@@ -206,21 +206,17 @@ def checkout(request):
 def payment_success(request):
     # Obtener las reservas que están en el carrito (que fueron pagadas)
     reservations = Reservation.objects.filter(user=request.user, cart=True)
-    print(reservations)
 
     # Recoger los cursos que fueron comprados
     purchased_courses_ids = [reservation.course_id for reservation in reservations]
-    print(purchased_courses_ids)
     purchased_courses = []
     for course_id in purchased_courses_ids:
-        print(course_id)
         course = Course.objects.get(id=course_id)
         purchased_courses.append(course)
-        print(course.name)
-        print(course.price)
         
 
     # Enviar el correo con la lista de cursos
+    destinatario = request.user.email
     subject = "Confirmación de compra de tus cursos"
     message = f"¡Gracias por tu compra, {request.user.first_name}!\n\n"
     message += "Has comprado los siguientes cursos:\n"
@@ -229,9 +225,7 @@ def payment_success(request):
         message += f"- {course.name} por {course.price} €\n"
 
     message += "\n¡Esperamos que disfrutes de tus cursos! Si tienes alguna duda, no dudes en contactarnos."
-    
-    # Usamos la función de enviar correo que ya tienes configurada
-    destinatario = request.user.email
+
     enviar_notificacion_email(destinatario, subject, message)
 
     # Actualizar las reservas en el carrito a 'pagado'
@@ -249,7 +243,29 @@ def payment_cancel(request):
 def cash(request):
     # Actualiza las reservas en el carrito del usuario
     reservations = Reservation.objects.filter(user=request.user, cart=True)
+    
+    # Recoger los cursos que fueron comprados
+    purchased_courses_ids = [reservation.course_id for reservation in reservations]
+    purchased_courses = []
+    for course_id in purchased_courses_ids:
+        course = Course.objects.get(id=course_id)
+        purchased_courses.append(course)
+    
+    
+    # Enviar un correo de confirmación
+    destinatario = request.user.email
+    subject = "Confirmación de compra de tus cursos"
+    message = f"¡Gracias por tu compra, {request.user.first_name}!\n\n"
+    message += "Has comprado los siguientes cursos:\n"
+    
+    for course in purchased_courses:
+        message += f"- {course.name} por {course.price} €\n"
+        
+    message += "\n¡Esperamos que disfrutes de tus cursos! Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
+    
+    enviar_notificacion_email(destinatario, subject, message)
     reservations.update(cart=False, paymentMethod="Cash")  # Actualiza el estado a "pagado"
+
 
     # Renderiza la plantilla de éxito
     return render(request, "cart/cash_success.html")
