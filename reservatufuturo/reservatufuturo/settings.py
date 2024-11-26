@@ -148,4 +148,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STRIPE_PUBLISHABLE_KEY = "pk_test_51QNFsTDa96JdQYrGZhmNc6sqEqOAurnVW19mUg2c7ISP5QARaPewtnrxP14Tmki1GZoEp3CdDPrMkyBxOazrMXXi00DKeAgK1P"
 STRIPE_SECRET_KEY = "sk_test_51QNFsTDa96JdQYrGM4fjR2iy0QojamRw6E0ZTUEwIeYl6JFRf6LhU9D616ZAAS67s3Wg2xyc31eZEE1Nc1B56dhC00O6YPAfmc"
 
+# Mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.gmx.com'  # Servidor SMTP de GMX
+EMAIL_PORT = 587  # Puerto para envío de correos
+EMAIL_USE_TLS = True  # Usar TLS para seguridad
+EMAIL_HOST_USER = 'reservatufuturo@gmx.com'  # Tu dirección de correo GMX
+EMAIL_HOST_PASSWORD = 'pass_mail_1'  # Tu contraseña de GMX
+DEFAULT_FROM_EMAIL = 'reservatufuturo@gmx.com'
 

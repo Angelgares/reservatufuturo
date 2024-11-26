@@ -8,6 +8,7 @@ from django.http import JsonResponse
 import stripe
 from django import forms
 from django.urls import reverse
+from home.mail import enviar_notificacion_email
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -123,8 +124,14 @@ class QuickCashPurchaseView(View):
                 reservation.paymentMethod = "Cash"
                 reservation.cart = False
                 reservation.save()
+                
+            # Enviar notificación por correo electrónico
+            destinatario = email
+            asunto = "Reserva de curso"
+            mensaje = f"Has reservado el curso {course.name} con éxito. Por favor, paga en efectivo en la oficina antes de la fecha de inicio."
+            enviar_notificacion_email(destinatario, asunto, mensaje)
 
             # Redirigir a la página de éxito
-            return JsonResponse({"success_url": "/cart/cash/success"})
+            return JsonResponse({"success_url": "/cart/cash/success/{0}/{1}".format(course_id, email)})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
