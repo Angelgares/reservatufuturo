@@ -178,7 +178,6 @@ def update_course(request, pk):
     return render(request, 'courses/update_course.html', {'form': form, 'course': course})
 
 @login_required
-@user_passes_test(lambda user: user.groups.filter(name='academy').exists())
 def course_inscriptions(request, pk):
     if not request.user.groups.filter(name='academy').exists():
         return HttpResponseForbidden("No tienes permisos para acceder a esta página")
