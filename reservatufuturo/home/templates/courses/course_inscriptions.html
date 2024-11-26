@@ -13,6 +13,7 @@
                 <th>Nombre de Usuario</th>
                 <th>Email</th>
                 <th>Método de Pago</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +34,13 @@
                     {% endif %}
                 </td>
                 <td>{{ inscription.get_paymentMethod_display }}</td>
+                <td>
+                    <!-- Botón para eliminar la inscripción -->
+                    <form method="post" action="{% url 'remove_user_from_course' course.pk inscription.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
