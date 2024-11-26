@@ -157,3 +157,4 @@ EMAIL_HOST_USER = 'reservatufuturo@gmx.com'  # Tu dirección de correo GMX
 EMAIL_HOST_PASSWORD = 'pass_mail_1'  # Tu contraseña de GMX
 DEFAULT_FROM_EMAIL = 'reservatufuturo@gmx.com'
 
+
