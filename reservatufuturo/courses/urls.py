@@ -13,6 +13,8 @@ urlpatterns = [
     path('courses/update/<int:pk>', views.update_course, name='update_course'),
     path('courses/delete/<int:pk>', views.delete_course, name='delete_course'),
     path('courses/<int:pk>/inscriptions/', views.course_inscriptions, name='course_inscriptions'),
+    path('courses/<int:course_id>/remove/<int:inscription_id>/', views.remove_user_from_course, name='remove_user_from_course'),
+
 ]
 
 if settings.DEBUG:
