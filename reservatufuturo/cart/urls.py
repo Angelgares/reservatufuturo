@@ -14,7 +14,7 @@ urlpatterns = [
     path('cancel/', payment_cancel, name='payment_cancel'),
     path('quick/<int:course_id>/', QuickPurchaseView.as_view(), name='quick_purchase'),
     path('quick/success/', quick_payment_success, name='quick_success'),
-    path('cash/success', cash_success, name='cash_success'),
+    path('cash/success/<int:course_id>/<str:email>/', cash_success, name='cash_success'),
     path('quick/cancel/', payment_cancel, name='quick_cancel'),
     path('quick/cash/<int:course_id>/', QuickCashPurchaseView.as_view(), name='cash_purchase'),
 ]

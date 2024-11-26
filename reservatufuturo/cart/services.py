@@ -7,6 +7,7 @@ import stripe
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from home.mail import enviar_notificacion_email
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -103,5 +104,10 @@ def cash(request):
     # Renderiza la plantilla de éxito
     return render(request, "cart/cash_success.html")
 
-def cash_success(request):
+def cash_success(request, course_id, email):
+    course = get_object_or_404(Course, id=course_id)
+    destinatario = email
+    asunto = f"Reserva de curso {course.name}"
+    mensaje = f"¡Hola! Has reservado el curso {course.name} con éxito. Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
+    enviar_notificacion_email(destinatario, asunto, mensaje)
     return render(request, "cart/cash_success.html")

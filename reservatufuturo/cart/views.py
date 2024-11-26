@@ -124,12 +124,6 @@ class QuickCashPurchaseView(View):
                 reservation.paymentMethod = "Cash"
                 reservation.cart = False
                 reservation.save()
-                
-            # Enviar notificación por correo electrónico
-            destinatario = email
-            asunto = "Reserva de curso"
-            mensaje = f"Has reservado el curso {course.name} con éxito. Por favor, paga en efectivo en la oficina antes de la fecha de inicio."
-            enviar_notificacion_email(destinatario, asunto, mensaje)
 
             # Redirigir a la página de éxito
             return JsonResponse({"success_url": "/cart/cash/success/{0}/{1}".format(course_id, email)})
