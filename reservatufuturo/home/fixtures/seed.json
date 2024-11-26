@@ -71,154 +71,156 @@
         "phone_number": 12121212121
     }
 },
-{
-    "model": "courses.course",
-    "pk": 1,
-    "fields": {
-        "name": "Administración Pública Avanzada",
-        "price": 50.0,
-        "teacher": "Juan Pérez",
-        "capacity": 20,
-        "description": "Este curso está diseñado para los que quieran opositar para algún puesto de la administración pública.",
-        "starting_date": "2021-09-01",
-        "ending_date": "2021-09-30",
-        "type": "Administración General"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 2,
-    "fields": {
-        "name": "Ciencia de Datos con Python",
-        "price": 150.0,
-        "image": "course_images/data_science.jpg",
-        "teacher": "Ana López",
-        "capacity": 30,
-        "description": "Curso para aprender ciencia de datos utilizando Python.",
-        "starting_date": "2021-10-01",
-        "ending_date": "2021-10-30",
-        "type": "Informática"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 3,
-    "fields": {
-        "name": "Administración Pública para Oposiciones",
-        "price": 120.0,
-        "image": "course_images/public_administration.jpg",
-        "teacher": "Carlos García",
-        "capacity": 25,
-        "description": "Curso enfocado en los fundamentos para oposiciones de administración general.",
-        "starting_date": "2021-11-01",
-        "ending_date": "2021-11-30",
-        "type": "Administración General"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 4,
-    "fields": {
-        "name": "Técnicos de Ayuntamientos",
-        "price": 180.0,
-        "image": "course_images/municipal_technicians.jpg",
-        "teacher": "Laura Méndez",
-        "capacity": 20,
-        "description": "Curso para preparación de oposiciones a técnicos de ayuntamientos.",
-        "starting_date": "2021-12-01",
-        "ending_date": "2021-12-30",
-        "type": "Técnicos de Ayuntamientos"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 5,
-    "fields": {
-        "name": "Educación Primaria para Oposiciones",
-        "price": 100.0,
-        "image": "course_images/primary_education.jpg",
-        "teacher": "María Fernández",
-        "capacity": 30,
-        "description": "Curso diseñado para opositores al cuerpo de maestros de educación primaria.",
-        "starting_date": "2022-01-10",
-        "ending_date": "2022-02-10",
-        "type": "Educación"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 6,
-    "fields": {
-        "name": "Policía Nacional - Temario Completo",
-        "price": 200.0,
-        "image": "course_images/police_training.jpg",
-        "teacher": "Luis Martínez",
-        "capacity": 25,
-        "description": "Curso completo para oposiciones al cuerpo de Policía Nacional.",
-        "starting_date": "2022-02-15",
-        "ending_date": "2022-03-15",
-        "type": "Policía"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 7,
-    "fields": {
-        "name": "Sanidad - Preparación Oposiciones",
-        "price": 150.0,
-        "image": "course_images/healthcare.jpg",
-        "teacher": "Andrea Gómez",
-        "capacity": 20,
-        "description": "Curso para preparación de oposiciones al sector sanitario.",
-        "starting_date": "2022-03-01",
-        "ending_date": "2022-03-31",
-        "type": "Sanidad"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 8,
-    "fields": {
-        "name": "Informática Básica para Oposiciones",
-        "price": 130.0,
-        "image": "course_images/python_basics.jpg",
-        "teacher": "Elena Morales",
-        "capacity": 20,
-        "description": "Curso para adquirir conocimientos básicos de informática para oposiciones.",
-        "starting_date": "2022-04-01",
-        "ending_date": "2022-04-30",
-        "type": "Informática"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 9,
-    "fields": {
-        "name": "Telecomunicaciones y Redes",
-        "price": 170.0,
-        "teacher": "Clara Rojas",
-        "capacity": 15,
-        "description": "Curso técnico sobre redes y telecomunicaciones.",
-        "starting_date": "2022-05-01",
-        "ending_date": "2022-05-31",
-        "type": "Telecomunicaciones"
-    }
-},
-{
-    "model": "courses.course",
-    "pk": 10,
-    "fields": {
-        "name": "Inspector de Trabajo - Fundamentos",
-        "price": 200.0,
-        "image": "course_images/labor_inspector.jpg",
-        "teacher": "Fernando Álvarez",
-        "capacity": 20,
-        "description": "Curso básico para preparación de oposiciones a inspector de trabajo.",
-        "starting_date": "2022-06-01",
-        "ending_date": "2022-06-30",
-        "type": "Inspector de Trabajo"
-    }
-},
+    {
+        "model": "courses.course",
+        "pk": 1,
+        "fields": {
+            "name": "Administración Pública Básica para Oposiciones",
+            "price": 50.0,
+            "image": "course_images/administracionpublica.jpg",
+            "teacher": "Juan Pérez",
+            "capacity": 20,
+            "description": "Curso introductorio para opositores interesados en plazas de la administración pública.",
+            "starting_date": "2021-09-01",
+            "ending_date": "2021-09-30",
+            "type": "Administración General"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 2,
+        "fields": {
+            "name": "Técnicas de Ofimática para Oposiciones",
+            "price": 150.0,
+            "image": "course_images/ofimatica.jpg",
+            "teacher": "Ana López",
+            "capacity": 1,
+            "description": "Curso diseñado para dominar las herramientas informáticas esenciales para oposiciones.",
+            "starting_date": "2021-10-01",
+            "ending_date": "2021-10-30",
+            "type": "Informática"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 3,
+        "fields": {
+            "name": "Gestión Administrativa en Oposiciones",
+            "price": 120.0,
+            "image": "course_images/administrador.jpg",
+            "teacher": "Carlos García",
+            "capacity": 25,
+            "description": "Curso avanzado para oposiciones en administración pública.",
+            "starting_date": "2021-11-01",
+            "ending_date": "2021-11-30",
+            "type": "Administración General"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 4,
+        "fields": {
+            "name": "Preparación de Oposiciones para Técnicos Municipales",
+            "price": 180.0,
+            "image": "course_images/tecnico.jpg",
+            "teacher": "Laura Méndez",
+            "capacity": 20,
+            "description": "Curso completo para opositores a técnicos de ayuntamientos.",
+            "starting_date": "2021-12-01",
+            "ending_date": "2021-12-30",
+            "type": "Técnicos de Ayuntamientos"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 5,
+        "fields": {
+            "name": "Maestros de Educación Primaria: Preparación Integral",
+            "price": 100.0,
+            "image": "course_images/teacher.jpg",
+            "teacher": "María Fernández",
+            "capacity": 30,
+            "description": "Curso enfocado en oposiciones al cuerpo de maestros de educación primaria.",
+            "starting_date": "2022-01-10",
+            "ending_date": "2022-02-10",
+            "type": "Educación"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 6,
+        "fields": {
+            "name": "Policía Nacional: Temario y Pruebas Completas",
+            "price": 200.0,
+            "image": "course_images/cnp.jpg",
+            "teacher": "Luis Martínez",
+            "capacity": 25,
+            "description": "Preparación intensiva para oposiciones al cuerpo de Policía Nacional.",
+            "starting_date": "2022-02-15",
+            "ending_date": "2022-03-15",
+            "type": "Policía"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 7,
+        "fields": {
+            "name": "Sanidad Pública: Preparación para Oposiciones",
+            "price": 150.0,
+            "image": "course_images/medico.jpg",
+            "teacher": "Andrea Gómez",
+            "capacity": 20,
+            "description": "Curso dirigido a opositores del sector sanitario.",
+            "starting_date": "2022-03-01",
+            "ending_date": "2022-03-31",
+            "type": "Sanidad"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 8,
+        "fields": {
+            "name": "Informática Avanzada para Oposiciones TIC",
+            "price": 130.0,
+            "image": "course_images/informatico.jpg",
+            "teacher": "Elena Morales",
+            "capacity": 20,
+            "description": "Preparación para plazas relacionadas con tecnologías de la información.",
+            "starting_date": "2022-04-01",
+            "ending_date": "2022-04-30",
+            "type": "Informática"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 9,
+        "fields": {
+            "name": "Telecomunicaciones y Redes para Oposiciones",
+            "price": 170.0,
+            "image": "course_images/teleco.jpg",
+            "teacher": "Clara Rojas",
+            "capacity": 15,
+            "description": "Curso técnico sobre telecomunicaciones enfocado en oposiciones.",
+            "starting_date": "2022-05-01",
+            "ending_date": "2022-05-31",
+            "type": "Telecomunicaciones"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 10,
+        "fields": {
+            "name": "Inspector de Trabajo: Preparación Integral",
+            "price": 200.0,
+            "image": "course_images/inspector.jpg",
+            "teacher": "Fernando Álvarez",
+            "capacity": 20,
+            "description": "Preparación completa para oposiciones al cuerpo de inspectores de trabajo.",
+            "starting_date": "2022-06-01",
+            "ending_date": "2022-06-30",
+            "type": "Inspector de Trabajo"
+        }
+    },
     {
         "model": "home.reservation",
         "pk": 1,

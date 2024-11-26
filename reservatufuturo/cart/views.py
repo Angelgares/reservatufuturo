@@ -7,6 +7,7 @@ from courses.models import Course
 from django.http import JsonResponse
 import stripe
 from django import forms
+from django.urls import reverse
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -54,6 +55,8 @@ class QuickPurchaseView(View):
     def post(self, request, course_id):
         email = request.POST.get("email")
         course = get_object_or_404(Course, id=course_id)
+        success_url = request.build_absolute_uri(reverse("cart:quick_success"))
+        cancel_url = request.build_absolute_uri(reverse("cart:quick_cancel"))
 
         if not email:
             return render(request, self.template_name, {
@@ -91,9 +94,37 @@ class QuickPurchaseView(View):
                     }
                 ],
                 mode="payment",
-                success_url="http://localhost:8000/cart/quick/success/",
-                cancel_url="http://localhost:8000/cart/quick/cancel/",
+                success_url=success_url,
+                cancel_url=cancel_url,
             )
             return JsonResponse({"id": session.id})
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+        
+class QuickCashPurchaseView(View):
+    template_name = "cart/quick_purchase.html"
+
+    def post(self, request, course_id):
+        email = request.POST.get("email")
+        course = get_object_or_404(Course, id=course_id)
+
+        if not email:
+            return JsonResponse({"error": "Por favor, ingresa un correo válido."}, status=400)
+
+        try:
+            # Crear o actualizar una reserva basada en el correo electrónico
+            reservation, created = Reservation.objects.get_or_create(
+                course=course,
+                email=email,
+                defaults={"cart": False, "paymentMethod": "Cash"}
+            )
+
+            if not created:
+                reservation.paymentMethod = "Cash"
+                reservation.cart = False
+                reservation.save()
+
+            # Redirigir a la página de éxito
+            return JsonResponse({"success_url": "/cart/cash/success"})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)

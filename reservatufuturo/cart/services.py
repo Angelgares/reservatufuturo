@@ -91,3 +91,17 @@ def payment_success(request):
 def quick_payment_success(request):
 
     return render(request, "cart/payment_success.html")
+
+def payment_cancel(request):
+    return render(request, "cart/payment_cancel.html")
+
+def cash(request):
+    # Actualiza las reservas en el carrito del usuario
+    reservations = Reservation.objects.filter(user=request.user, cart=True)
+    reservations.update(cart=False, paymentMethod="Cash")  # Actualiza el estado a "pagado"
+
+    # Renderiza la plantilla de éxito
+    return render(request, "cart/cash_success.html")
+
+def cash_success(request):
+    return render(request, "cart/cash_success.html")

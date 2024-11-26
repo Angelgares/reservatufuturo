@@ -44,7 +44,8 @@ menu() {
     echo "2) Arrancar el servidor"
     echo "3) Crear superusuario de Django (admin/admin)"
     echo "4) Crear entorno virtual"
-    echo "5) Salir"
+    echo "5) Correr en Docker"
+    echo "6) Salir"
     echo -n -e "${YELLOW}Elige una opción: ${NC}"
     read opcion
 }
@@ -67,7 +68,7 @@ activar_entorno_virtual() {
 
 instalar_dependencias() {
     echo -e "${GREEN}📦 Instalando dependencias...${NC}"
-    "$VENV_DIR/bin/pip3" install -r requirements.txt
+    "$VENV_DIR/bin/pip3" install -r reservatufuturo/requirements.txt
 }
 
 eliminar_base_datos() {
@@ -157,6 +158,12 @@ all_in_one() {
     arrancar_servidor
 }
 
+launch_in_docker() {
+    echo -e "${GREEN}🐳 Corriendo en Docker...${NC}"
+    cd $GLOBAL_PATH/reservatufuturo
+    docker compose up --build
+}
+
 # Ciclo del menú
 while true; do
     menu
@@ -166,7 +173,8 @@ while true; do
         2) arrancar_servidor ; exit 0 ;;
         3) crear_superusuario ; exit 0 ;;
         4) crear_entorno_virtual ; exit 0 ;;
-        5) echo -e "${RED}👋 Saliendo..."; exit 0 ;;
+        5) launch_in_docker; exit 0 ;;
+        6) echo -e "${RED}👋 Saliendo..."; exit 0 ;;
         *) echo -e "${RED}❌ Opción inválida, intenta de nuevo.${NC}" ; clear ;;
     esac
 done
