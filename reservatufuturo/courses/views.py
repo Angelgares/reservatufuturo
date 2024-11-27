@@ -205,8 +205,7 @@ def course_inscriptions(request, pk):
     course = get_object_or_404(Course, pk=pk)
     # Filtrar solo las reservas completadas
     inscriptions = Reservation.objects.filter(
-        course=course, 
-        paymentMethod__in=['Online', 'Cash']
+        course=course
     ).select_related('user')
     
     return render(request, 'courses/course_inscriptions.html', {
@@ -239,3 +238,22 @@ def remove_user_from_course(request, course_id, inscription_id):
     # Redirige de vuelta a la lista de inscritos
     return redirect('course_inscriptions', pk=course_id)
 
+@login_required
+def update_payment_method(request, course_id, inscription_id):
+    # Verificar que el usuario pertenece al grupo 'academy'
+    if not request.user.groups.filter(name='academy').exists():
+        return HttpResponseForbidden("No tienes permisos para realizar esta acción")
+
+    # Obtener la inscripción
+    inscription = get_object_or_404(Reservation, id=inscription_id, course_id=course_id)
+
+    # Actualizar el método de pago
+    if inscription.paymentMethod == 'Pending':
+        inscription.paymentMethod = 'Cash'
+        inscription.save()
+        messages.success(request, f"El método de pago para {inscription.user or inscription.email} ha sido actualizado a 'Cash'.")
+    else:
+        messages.warning(request, f"El método de pago no se puede actualizar porque no está en estado 'Pending'.")
+
+    # Redirigir de vuelta a la lista de inscritos
+    return redirect('course_inscriptions', pk=course_id)
