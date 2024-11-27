@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from courses.models import Course
+import uuid
 
 
 class Profile(models.Model):
@@ -33,6 +34,8 @@ class Reservation(models.Model):
         blank=False, 
         verbose_name="Gastos de gestión"
     )
+    tracking_code = models.CharField(max_length=36, default=uuid.uuid4, unique=True)
+
     
     def save(self, *args, **kwargs):
         # Calcular automáticamente los gastos de gestión

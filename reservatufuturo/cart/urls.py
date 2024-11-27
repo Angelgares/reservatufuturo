@@ -11,6 +11,8 @@ from .views import (
     payment_cancel,
     cash,
     cash_success,
+    tracking_form,
+    reservation_tracking
 )
 
 app_name = "cart"
@@ -26,7 +28,7 @@ urlpatterns = [
     path("quick/<int:course_id>/", QuickPurchaseView.as_view(), name="quick_purchase"),
     path("quick/success/", quick_payment_success, name="quick_success"),
     path(
-        "cash/success/<int:course_id>/<str:email>/", cash_success, name="cash_success"
+        "cash/success/<int:course_id>/<str:email>/<str:tracking_code>/", cash_success, name="cash_success"
     ),
     path("quick/cancel/", payment_cancel, name="quick_cancel"),
     path(
@@ -34,4 +36,6 @@ urlpatterns = [
         QuickCashPurchaseView.as_view(),
         name="cash_purchase",
     ),
+    path("tracking", tracking_form, name="tracking"),
+    path("tracking/<str:tracking_code>/", reservation_tracking, name="reservation_tracking"),
 ]

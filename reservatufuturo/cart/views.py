@@ -4,7 +4,7 @@ from home.models import Reservation
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404, redirect
 from courses.models import Course
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.contrib import messages
 from django import forms
 import stripe
@@ -161,7 +161,7 @@ class QuickCashPurchaseView(View):
                 reservation.save()
 
             # Redirigir a la página de éxito
-            return JsonResponse({"success_url": f"/cart/cash/success/{course.id}/{email}"})
+            return JsonResponse({"success_url": f"/cart/cash/success/{course.id}/{email}/{reservation.tracking_code}"})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
 
@@ -338,16 +338,44 @@ def cash(request):
     return render(request, "cart/cash_success.html")
 
 # Acción después de completar un pago en efectivo
-def cash_success(request, course_id, email):
+def cash_success(request, course_id, email, tracking_code):
     course = get_object_or_404(Course, id=course_id)
     destinatario = email
-    asunto = f"Confirmación de compra de tu curso"
-    mensaje = f"¡Hola! Has reservado el curso:"
-    mensaje += f"\n- {course.name} por {course.price} €"
-    mensaje += "\n\n¡Esperamos que disfrutes de tu curso! Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
-    mensaje += "\n\nEquipo de ReservaTuFuturo."
-    enviar_notificacion_email(destinatario, asunto, mensaje)
+    subject = "Confirmación de compra de tus cursos"
+    message = f"¡Gracias por tu compra!\n\n"
+    message += "Has comprado el siguiente curso:\n"
+
+    tasas = 5 if course.price <= 150 else 0
+    message += f"- {course.name}\n"
+    message += f"     - Precio: {course.price} €\n"
+    message += f"     - Gastos de gestión: {tasas} €\n"
+    message += f"     - Método de pago: Efectivo\n"
+    message += f"     - Estado: Pendiente de pago\n"
+    message += f"     - Fecha de inicio: {course.starting_date}\n\n"
+        
+    message += f"\n\nTu código de seguimiento es: {tracking_code}"
+    message += f"\nPuedes realizar un seguimiento de tus cursos en la sección 'Seguimiento' de la web (www.reservatufuturo.onrender.com)."
+    
+    message += "\n¡Esperamos que disfrutes de tus cursos!"
+    message += "\n\nEquipo de ReservaTuFuturo."
+    enviar_notificacion_email(destinatario, subject, message)
     return render(request, "cart/cash_success.html")
 
 def quick_payment_success(request):
     return render(request, "cart/payment_success.html")
+
+def tracking_form(request):
+    return render(request, "cart/tracking_form.html")
+
+def reservation_tracking(request, tracking_code):
+    if not tracking_code:
+        raise Http404("Código de seguimiento no proporcionado.")
+    
+    reservation = get_object_or_404(Reservation, tracking_code=tracking_code)
+    course = reservation.course
+    context = {
+        'reservation': reservation,
+        'course': course,
+        'available_slots': course.capacity - Reservation.objects.filter(course=course).count(),
+    }
+    return render(request, "cart/reservation_tracking.html", {"reservation": reservation})

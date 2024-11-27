@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Seguimiento de Reserva - ReservaTuFuturo{% endblock %}
+
+{% block content %}
+
+<div class="tracking-info-container">
+    <h1>Detalles de tu reserva</h1>
+    
+    {% if reservation %}
+        <div class="reservation-details">
+            <p><strong>Email del comprador:</strong> {{ reservation.email }}</p>
+            <p><strong>Código de seguimiento:</strong> {{ reservation.tracking_code }}</p>
+            <p><strong>Curso:</strong> {{ reservation.course.name }}</p>
+            <p><strong>Fecha de inicio:</strong> {{ reservation.course.starting_date }}</p>
+            <p><strong>Fecha de fin:</strong> {{ reservation.course.ending_date }}</p>
+            <p><strong>Precio:</strong> {{ reservation.course.price }}0€</p>
+            <p><strong>Tasas de gestión:</strong> {{ reservation.management_fee }}€</p>
+            
+            {% if reservation.paymentMethod == 'Pending' %}
+                <p><strong>Método de pago:</strong> Cash</p>
+                <p><strong>Estado de la reserva:</strong> Pendiente</p>
+            {% else %}
+                <p><strong>Método de pago:</strong> {{ reservation.paymentMethod }}</p>
+                <p><strong>Estado de la reserva:</strong> Pagado</p>
+            {% endif %}
+            
+            
+        </div>
+    {% else %}
+        <p>No se encontró ninguna reserva con el código de seguimiento proporcionado.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
