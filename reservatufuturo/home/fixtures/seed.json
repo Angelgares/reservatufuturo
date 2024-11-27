@@ -94,7 +94,7 @@
             "price": 150.0,
             "image": "course_images/ofimatica.jpg",
             "teacher": "Ana López",
-            "capacity": 2,
+            "capacity": 1,
             "description": "Curso diseñado para dominar las herramientas informáticas esenciales para oposiciones.",
             "starting_date": "2026-10-01",
             "ending_date": "2027-10-30",
