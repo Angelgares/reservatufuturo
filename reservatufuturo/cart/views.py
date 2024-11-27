@@ -351,9 +351,9 @@ def cash_success(request, course_id, email, tracking_code):
     message += f"     - Gastos de gestión: {tasas} €\n"
     message += f"     - Método de pago: Efectivo\n"
     message += f"     - Estado: Pendiente de pago\n"
-    message += f"     - Fecha de inicio: {course.starting_date}\n\n"
+    message += f"     - Fecha de inicio: {course.starting_date}\n"
+    message += f"     - Nº seguimiento: {tracking_code}\n\n"
         
-    message += f"\n\nTu código de seguimiento es: {tracking_code}"
     message += f"\nPuedes realizar un seguimiento de tus cursos en la sección 'Seguimiento' de la web (www.reservatufuturo.onrender.com)."
     
     message += "\n¡Esperamos que disfrutes de tus cursos!"
