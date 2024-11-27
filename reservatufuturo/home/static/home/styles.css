@@ -1079,3 +1079,12 @@ strong {
       border-radius: 4px;
   }
 }
+
+.cart-count {
+  background-color: #3e4855;
+  color: #ffffff;
+  border-radius: 40%;
+  padding: 2px 8px;
+  font-size: 0.9em;
+  margin-left: 5px;
+}
