@@ -266,9 +266,10 @@ def payment_success(request):
 
     # Enviar el correo con la lista de cursos
     destinatario = request.user.email
-    subject = "Confirmación de compra de tus cursos"
-    message = f"¡Gracias por tu compra, {request.user.first_name}!\n\n"
-    message += "Has comprado los siguientes cursos:\n"
+    subject = "Confirmación de compra en ReservaTuFuturo"
+    message = f"Hola {request.user.first_name},\n\n"
+    message += "Gracias por confiar en ReservaTuFuturo para tu formación.\n\n"
+    message += "Has adquirido los siguientes cursos:\n"
 
     for course in purchased_courses:
         tasas = 5 if course.price <= 150 else 0
@@ -279,10 +280,9 @@ def payment_success(request):
         message += f"     - Estado: Pagado\n"
         message += f"     - Fecha de inicio: {course.starting_date}\n\n"
         
-    message += f"Puedes realizar un seguimiento de tus cursos en la sección 'Mis cursos', tras iniciar sesión en la web (www.reservatufuturo.onrender.com)."
-        
-    message += "\n¡Esperamos que disfrutes de tus cursos!"
-    message += "\n\nEquipo de ReservaTuFuturo."
+    message += "Puedes acceder a tus cursos en la sección 'Mis cursos' después de iniciar sesión en nuestra web (reservatufuturo.onrender.com).\n\n"
+    message += "¡Esperamos que disfrutes de tus cursos!\n\n"
+    message += "Atentamente,\nEquipo de ReservaTuFuturo."
 
     enviar_notificacion_email(destinatario, subject, message)
 
@@ -312,9 +312,10 @@ def cash(request):
     
     # Enviar un correo de confirmación
     destinatario = request.user.email
-    subject = "Confirmación de compra de tus cursos"
-    message = f"¡Gracias por tu compra, {request.user.first_name}!\n\n"
-    message += "Has comprado los siguientes cursos:\n"
+    subject = "Confirmación de compra en ReservaTuFuturo"
+    message = f"Hola {request.user.first_name},\n\n"
+    message += "Gracias por confiar en ReservaTuFuturo para tu formación.\n\n"
+    message += "Has adquirido los siguientes cursos:\n"
 
     for course in purchased_courses:
         tasas = 5 if course.price <= 150 else 0
@@ -325,13 +326,13 @@ def cash(request):
         message += f"     - Estado: Pendiente de pago\n"
         message += f"     - Fecha de inicio: {course.starting_date}\n\n"
         
-    message += f"Puedes realizar un seguimiento de tus cursos en la sección 'Mis cursos', tras iniciar sesión en la web (www.reservatufuturo.onrender.com)."
-        
-    message += "\n¡Esperamos que disfrutes de tus cursos!"
-    message += "\n\nEquipo de ReservaTuFuturo."
+    message += "Recuerda que debes acudir físicamente a nuestro local para pagar el importe de la compra.\n\n"
+    message += "Puedes acceder a tus cursos en la sección 'Mis cursos' después de iniciar sesión en nuestra web (reservatufuturo.onrender.com).\n\n"
+    message += "¡Esperamos que disfrutes de tus cursos!\n\n"
+    message += "Atentamente,\nEquipo de ReservaTuFuturo."
     
     enviar_notificacion_email(destinatario, subject, message)
-    reservations.update(cart=False, paymentMethod="Pending") 
+    reservations.update(cart=False, paymentMethod="Pending")
 
 
     # Renderiza la plantilla de éxito
@@ -341,10 +342,9 @@ def cash(request):
 def cash_success(request, course_id, email, tracking_code):
     course = get_object_or_404(Course, id=course_id)
     destinatario = email
-    subject = "Confirmación de compra de tus cursos"
-    message = f"¡Gracias por tu compra!\n\n"
-    message += "Has comprado el siguiente curso:\n"
-
+    subject = "Confirmación de compra en ReservaTuFuturo"
+    message = f"Gracias por confiar en ReservaTuFuturo para tu formación.\n\n"
+    message += "Has adquirido los siguientes cursos:\n"
     tasas = 5 if course.price <= 150 else 0
     message += f"- {course.name}\n"
     message += f"     - Precio: {course.price} €\n"
@@ -354,10 +354,10 @@ def cash_success(request, course_id, email, tracking_code):
     message += f"     - Fecha de inicio: {course.starting_date}\n"
     message += f"     - Nº seguimiento: {tracking_code}\n\n"
         
-    message += f"\nPuedes realizar un seguimiento de tus cursos en la sección 'Seguimiento' de la web (www.reservatufuturo.onrender.com)."
-    
-    message += "\n¡Esperamos que disfrutes de tus cursos!"
-    message += "\n\nEquipo de ReservaTuFuturo."
+    message += "Recuerda que debes acudir físicamente a nuestro local para pagar el importe de la compra.\n\n"
+    message += "Puedes realizar un seguimiento de tus cursos en la sección 'Seguimiento' en nuestra web (reservatufuturo.onrender.com).\n\n"
+    message += "¡Esperamos que disfrutes de tus cursos!\n\n"
+    message += "Atentamente,\nEquipo de ReservaTuFuturo."
     enviar_notificacion_email(destinatario, subject, message)
     return render(request, "cart/cash_success.html")
 
