@@ -8,9 +8,17 @@
   <h1>Cursos ofertados</h1>
 
   <form method="get" action="{% url 'courses' %}" class="search-form">
-    <input type="text" name="search" placeholder="Nombre, Profesor o Categoría" value="{{ request.GET.search }}">
+    <input type="text" name="name_search" placeholder="Nombre del curso" value="{{ request.GET.name_search }}">
+    <select name="type_search">
+      <option value="">Selecciona una categoría</option>
+      {% for type in type_choices %}
+        <option value="{{ type.0 }}" {% if request.GET.type_search == type.0 %}selected{% endif %}>{{ type.1 }}</option>
+      {% endfor %}
+    </select>
+    <input type="date" name="date_search" placeholder="Fecha de Inicio/Fin" value="{{ request.GET.date_search }}">
     <button type="submit" class="btn btn-search">Buscar</button>
-  </form>
+</form>
+
 
 
   {% if courses_grouped %}
