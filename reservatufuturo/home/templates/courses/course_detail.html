@@ -51,11 +51,16 @@
           <strong>
             {% if reservation.paymentMethod == 'Pending' %}
               Pendiente de pago.
+              </strong>
+            </p>
+            <div>
+              <a href="{% url 'cart:cart' %}" class="btn btn-primary">Ir a la cesta</a>
+            </div>
             {% else %}
               Pagado.
-            {% endif %}
-          </strong>
-        </p>
+              </strong>
+            </p>
+          {% endif %}
         {% else %}
         <!-- Opciones para usuarios -->
         {% if available_slots > 0 %}

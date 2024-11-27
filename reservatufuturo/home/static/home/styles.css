@@ -1088,3 +1088,12 @@ strong {
   font-size: 0.9em;
   margin-left: 5px;
 }
+
+.course-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.course-link:hover {
+  color: #007BFF;
+}

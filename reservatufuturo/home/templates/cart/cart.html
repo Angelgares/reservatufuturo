@@ -15,14 +15,14 @@ compra{% endblock %} {% block content %}
     <tbody>
       {% for reservation in reservations %}
       <tr>
-        <td>{{ reservation.course.name }}</td>
+        <td>
+            <a href="{% url 'course_detail' reservation.course.id %}" class="course-link">
+                {{ reservation.course.name }}
+            </a>
+        </td>
         <td>{{ reservation.course.price }}€</td>
         <td>
-          <a
-            href="{% url 'cart:remove_from_cart' reservation.id %}"
-            class="btn btn-danger"
-            >Eliminar</a
-          >
+            <a href="{% url 'cart:remove_from_cart' reservation.id %}" class="btn btn-danger">Eliminar</a>
         </td>
       </tr>
       {% endfor %}
