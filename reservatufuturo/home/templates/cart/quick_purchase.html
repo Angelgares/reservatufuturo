@@ -4,7 +4,9 @@
 <div class="quick-purchase-container">
   <h1 class="quick-purchase-title">Compra rápida</h1>
   <p class="quick-purchase-course">Curso: <strong>{{ course.name }}</strong></p>
-  <p class="quick-purchase-price">Precio: <strong>{{ course.price }}€</strong></p>
+  <p class="quick-purchase-price">Precio del curso: <strong>{{ course.price }}€</strong></p>
+  <p class="quick-purchase-price">Gastos de gestión: <strong>{{ management_fee }}€</strong></p>
+  <p class="quick-purchase-price">Total a pagar: <strong>{{ total_price }}€</strong></p>
 
   <!-- Formulario compartido para ambas acciones -->
   <form id="quick-purchase-form" class="quick-purchase-form">
@@ -96,6 +98,5 @@
     }
   });
 </script>
-
 
 {% endblock %}
