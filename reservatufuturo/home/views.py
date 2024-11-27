@@ -17,7 +17,7 @@ class CustomLoginView(LoginView):
 
 def homepage(request):
     template_name = 'home/homepage.html'
-    courses = Course.objects.all()
+    courses = Course.objects.order_by('-starting_date')[:6]
 
     courses_with_images = [
         {
