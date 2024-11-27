@@ -23,6 +23,9 @@
           <a href="{% url 'cart:tracking' %}">Seguimiento</a>
           {% if user.is_authenticated %}
             {% if user_in_academy %}
+              <a href="#" class="disabled" title="Los administradores no pueden comprar">
+                Cesta
+              </a>
               <a href="{% url 'create_course' %}">Crear Curso</a>
             {% endif %}
             {% if not user_in_academy %}
@@ -42,6 +45,9 @@
               {% csrf_token %}
             </form>
           {% else %}
+            <a href="{% url 'login' %}" title="Debes iniciar sesión para usar la cesta">
+              Cesta
+            </a>
             <a href="{% url 'about_us' %}">Sobre nosotros</a>
             <a href="{% url 'login' %}">Iniciar sesión</a>
             <a href="{% url 'register' %}">Registrarse</a>
