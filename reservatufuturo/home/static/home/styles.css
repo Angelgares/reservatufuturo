@@ -312,15 +312,30 @@ strong {
     color: #007BFF;
 }
 
-
 .course-image-column {
     flex: 1;
+    margin-left: 5px;
     max-width: 210px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .course-image-column:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.course-my-image-column {
+  flex: 2;
+  margin-left: 10px;
+  max-width: 310px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.course-my-image-column:hover img {
   transform: scale(1.05);
   transition: transform 0.3s ease;
 }

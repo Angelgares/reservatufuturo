@@ -79,13 +79,17 @@ def edit_profile(request):
 
 @login_required
 def my_courses(request):
-    reservas = Reservation.objects.filter(user=request.user).exclude(paymentMethod='Pending')
+    reservas = Reservation.objects.filter(user=request.user)
     cursos = [
         {
             **reserva.course.__dict__,
-            'image_url': get_image_url(reserva.course.image)
+            'image_url': get_image_url(reserva.course.image),
+            'available_slots': reserva.course.capacity - Reservation.objects
+                            .filter(course=reserva.course).count(),
+            'payment_status': 'Pendiente de pago' if reserva.paymentMethod ==
+            'Pending' else 'Pagado'
         }
-        for reserva in reservas if not reserva.cart
+        for reserva in reservas
     ]
 
     return render(request, 'courses/my_courses.html', {'cursos': cursos})
