@@ -1,10 +1,8 @@
-from typing import Any
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views import generic
 from .models import Course
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from home.models import Reservation
-from django.views import generic
 from itertools import groupby
 from operator import itemgetter
 from .forms import CourseForm
@@ -13,6 +11,8 @@ from django.conf import settings
 from django.db.models import Q
 from django.contrib import messages
 from home.mail import enviar_notificacion_email
+from django.utils import timezone
+
 
 class CourseListView(generic.ListView):
     model = Course
@@ -25,23 +25,25 @@ class CourseListView(generic.ListView):
         name_query = self.request.GET.get('name_search', '')
         type_query = self.request.GET.get('type_search', '')
         date_query = self.request.GET.get('date_search', '')
+        current_date = timezone.now().date()
+        
         # Obtener solo los campos necesarios para optimizar la consulta
-        courses = Course.objects.all().values(
-            'id', 'name', 'price', 'image', 'teacher', 'capacity', 'description', 'starting_date', 'ending_date', 'type'
+        courses = Course.objects.filter(starting_date__gte=current_date).values(
+            'id', 'name', 'price', 'image', 'teacher', 'capacity',
+            'description', 'starting_date', 'ending_date', 'type'
         )
-        
-        print(name_query)
-        
+
         filtered_courses1 = courses.filter(
-            Q(name__icontains=name_query) 
+            Q(name__icontains=name_query)
         )
-        
+
         filtered_courses2 = filtered_courses1.filter(
-            Q(starting_date__icontains=date_query) | Q(ending_date__icontains=date_query)
+            Q(starting_date__icontains=date_query) |
+            Q(ending_date__icontains=date_query)
         )
 
         filtered_courses3 = filtered_courses2.filter(
-            Q(type__icontains=type_query) 
+            Q(type__icontains=type_query)
         )
         # Agrupar cursos por tipo
         grouped_courses = {}
@@ -51,8 +53,10 @@ class CourseListView(generic.ListView):
                     **course,
                     # Asegúrate de incluir la URL completa de la imagen
                     'image_url': self.get_image_url(course['image']),
+                    # Calcular las plazas disponibles
+                    'available_slots': course['capacity'] - Reservation.objects.filter(course_id=course['id']).exclude(paymentMethod='Pending').count()
                 }
-                for course in group
+                for course in group if course['capacity'] - Reservation.objects.filter(course_id=course['id']).exclude(paymentMethod='Pending').count() > 0
             ]
 
         context['courses_grouped'] = grouped_courses
@@ -91,7 +95,8 @@ class CourseDetailView(generic.DetailView):
             reservation = None
 
         # Calcular las plazas disponibles
-        reserved_count = Reservation.objects.filter(course=self.object).count()
+        reserved_count = Reservation.objects.filter(course=self.object)\
+            .exclude(paymentMethod='Pending').count()
         available_slots = self.object.capacity - reserved_count
 
         context['user_in_academy'] = user_in_academy

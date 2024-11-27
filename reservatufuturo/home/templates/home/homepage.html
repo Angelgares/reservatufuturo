@@ -18,7 +18,7 @@
                 {% for course in courses %}
                 <div class="course-box">
                     <div class="course-row">
-                      <div class="course-image-column">
+                      <div class="course-image-home-column">
                         <a href="{% url 'course_detail' course.id %}">
                         {% if course.image_url %}
                           <img
@@ -43,7 +43,9 @@
                         </h3>
                         <p><strong>Profesor:</strong> {{ course.teacher }}</p>
                         <p><strong>Precio:</strong> {{ course.price }}€</p>
-                        <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+                        <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
+                        <p><strong>Fecha de finalización:</strong> {{ course.ending_date }}</p>
+                        <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
                       </div>
                     </div>
                   </div>
