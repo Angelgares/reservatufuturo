@@ -149,13 +149,13 @@ class QuickCashPurchaseView(View):
                 email=email,
                 defaults={
                     "cart": False,
-                    "paymentMethod": "Cash",
+                    "paymentMethod": "Pending",
                     "management_fee": management_fee,
                 }
             )
 
             if not created:
-                reservation.paymentMethod = "Cash"
+                reservation.paymentMethod = "Pending"
                 reservation.cart = False
                 reservation.management_fee = management_fee
                 reservation.save()
@@ -315,7 +315,7 @@ def cash(request):
     message += "\n\nEquipo de ReservaTuFuturo."
     
     enviar_notificacion_email(destinatario, subject, message)
-    reservations.update(cart=False, paymentMethod="Cash")  # Actualiza el estado a "pagado"
+    reservations.update(cart=False, paymentMethod="Pending") 
 
 
     # Renderiza la plantilla de éxito
