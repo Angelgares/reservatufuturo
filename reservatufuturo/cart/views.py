@@ -16,6 +16,8 @@ from django.contrib.auth.decorators import login_required
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Vista para el carrito de compras
+from decimal import Decimal
+
 class CartView(LoginRequiredMixin, generic.TemplateView):
     template_name = "cart/cart.html"
 
@@ -25,15 +27,26 @@ class CartView(LoginRequiredMixin, generic.TemplateView):
         # Obtener las reservas del usuario actual que están en el carrito
         reservations = Reservation.objects.filter(user=self.request.user, cart=True)
 
-        # Calcular el precio total
-        total_price = sum(reservation.course.price for reservation in reservations)
+        # Calcular el subtotal (solo precios de los cursos)
+        subtotal_courses = sum(Decimal(reservation.course.price) for reservation in reservations)
+
+        # Calcular el total de gastos de gestión
+        total_management_fee = sum(reservation.management_fee for reservation in reservations)
+
+        # Calcular el precio total incluyendo los gastos de gestión
+        total_price = subtotal_courses + total_management_fee
 
         # Añadir al contexto
         context["reservations"] = reservations
+        context["subtotal_courses"] = subtotal_courses
+        context["total_management_fee"] = total_management_fee
         context["total_price"] = total_price
         context["stripe_publishable_key"] = settings.STRIPE_PUBLISHABLE_KEY  # Clave pública de Stripe
 
         return context
+
+
+
 
 # Formulario para la compra rápida
 class QuickPurchaseForm(forms.Form):
@@ -45,8 +58,13 @@ class QuickPurchaseView(View):
 
     def get(self, request, course_id):
         course = get_object_or_404(Course, id=course_id)
+        # Calcular los gastos de gestión
+        management_fee = 5 if course.price <= 150 else 0
+        total_price = course.price + management_fee
         return render(request, self.template_name, {
             "course": course,
+            "management_fee": management_fee,
+            "total_price": total_price,
             "stripe_publishable_key": settings.STRIPE_PUBLISHABLE_KEY,
         })
 
@@ -63,26 +81,26 @@ class QuickPurchaseView(View):
             })
 
         try:
+            # Calcular los gastos de gestión
+            management_fee = 5 if course.price <= 150 else 0
+            total_price = course.price + management_fee
+
             # Crear o actualizar una reserva basada en el correo electrónico
             reservation, created = Reservation.objects.get_or_create(
                 course=course,
                 email=email,
-                defaults={"cart": False, "paymentMethod": "Online"}
+                defaults={
+                    "cart": False,
+                    "paymentMethod": "Online",
+                    "management_fee": management_fee,
+                }
             )
 
             if not created:
                 reservation.paymentMethod = "Online"
                 reservation.cart = False
+                reservation.management_fee = management_fee
                 reservation.save()
-                
-            # Enviar un correo de confirmación
-            destinatario = email
-            asunto = "Confirmación de compra de tu curso"
-            mensaje = f"¡Hola! Has reservado el curso:"
-            mensaje += f"\n- {course.name} por {course.price} €"
-            mensaje += "\n\n¡Esperamos que disfrutes de tu curso!"
-            mensaje += "\n\nEquipo de ReservaTuFuturo."
-            enviar_notificacion_email(destinatario, asunto, mensaje)
 
             # Crear sesión de Stripe Checkout
             session = stripe.checkout.Session.create(
@@ -95,7 +113,7 @@ class QuickPurchaseView(View):
                             "product_data": {
                                 "name": course.name,
                             },
-                            "unit_amount": int(course.price * 100),
+                            "unit_amount": int(total_price * 100),  # Precio total en céntimos
                         },
                         "quantity": 1,
                     }
@@ -107,6 +125,7 @@ class QuickPurchaseView(View):
             return JsonResponse({"id": session.id})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+
 
 # Vista para la compra rápida en efectivo
 class QuickCashPurchaseView(View):
@@ -120,22 +139,32 @@ class QuickCashPurchaseView(View):
             return JsonResponse({"error": "Por favor, ingresa un correo válido."}, status=400)
 
         try:
+            # Calcular los gastos de gestión
+            management_fee = 5 if course.price <= 150 else 0
+            total_price = course.price + management_fee
+
             # Crear o actualizar una reserva basada en el correo electrónico
             reservation, created = Reservation.objects.get_or_create(
                 course=course,
                 email=email,
-                defaults={"cart": False, "paymentMethod": "Cash"}
+                defaults={
+                    "cart": False,
+                    "paymentMethod": "Cash",
+                    "management_fee": management_fee,
+                }
             )
 
             if not created:
                 reservation.paymentMethod = "Cash"
                 reservation.cart = False
+                reservation.management_fee = management_fee
                 reservation.save()
 
             # Redirigir a la página de éxito
             return JsonResponse({"success_url": f"/cart/cash/success/{course.id}/{email}"})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+
 
 # Eliminar un curso del carrito
 @login_required
@@ -156,37 +185,47 @@ def remove_from_cart(request, reservation_id):
 def add_to_cart(request, course_id):
     course = get_object_or_404(Course, id=course_id)
 
+    # Calcular los gastos de gestión
+    management_fee = 5 if course.price <= 150 else 0
+
     reservation, created = Reservation.objects.get_or_create(
         user=request.user,
         course=course,
-        defaults={'cart': True, 'paymentMethod': 'Pending'}
+        defaults={
+            'cart': True,
+            'paymentMethod': 'Pending',
+            'management_fee': management_fee,
+        }
     )
 
     if created:
         messages.success(request, f'El curso "{course.name}" ha sido añadido al carrito.')
-    elif not reservation.cart:
+    else:
+        # Actualizar los valores si ya existía
         reservation.cart = True
         reservation.paymentMethod = 'Pending'
+        reservation.management_fee = management_fee
         reservation.save()
         messages.success(request, f'El curso "{course.name}" ha sido añadido al carrito.')
-    else:
-        messages.info(request, f'El curso "{course.name}" ya está en el carrito.')
 
     return redirect('cart:cart')
+
 
 # Checkout y pago
 @login_required
 def checkout(request):
     try:
-        # Calcular el total del carrito
+        # Obtener las reservas del carrito
+        reservations = Reservation.objects.filter(user=request.user, cart=True)
         total_price = sum(
-            reservation.course.price for reservation in Reservation.objects.filter(user=request.user, cart=True)
+            Decimal(reservation.course.price) + reservation.management_fee
+            for reservation in reservations
         )
-        # Urls de éxito y cancelación
+
+        # URLs de éxito y cancelación
         success_url = request.build_absolute_uri(reverse("cart:payment_success"))
         cancel_url = request.build_absolute_uri(reverse("cart:payment_cancel"))
-        
-        
+
         # Crear una sesión de Stripe Checkout
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
@@ -194,9 +233,7 @@ def checkout(request):
                 {
                     "price_data": {
                         "currency": "eur",
-                        "product_data": {
-                            "name": "Cesta de la compra",
-                        },
+                        "product_data": {"name": "Cesta de la compra"},
                         "unit_amount": int(total_price * 100),  # Convertir a céntimos
                     },
                     "quantity": 1,
@@ -208,7 +245,10 @@ def checkout(request):
         )
         return JsonResponse({"id": session.id})
     except Exception as e:
-        return JsonResponse({"error": str(e)})
+        print(f"Error en checkout: {e}")  # Depuración en consola
+        return JsonResponse({"error": str(e)}, status=400)
+
+
 
 # Acción después de un pago exitoso
 @login_required
