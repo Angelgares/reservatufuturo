@@ -18,6 +18,7 @@
         <div class="nav-links">
           <a href="{% url 'homepage' %}">Inicio</a>
           <a href="{% url 'courses' %}">Catálogo</a>
+          <a href="{% url 'cart:tracking' %}">Seguimiento</a>
           {% if user.is_authenticated %}
             {% if user_in_academy %}
               <a href="{% url 'create_course' %}">Crear Curso</a>
