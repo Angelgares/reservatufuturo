@@ -1063,7 +1063,7 @@ strong {
 .search-form .btn-search {
   padding: 10px 20px;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
   background-color: #007BFF;
   color: #ffffff;
   font-size: 1em;

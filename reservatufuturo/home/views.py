@@ -7,6 +7,7 @@ from .forms import EmailAuthenticationForm
 from .models import Reservation, Course
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Q
 
 
 def base_view(request):
@@ -14,7 +15,7 @@ def base_view(request):
     return {
         'cart_item_count': cart_item_count,
     }
-    
+
 
 class CustomLoginView(LoginView):
     authentication_form = EmailAuthenticationForm
@@ -24,9 +25,21 @@ class CustomLoginView(LoginView):
 def homepage(request):
     template_name = 'home/homepage.html'
     current_date = timezone.now().date()
-    
+
+    name_query = request.GET.get('name_search', '')
+    type_query = request.GET.get('type_search', '')
+    date_query = request.GET.get('date_search', '')
+
     # Filtrar cursos cuya fecha de inicio es igual o posterior a la fecha actual
     courses = Course.objects.filter(starting_date__gte=current_date).order_by('-starting_date')
+
+    # Aplicar filtros
+    if name_query:
+        courses = courses.filter(Q(name__icontains=name_query))
+    if date_query:
+        courses = courses.filter(Q(starting_date__icontains=date_query) | Q(ending_date__icontains=date_query))
+    if type_query:
+        courses = courses.filter(Q(type__icontains=type_query))
 
     # Excluir cursos sin plazas disponibles y limitar a 6 cursos al final
     courses_with_images = [
@@ -40,9 +53,14 @@ def homepage(request):
     ][:6]
 
     context = {
-        'courses': courses_with_images
+        'courses': courses_with_images,
+        'name_query': name_query,
+        'type_query': type_query,
+        'date_query': date_query,
+        'type_choices': Course.TYPE_CHOICES
     }
     return render(request, template_name, context)
+
 
 
 def about_us(request):
