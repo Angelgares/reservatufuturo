@@ -16,7 +16,7 @@
             <h2>Escaparate</h2>
             <!-- Barra de búsqueda -->
             <form method="get" action="{% url 'homepage' %}" class="search-form">
-              <input type="text" name="name_search" placeholder="Nombre del curso" value="{{ name_query }}">
+              <input type="text" class="name-search" name="name_search" placeholder="Nombre del curso" value="{{ name_query }}">
               <select name="type_search">
                   <option value="">Selecciona una categoría</option>
                   {% for type in type_choices %}
