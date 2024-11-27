@@ -8,6 +8,13 @@ from .models import Reservation, Course
 from django.conf import settings
 
 
+def base_view(request):
+    cart_item_count = Reservation.objects.filter(user=request.user, cart=True).count() if request.user.is_authenticated else 0
+    return {
+        'cart_item_count': cart_item_count,
+    }
+    
+
 class CustomLoginView(LoginView):
     authentication_form = EmailAuthenticationForm
     template_name = 'home/login.html'
