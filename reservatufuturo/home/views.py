@@ -86,7 +86,7 @@ def edit_profile(request):
 
 @login_required
 def my_courses(request):
-    reservas = Reservation.objects.filter(user=request.user)
+    reservas = Reservation.objects.filter(user=request.user, cart=False)
     cursos = [
         {
             **reserva.course.__dict__,

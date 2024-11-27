@@ -205,7 +205,8 @@ def course_inscriptions(request, pk):
     course = get_object_or_404(Course, pk=pk)
     # Filtrar solo las reservas completadas
     inscriptions = Reservation.objects.filter(
-        course=course
+        course=course,
+        cart=False
     ).select_related('user')
     
     return render(request, 'courses/course_inscriptions.html', {

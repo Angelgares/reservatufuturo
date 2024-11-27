@@ -271,8 +271,16 @@ def payment_success(request):
     message += "Has comprado los siguientes cursos:\n"
 
     for course in purchased_courses:
-        message += f"- {course.name} por {course.price} €\n"
-
+        tasas = 5 if course.price <= 150 else 0
+        message += f"- {course.name}\n"
+        message += f"     - Precio: {course.price} €\n"
+        message += f"     - Gastos de gestión: {tasas} €\n"
+        message += f"     - Método de pago: Online\n"
+        message += f"     - Estado: Pagado\n"
+        message += f"     - Fecha de inicio: {course.starting_date}\n\n"
+        
+    message += f"Puedes realizar un seguimiento de tus cursos en la sección 'Mis cursos', tras iniciar sesión en la web (www.reservatufuturo.onrender.com)."
+        
     message += "\n¡Esperamos que disfrutes de tus cursos!"
     message += "\n\nEquipo de ReservaTuFuturo."
 
@@ -307,11 +315,19 @@ def cash(request):
     subject = "Confirmación de compra de tus cursos"
     message = f"¡Gracias por tu compra, {request.user.first_name}!\n\n"
     message += "Has comprado los siguientes cursos:\n"
-    
+
     for course in purchased_courses:
-        message += f"- {course.name} por {course.price} €\n"
+        tasas = 5 if course.price <= 150 else 0
+        message += f"- {course.name}\n"
+        message += f"     - Precio: {course.price} €\n"
+        message += f"     - Gastos de gestión: {tasas} €\n"
+        message += f"     - Método de pago: Efectivo\n"
+        message += f"     - Estado: Pendiente de pago\n"
+        message += f"     - Fecha de inicio: {course.starting_date}\n\n"
         
-    message += "\n¡Esperamos que disfrutes de tus cursos! Recuerda pagar en efectivo en la oficina antes de la fecha de inicio."
+    message += f"Puedes realizar un seguimiento de tus cursos en la sección 'Mis cursos', tras iniciar sesión en la web (www.reservatufuturo.onrender.com)."
+        
+    message += "\n¡Esperamos que disfrutes de tus cursos!"
     message += "\n\nEquipo de ReservaTuFuturo."
     
     enviar_notificacion_email(destinatario, subject, message)
