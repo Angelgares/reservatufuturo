@@ -19,6 +19,7 @@
                 <div class="course-box">
                     <div class="course-row">
                       <div class="course-image-column">
+                        <a href="{% url 'course_detail' course.id %}">
                         {% if course.image_url %}
                           <img
                             class="course-detail-img"
@@ -32,6 +33,7 @@
                             alt="Imagen no disponible"
                           />
                         {% endif %}
+                        </a>
                       </div>
                       <div class="course-details-column">
                         <h3>
