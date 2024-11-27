@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import EmailAuthenticationForm
 from .models import Reservation, Course
 from django.conf import settings
+from django.utils import timezone
 
 
 def base_view(request):
@@ -22,15 +23,21 @@ class CustomLoginView(LoginView):
 
 def homepage(request):
     template_name = 'home/homepage.html'
-    courses = Course.objects.order_by('-starting_date')[:6]
+    current_date = timezone.now().date()
+    
+    # Filtrar cursos cuya fecha de inicio es igual o posterior a la fecha actual
+    courses = Course.objects.filter(starting_date__gte=current_date).order_by('-starting_date')
 
+    # Excluir cursos sin plazas disponibles y limitar a 6 cursos al final
     courses_with_images = [
         {
             **course.__dict__,
-            'image_url': get_image_url(course.image)
+            'image_url': get_image_url(course.image),
+            'available_slots': course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count()
         }
         for course in courses
-    ]
+        if course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count() > 0
+    ][:6]
 
     context = {
         'courses': courses_with_images

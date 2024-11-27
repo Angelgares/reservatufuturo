@@ -313,9 +313,9 @@ strong {
 }
 
 .course-image-column {
-    flex: 1;
-    margin-left: 5px;
-    max-width: 210px;
+    flex: 2;
+    margin-left: 10px;
+    max-width: 280px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -325,6 +325,21 @@ strong {
   transform: scale(1.05);
   transition: transform 0.3s ease;
 }
+
+.course-image-home-column {
+  flex: 2;
+  margin-left: 8px;
+  max-width: 290px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.course-image-home-column:hover img {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
 
 .course-my-image-column {
   flex: 2;
