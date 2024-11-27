@@ -358,10 +358,11 @@ strong {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .course-detail-image {
-    flex: 1;
+    flex: 2;
     max-width: 300px;
     text-align: center;
 }
@@ -375,6 +376,7 @@ strong {
 
 .course-detail-info {
     flex: 2;
+    align-items: center;
 }
 
 .course-detail-info p {

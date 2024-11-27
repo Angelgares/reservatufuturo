@@ -23,6 +23,7 @@
       <p><strong>Profesor:</strong> {{ course.teacher }}</p>
       <p><strong>Precio:</strong> {{ course.price }}€</p>
       <p><strong>Capacidad:</strong> {{ course.capacity }} estudiantes</p>
+      <p><strong>Plazas disponibles:</strong> {{ available_slots }} estudiantes</p>
       <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
       <p><strong>Fecha de fin:</strong> {{ course.ending_date }}</p>
     </div>
@@ -44,9 +45,20 @@
           <button type="submit" class="btn btn-add-to-cart">Eliminar curso</button>
         </form>
         <a href="{% url 'course_inscriptions' course.id %}" class="btn btn-secondary">Ver inscritos</a>
-      {% elif not has_reservation %}
+      {% elif has_reservation %}
+        <!-- Mostrar estado de la reserva -->
+        <p>Ya tienes una reserva para este curso. Estado:
+          <strong>
+            {% if reservation.paymentMethod == 'Pending' %}
+              Pendiente de pago.
+            {% else %}
+              Pagado.
+            {% endif %}
+          </strong>
+        </p>
+        {% else %}
         <!-- Opciones para usuarios -->
-        {% if not course.is_full %}
+        {% if available_slots > 0 %}
           {% if user.is_authenticated %}
           <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
             {% csrf_token %}
@@ -59,8 +71,6 @@
         {% else %}
           <p>Este curso ya no tiene plazas disponibles.</p>
         {% endif %}
-      {% else %}
-        <p>Ya tienes una reserva para este curso.</p>
       {% endif %}
     </div>
     

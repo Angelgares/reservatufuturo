@@ -1,12 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, authenticate
 from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from .forms import EmailAuthenticationForm
 from .models import Reservation, Course
-from collections import defaultdict
 from django.conf import settings
 
 
