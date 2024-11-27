@@ -5,67 +5,81 @@
 
 {% block content %}
 <div class="container">
+
+  <!-- Alerta del carrito cuando el usuario está autenticado y tiene productos -->
+  {% if user.is_authenticated and cart_item_count > 0 %}
+    <div class="cart-alert">
+        <div class="cart-header">
+            <p style="color: #856404;">Tienes {{ cart_item_count }} producto(s) en tu carrito:</p>
+            <a href="{% url 'cart:cart' %}" class="btn btn-view-cart">Ver Carrito</a>
+        </div>
+        <div class="cart-courses">
+            {% for course in cart_courses %}
+                <h4>{{ course.name }}</h4>
+            {% endfor %}
+        </div>
+    </div>
+  {% endif %}
+
   <h1>Cursos ofertados</h1>
 
   <form method="get" action="{% url 'courses' %}" class="search-form">
-    <input type="text" name="name_search" placeholder="Nombre del curso" value="{{ request.GET.name_search }}">
-    <select name="type_search">
-      <option value="">Selecciona una categoría</option>
-      {% for type in type_choices %}
-        <option value="{{ type.0 }}" {% if request.GET.type_search == type.0 %}selected{% endif %}>{{ type.1 }}</option>
-      {% endfor %}
-    </select>
-    <input type="date" name="date_search" placeholder="Fecha de Inicio/Fin" value="{{ request.GET.date_search }}">
-    <button type="submit" class="btn btn-search">Buscar</button>
-</form>
-
-
+      <input type="text" name="name_search" placeholder="Nombre del curso" value="{{ request.GET.name_search }}">
+      <select name="type_search">
+          <option value="">Selecciona una categoría</option>
+          {% for type in type_choices %}
+              <option value="{{ type.0 }}" {% if request.GET.type_search == type.0 %}selected{% endif %}>{{ type.1 }}</option>
+          {% endfor %}
+      </select>
+      <input type="date" name="date_search" placeholder="Fecha de Inicio/Fin" value="{{ request.GET.date_search }}">
+      <button type="submit" class="btn btn-search">Buscar</button>
+  </form>
 
   {% if courses_grouped %}
-    <div class="course-container">
-      {% for type, courses in courses_grouped.items %}
-        <h2>{{ type }}</h2>
-        <div class="type-group">
-          {% for course in courses %}
-            <div class="course-box">
-              <div class="course-row">
-                <div class="course-image-column">
-                  {% if course.image_url %}
-                    <a href="{% url 'course_detail' course.id %}">
-                      <img
-                          class="course-detail-img"
-                          src="{{ course.image_url }}"
-                          alt="Imagen de {{ course.name }}"
-                        />
-                    </a>
-                  {% else %}
-                    <img
-                      class="course-detail-img"
-                      src="{% static 'home/course_images/default_course_image.jpg' %}"
-                      alt="Imagen no disponible"
-                    />
-                  {% endif %}
-                </div>
-                <div class="course-details-column">
-                  <h3>
-                    <a href="{% url 'course_detail' course.id %}" class="course-name">
-                      {{ course.name }}
-                    </a>
-                  </h3>
-                  <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-                  <p><strong>Precio:</strong> {{ course.price }}€</p>
-                  <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
-                  <p><strong>Fecha de finalización:</strong> {{ course.ending_date }}</p>
-                  <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
-                </div>
+      <div class="course-container">
+          {% for type, courses in courses_grouped.items %}
+              <h2>{{ type }}</h2>
+              <div class="type-group">
+                  {% for course in courses %}
+                      <div class="course-box {% if course.id in cart_course_ids %}in-cart{% elif course.id in enrolled_course_ids %}enrolled{% endif %}">
+                          <div class="course-row">
+                              <div class="course-image-column">
+                                  {% if course.image_url %}
+                                      <a href="{% url 'course_detail' course.id %}">
+                                          <img class="course-detail-img" src="{{ course.image_url }}" alt="Imagen de {{ course.name }}" />
+                                      </a>
+                                  {% else %}
+                                      <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible" />
+                                  {% endif %}
+                              </div>
+                              <div class="course-details-column">
+                                  <h3>
+                                      <a href="{% url 'course_detail' course.id %}" class="course-name">
+                                          {{ course.name }}
+                                      </a>
+                                  </h3>
+                                  <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+                                  <p><strong>Precio:</strong> {{ course.price }}€</p>
+                                  <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
+                                  <p><strong>Fecha de finalización:</strong> {{ course.ending_date }}</p>
+                                  <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
+
+                                  {% if user.is_authenticated %}
+                                      {% if course.id in cart_course_ids %}
+                                          <span class="badge in-cart-badge">En el Carrito</span>
+                                      {% elif course.id in enrolled_course_ids %}
+                                          <span class="badge enrolled-badge">Inscrito</span>
+                                      {% endif %}
+                                  {% endif %}
+                              </div>
+                          </div>
+                      </div>
+                  {% endfor %}
               </div>
-            </div>
           {% endfor %}
-        </div>
-      {% endfor %}
-    </div>
+      </div>
   {% else %}
-    <p>No se encontraron cursos que coincidan con los criterios de búsqueda.</p>
-  {% endif %}
+      <p>No se encontraron cursos que coincidan con los criterios de búsqueda.</p>
+{% endif %}
 </div>
 {% endblock %}

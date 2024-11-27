@@ -8,7 +8,7 @@ from operator import itemgetter
 from .forms import CourseForm
 from django.http import HttpResponseForbidden
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib import messages
 from home.mail import enviar_notificacion_email
 from django.utils import timezone
@@ -62,6 +62,29 @@ class CourseListView(generic.ListView):
         context['courses_grouped'] = grouped_courses
         context['search_query'] = self.request.GET.get('search', '')
         context['type_choices'] = Course.TYPE_CHOICES
+        
+        # Añadir información del carrito y cursos inscritos si el usuario está autenticado
+        user = self.request.user
+        if user.is_authenticated:
+            # Obtener las reservas que están en el carrito
+            cart_reservations = Reservation.objects.filter(user=user, cart=True, paymentMethod='Pending')
+            cart_item_count = cart_reservations.count()
+            cart_course_ids = cart_reservations.values_list('course_id', flat=True)
+
+            # Obtener los cursos ya inscritos
+            enrolled_reservations = Reservation.objects.filter(user=user, cart=False).exclude(paymentMethod__in=['Pending'])
+            enrolled_course_ids = enrolled_reservations.values_list('course_id', flat=True)
+
+            context['cart_item_count'] = cart_item_count
+            context['cart_courses'] = cart_reservations.annotate(name=F('course__name')).values('name')
+            context['cart_course_ids'] = list(cart_course_ids)
+            context['enrolled_course_ids'] = list(enrolled_course_ids)
+        else:
+            context['cart_item_count'] = 0
+            context['cart_courses'] = []
+            context['cart_course_ids'] = []
+            context['enrolled_course_ids'] = []
+
         return context
 
     def get_image_url(self, image):
