@@ -1213,3 +1213,30 @@ strong {
   color: #ffffff;
 }
 
+.disabled {
+  color: #cccccc;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.disabled::after {
+  content: 'No disponible';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.9);
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  content: 'No disponible';
+}
+
+.disabled:hover::after {
+  opacity: 1;
+}
