@@ -57,6 +57,7 @@ class CourseListView(generic.ListView):
 
         context['courses_grouped'] = grouped_courses
         context['search_query'] = self.request.GET.get('search', '')
+        context['type_choices'] = Course.TYPE_CHOICES
         return context
 
     def get_image_url(self, image):
