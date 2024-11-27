@@ -14,7 +14,20 @@
         <!-- Sección del catálogo de cursos -->
         <section class="courses-section">
             <h2>Escaparate</h2>
+            <!-- Barra de búsqueda -->
+            <form method="get" action="{% url 'homepage' %}" class="search-form">
+              <input type="text" name="name_search" placeholder="Nombre del curso" value="{{ name_query }}">
+              <select name="type_search">
+                  <option value="">Selecciona una categoría</option>
+                  {% for type in type_choices %}
+                      <option value="{{ type.0 }}" {% if type_query == type.0 %}selected{% endif %}>{{ type.1 }}</option>
+                  {% endfor %}
+              </select>
+              <input type="date" name="date_search" placeholder="Fecha de Inicio/Fin" value="{{ date_query }}">
+              <button type="submit" class="btn btn-search">Buscar</button>
+            </form>
             <div class="courses-grid">
+              {% if courses %}
                 {% for course in courses %}
                 <div class="course-box">
                     <div class="course-row">
@@ -50,6 +63,9 @@
                     </div>
                   </div>
                 {% endfor %}
+              {% else %}
+                <p>No se encontraron cursos que coincidan con los criterios de búsqueda.</p>
+              {% endif %}
             </div>
         </section>
 
@@ -72,12 +88,19 @@
         </section>
 
         <!-- Llamado a la acción -->
+        {% if not user.is_authenticated %}
         <section class="cta-section">
-            <h2>¡Reserva tu futuro hoy mismo!</h2>
-            <p>No pierdas la oportunidad de comenzar tu preparación con los mejores. Inscríbete en uno de nuestros cursos y da el primer paso hacia tu plaza soñada.</p>
-            {% if not user.is_authenticated %}
-            <a href="{% url 'register' %}" class="cta-button">Registrarse</a>
-            {% endif %}
+          <h2>¡Reserva tu futuro hoy mismo!</h2>
+          <p>No pierdas la oportunidad de comenzar tu preparación con los mejores. Inscríbete en uno de nuestros cursos y da el primer paso hacia tu plaza soñada.</p>
+          <a href="{% url 'register' %}" class="cta-button">Registrarse</a>
+        </section>
+        {% endif %}
+
+        <!-- Sección de términos y condiciones -->
+        <section class="terms-section">
+          <h2>Términos y Condiciones</h2>
+          <p>Se cobrarán 5€ de gastos de gestión para los cursos con un precio inferior a 150€.</p>
+          <p>No se aceptan devoluciones.</p>
         </section>
     </div>
 {% endblock %}

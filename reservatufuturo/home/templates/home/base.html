@@ -12,8 +12,10 @@
     <header>
       <nav>
         <!-- Nombre de la empresa -->
-        <a href="{% url 'homepage' %}" class="brand">ReservaTuFuturo</a>
-
+        <a href="{% url 'homepage' %}" class="brand">
+          <img src="{% static 'home/logo.png' %}" alt="" class="brand-logo">
+          ReservaTuFuturo
+        </a>
         <!-- Enlaces de navegación -->
         <div class="nav-links">
           <a href="{% url 'homepage' %}">Inicio</a>

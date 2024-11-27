@@ -29,12 +29,19 @@
         </section>
 
         <!-- Llamado a la acción -->
+        {% if not user.is_authenticated %}
         <section class="cta-section">
             <h2>¡Reserva tu futuro hoy mismo!</h2>
             <p>No pierdas la oportunidad de comenzar tu preparación con los mejores. Inscríbete en uno de nuestros cursos y da el primer paso hacia tu plaza soñada.</p>
-            {% if not user.is_authenticated %}
             <a href="{% url 'register' %}" class="cta-button">Registrarse</a>
-            {% endif %}
+        </section>
+        {% endif %}
+
+        <!-- Sección de términos y condiciones -->
+        <section class="terms-section">
+            <h2>Términos y Condiciones</h2>
+            <p>Se cobrarán 5€ de gastos de gestión para los cursos con un precio inferior a 150€.</p>
+            <p>No se aceptan devoluciones.</p>
         </section>
     </div>
 {% endblock %}

@@ -20,10 +20,18 @@ nav {
 }
 
 .brand {
-    font-size: 1.5em;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.brand-logo {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
 }
 
 .brand-container {
@@ -1063,7 +1071,7 @@ strong {
 .search-form .btn-search {
   padding: 10px 20px;
   border: none;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
   background-color: #007BFF;
   color: #ffffff;
   font-size: 1em;
