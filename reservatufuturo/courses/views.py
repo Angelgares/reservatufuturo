@@ -22,21 +22,30 @@ class CourseListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        search_query = self.request.GET.get('search', '')
+        name_query = self.request.GET.get('name_search', '')
+        type_query = self.request.GET.get('type_search', '')
+        date_query = self.request.GET.get('date_search', '')
         # Obtener solo los campos necesarios para optimizar la consulta
         courses = Course.objects.all().values(
-            'type', 'id', 'name', 'teacher', 'price', 'capacity', 'image'
+            'id', 'name', 'price', 'image', 'teacher', 'capacity', 'description', 'starting_date', 'ending_date', 'type'
         )
         
-        filtered_courses = courses.filter(
-            Q(name__icontains=search_query) |
-            Q(teacher__icontains=search_query) |
-            Q(type__icontains=search_query)
+        print(name_query)
+        
+        filtered_courses1 = courses.filter(
+            Q(name__icontains=name_query) 
+        )
+        
+        filtered_courses2 = filtered_courses1.filter(
+            Q(starting_date__icontains=date_query) | Q(ending_date__icontains=date_query)
         )
 
+        filtered_courses3 = filtered_courses2.filter(
+            Q(type__icontains=type_query) 
+        )
         # Agrupar cursos por tipo
         grouped_courses = {}
-        for key, group in groupby(filtered_courses.order_by('type'), key=itemgetter('type')):
+        for key, group in groupby(filtered_courses3.order_by('type'), key=itemgetter('type')):
             grouped_courses[key] = [
                 {
                     **course,
