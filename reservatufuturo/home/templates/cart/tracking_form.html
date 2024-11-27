@@ -1,0 +1,33 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block title %}Ver Seguimiento - ReservaTuFuturo{% endblock %}
+
+{% block content %}
+
+<div class="tracking-container">
+    <h1>Introduce tu código de seguimiento</h1>
+
+    <!-- Campo de texto para el código de seguimiento -->
+    <div class="form-group">
+        <label for="tracking_code">Código de seguimiento:</label>
+        <input type="text" id="tracking_code" name="tracking_code" class="form-control" required placeholder="Ejemplo: abcde-fghi-1234-5678-9jklmn">
+    </div>
+
+    <!-- Botón para ver el seguimiento -->
+    <button type="button" class="btn btn-primary" onclick="goToTracking()">Ver seguimiento</button>
+</div>
+
+<script>
+    function goToTracking() {
+        var trackingCode = document.getElementById('tracking_code').value;
+        if (trackingCode) {
+            // Redirigir al usuario a la vista de seguimiento con el código como parámetro
+            window.location.href = "{% url 'cart:reservation_tracking' tracking_code='dummy' %}".replace('dummy', trackingCode);
+        } else {
+            alert('Por favor, introduce un código de seguimiento.');
+        }
+    }
+</script>
+
+{% endblock %}

@@ -24,6 +24,14 @@
                                 </h2>
                                 <p><strong>Profesor:</strong> {{ curso.teacher }}</p>
                                 <p><strong>Precio:</strong> {{ curso.price }}€</p>
+                                <p><strong>Gastos de gestión:</strong> 
+                                    {% if curso.price < 150 %}
+                                        5.00€
+                                    {% else %}
+                                        0.00€
+                                    {% endif %}
+                                </p>
+                                
                                 <p><strong>Fecha de inicio:</strong> {{ curso.starting_date }}</p>
                                 <p><strong>Plazas disponibles:</strong> {{ curso.available_slots }} estudiantes</p>
                                 <p><strong>Estado del pago:</strong> {{ curso.payment_status }}</p>

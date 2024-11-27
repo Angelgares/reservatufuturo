@@ -49,7 +49,10 @@
         <!-- Mostrar estado de la reserva -->
         <p>Ya tienes una reserva para este curso. Estado:
           <strong>
-            {% if reservation.paymentMethod == 'Pending' %}
+            {% if reservation.cart == True %}
+              En carrito
+              </strong>
+            {% elif reservation.paymentMethod == 'Pending' %}
               Pendiente de pago.
               </strong>
             </p>

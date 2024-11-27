@@ -12,6 +12,8 @@
             <tr>
                 <th>Nombre de Usuario</th>
                 <th>Email</th>
+                <th>Precio</th>
+                <th>Tasa de gestión</th>
                 <th>Método de Pago</th>
                 <th>Acciones</th>
             </tr>
@@ -33,14 +35,35 @@
                         {{ inscription.email }}
                     {% endif %}
                 </td>
+                <td>{{ course.price }}€</td>
+                <td>
+                    {% if course.price < 150 %}
+                        5.00€
+                    {% else %}
+                        0.00€
+                    {% endif %}
+                </td>
+                    
+                </p>
                 <td>{{ inscription.get_paymentMethod_display }}</td>
                 <td>
+                    {% if inscription.paymentMethod == "Pending" %}
+                        <!-- Botón para actualizar el método de pago -->
+                        <form method="post" action="{% url 'update_payment_method' course.pk inscription.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Cambiar a pagado</button>
+                        </form>
+                        <br>
+                    {% endif %}
                     <!-- Botón para eliminar la inscripción -->
                     <form method="post" action="{% url 'remove_user_from_course' course.pk inscription.pk %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form>
+                
+                    
                 </td>
+                
             </tr>
             {% endfor %}
         </tbody>
