@@ -27,6 +27,7 @@
               <button type="submit" class="btn btn-search">Buscar</button>
             </form>
             <div class="courses-grid">
+              {% if courses %}
                 {% for course in courses %}
                 <div class="course-box">
                     <div class="course-row">
@@ -62,6 +63,9 @@
                     </div>
                   </div>
                 {% endfor %}
+              {% else %}
+                <p>No se encontraron cursos que coincidan con los criterios de búsqueda.</p>
+              {% endif %}
             </div>
         </section>
 
