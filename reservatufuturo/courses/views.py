@@ -11,6 +11,8 @@ from .forms import CourseForm
 from django.http import HttpResponseForbidden
 from django.conf import settings
 from django.db.models import Q
+from django.contrib import messages
+from home.mail import enviar_notificacion_email
 
 class CourseListView(generic.ListView):
     model = Course
@@ -193,3 +195,29 @@ def course_inscriptions(request, pk):
         'course': course,
         'inscriptions': inscriptions,
     })
+
+def remove_user_from_course(request, course_id, inscription_id):
+    if request.method == "POST":
+        # Obtén el curso y la inscripción
+        course = get_object_or_404(Course, id=course_id)
+        inscription = get_object_or_404(Reservation, id=inscription_id)
+
+        # Envía un correo al usuario antes de eliminar
+        if inscription.user:
+            destinatario = inscription.user.email
+        else:
+            destinatario = inscription.email
+            
+        asunto = "Eliminación de inscripción"
+        mensaje = f"Tu inscripción al curso {course.name} ha sido eliminada."
+        mensaje += "\n\nPara más información, contacta con la academia."
+        mensaje += "\n\nEquipo ReservaTuFuturo."
+        enviar_notificacion_email(destinatario, asunto, mensaje)
+
+        # Elimina la inscripción
+        inscription.delete()
+        messages.success(request, f"La inscripción del usuario ha sido eliminada correctamente.")
+
+    # Redirige de vuelta a la lista de inscritos
+    return redirect('course_inscriptions', pk=course_id)
+
