@@ -80,16 +80,24 @@ class CourseDetailView(generic.DetailView):
 
         if user.is_authenticated:
             user_in_academy = user.groups.filter(name='academy').exists()
-            has_reservation = Reservation.objects.filter(
+            reservation = Reservation.objects.filter(
                 user=user,
                 course=self.object
-            ).exists()
+            ).first()
+            has_reservation = reservation is not None
         else:
             user_in_academy = False
             has_reservation = False
+            reservation = None
+
+        # Calcular las plazas disponibles
+        reserved_count = Reservation.objects.filter(course=self.object).count()
+        available_slots = self.object.capacity - reserved_count
 
         context['user_in_academy'] = user_in_academy
         context['has_reservation'] = has_reservation
+        context['reservation'] = reservation
+        context['available_slots'] = available_slots
         return context
 
 

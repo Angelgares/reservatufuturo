@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, authenticate
 from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from .forms import EmailAuthenticationForm
 from .models import Reservation, Course
-from collections import defaultdict
 from django.conf import settings
 
+
+def base_view(request):
+    cart_item_count = Reservation.objects.filter(user=request.user, cart=True).count() if request.user.is_authenticated else 0
+    return {
+        'cart_item_count': cart_item_count,
+    }
+    
 
 class CustomLoginView(LoginView):
     authentication_form = EmailAuthenticationForm
@@ -17,7 +22,7 @@ class CustomLoginView(LoginView):
 
 def homepage(request):
     template_name = 'home/homepage.html'
-    courses = Course.objects.all()
+    courses = Course.objects.order_by('-starting_date')[:6]
 
     courses_with_images = [
         {
@@ -81,13 +86,17 @@ def edit_profile(request):
 
 @login_required
 def my_courses(request):
-    reservas = Reservation.objects.filter(user=request.user).exclude(paymentMethod='Pending')
+    reservas = Reservation.objects.filter(user=request.user)
     cursos = [
         {
             **reserva.course.__dict__,
-            'image_url': get_image_url(reserva.course.image)
+            'image_url': get_image_url(reserva.course.image),
+            'available_slots': reserva.course.capacity - Reservation.objects
+                            .filter(course=reserva.course).count(),
+            'payment_status': 'Pendiente de pago' if reserva.paymentMethod ==
+            'Pending' else 'Pagado'
         }
-        for reserva in reservas if not reserva.cart
+        for reserva in reservas
     ]
 
     return render(request, 'courses/my_courses.html', {'cursos': cursos})
