@@ -27,11 +27,20 @@ class CourseListView(generic.ListView):
         date_query = self.request.GET.get('date_search', '')
         current_date = timezone.now().date()
         
+        user = self.request.user
+        user_in_academy = user.groups.filter(name='academy').exists()
+
         # Obtener solo los campos necesarios para optimizar la consulta
-        courses = Course.objects.filter(starting_date__gte=current_date).values(
-            'id', 'name', 'price', 'image', 'teacher', 'capacity',
-            'description', 'starting_date', 'ending_date', 'type'
-        )
+        if user_in_academy:
+            courses = Course.objects.values(
+                'id', 'name', 'price', 'image', 'teacher', 'capacity',
+                'description', 'starting_date', 'ending_date', 'type'
+            )
+        else:
+            courses = Course.objects.filter(starting_date__gte=current_date).values(
+                'id', 'name', 'price', 'image', 'teacher', 'capacity',
+                'description', 'starting_date', 'ending_date', 'type'
+            )
 
         filtered_courses1 = courses.filter(
             Q(name__icontains=name_query)
@@ -45,26 +54,28 @@ class CourseListView(generic.ListView):
         filtered_courses3 = filtered_courses2.filter(
             Q(type__icontains=type_query)
         )
+        
         # Agrupar cursos por tipo
         grouped_courses = {}
         for key, group in groupby(filtered_courses3.order_by('type'), key=itemgetter('type')):
             grouped_courses[key] = [
                 {
                     **course,
-                    # Asegúrate de incluir la URL completa de la imagen
                     'image_url': self.get_image_url(course['image']),
-                    # Calcular las plazas disponibles
-                    'available_slots': course['capacity'] - Reservation.objects.filter(course_id=course['id']).exclude(paymentMethod='Pending').count()
+                    'available_slots': course['capacity'] - Reservation.objects.filter(
+                        course_id=course['id']
+                    ).exclude(paymentMethod='Pending', cart=True).count()
                 }
-                for course in group if course['capacity'] - Reservation.objects.filter(course_id=course['id']).exclude(paymentMethod='Pending').count() > 0
+                for course in group
             ]
 
         context['courses_grouped'] = grouped_courses
         context['search_query'] = self.request.GET.get('search', '')
         context['type_choices'] = Course.TYPE_CHOICES
+        context['today'] = timezone.now().date()
+
         
         # Añadir información del carrito y cursos inscritos si el usuario está autenticado
-        user = self.request.user
         if user.is_authenticated:
             # Obtener las reservas que están en el carrito
             cart_reservations = Reservation.objects.filter(user=user, cart=True, paymentMethod='Pending')
@@ -74,11 +85,15 @@ class CourseListView(generic.ListView):
             # Obtener los cursos ya inscritos
             enrolled_reservations = Reservation.objects.filter(user=user, cart=False).exclude(paymentMethod__in=['Pending'])
             enrolled_course_ids = enrolled_reservations.values_list('course_id', flat=True)
+            
+            pending_reservations = Reservation.objects.filter(user=user, cart=False, paymentMethod='Pending')
+            pending_course_ids = pending_reservations.values_list('course_id', flat=True)
 
             context['cart_item_count'] = cart_item_count
             context['cart_courses'] = cart_reservations.annotate(name=F('course__name')).values('name')
             context['cart_course_ids'] = list(cart_course_ids)
             context['enrolled_course_ids'] = list(enrolled_course_ids)
+            context['pending_course_ids'] = list(pending_course_ids)
         else:
             context['cart_item_count'] = 0
             context['cart_courses'] = []
@@ -119,7 +134,7 @@ class CourseDetailView(generic.DetailView):
 
         # Calcular las plazas disponibles
         reserved_count = Reservation.objects.filter(course=self.object)\
-            .exclude(paymentMethod='Pending').count()
+            .exclude(paymentMethod='Pending', cart=True).count()
         available_slots = self.object.capacity - reserved_count
 
         context['user_in_academy'] = user_in_academy
