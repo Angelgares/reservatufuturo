@@ -1334,6 +1334,11 @@ strong {
   color: black;
 }
 
+.pending-badge {
+  background-color: #007bff;
+  color: black;
+}
+
 .enrolled-badge {
   background-color: #28a745;
   color: black;
@@ -1353,6 +1358,10 @@ strong {
 
 .course-box.in-cart {
   border: 2px solid #ffcc00;
+}
+
+.course-box.pending {
+  border: 2px solid #007bff;
 }
 
 .course-box.enrolled {

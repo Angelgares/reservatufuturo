@@ -43,6 +43,7 @@
                     {% for course in courses %}
                     <div class="course-box
                         {% if course.id in cart_course_ids %}in-cart
+                        {% elif course.id in pending_course_ids %}pending
                         {% elif course.id in enrolled_course_ids %}enrolled
                         {% elif course.available_slots == 0 %}full
                         {% endif %}
@@ -75,6 +76,8 @@
                                     {% if user.is_authenticated %}
                                         {% if course.id in cart_course_ids %}
                                             <span class="badge in-cart-badge">En el Carrito</span>
+                                        {% elif course.id in pending_course_ids %}
+                                            <span class="badge pending-badge">Pendiente de Pago</span>
                                         {% elif course.id in enrolled_course_ids %}
                                             <span class="badge enrolled-badge">Inscrito</span>
                                         {% elif course.available_slots == 0 %}

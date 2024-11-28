@@ -85,11 +85,15 @@ class CourseListView(generic.ListView):
             # Obtener los cursos ya inscritos
             enrolled_reservations = Reservation.objects.filter(user=user, cart=False).exclude(paymentMethod__in=['Pending'])
             enrolled_course_ids = enrolled_reservations.values_list('course_id', flat=True)
+            
+            pending_reservations = Reservation.objects.filter(user=user, cart=False, paymentMethod='Pending')
+            pending_course_ids = pending_reservations.values_list('course_id', flat=True)
 
             context['cart_item_count'] = cart_item_count
             context['cart_courses'] = cart_reservations.annotate(name=F('course__name')).values('name')
             context['cart_course_ids'] = list(cart_course_ids)
             context['enrolled_course_ids'] = list(enrolled_course_ids)
+            context['pending_course_ids'] = list(pending_course_ids)
         else:
             context['cart_item_count'] = 0
             context['cart_courses'] = []
