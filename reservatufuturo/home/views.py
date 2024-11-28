@@ -46,7 +46,7 @@ def homepage(request):
         {
             **course.__dict__,
             'image_url': get_image_url(course.image),
-            'available_slots': course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count()
+            'available_slots': course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending', cart=True).count()
         }
         for course in courses
         if course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count() > 0
