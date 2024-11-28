@@ -53,12 +53,14 @@ class QuickPurchaseForm(forms.Form):
     email = forms.EmailField(label="Correo electrónico", widget=forms.EmailInput(attrs={"class": "form-control"}))
 
 # Vista para la compra rápida (Stripe)
+import uuid
+from django.http import JsonResponse
+
 class QuickPurchaseView(View):
     template_name = "cart/quick_purchase.html"
 
     def get(self, request, course_id):
         course = get_object_or_404(Course, id=course_id)
-        # Calcular los gastos de gestión
         management_fee = 5 if course.price <= 150 else 0
         total_price = course.price + management_fee
         return render(request, self.template_name, {
@@ -71,8 +73,6 @@ class QuickPurchaseView(View):
     def post(self, request, course_id):
         email = request.POST.get("email")
         course = get_object_or_404(Course, id=course_id)
-        success_url = request.build_absolute_uri(reverse("cart:quick_success"))
-        cancel_url = request.build_absolute_uri(reverse("cart:quick_cancel"))
 
         if not email:
             return render(request, self.template_name, {
@@ -91,16 +91,28 @@ class QuickPurchaseView(View):
                 email=email,
                 defaults={
                     "cart": False,
-                    "paymentMethod": "Online",
+                    "paymentMethod": "Pending",
                     "management_fee": management_fee,
                 }
             )
 
             if not created:
-                reservation.paymentMethod = "Online"
+                reservation.paymentMethod = "Pending"
                 reservation.cart = False
                 reservation.management_fee = management_fee
                 reservation.save()
+            else:
+                # Informar al usuario de que la reserva ya existe
+                messages.info(request, f"Ya tienes una reserva para el curso '{course.name}' con el correo '{email}'.")
+                return redirect("homepage")
+                
+            
+            success_url = request.build_absolute_uri(reverse("cart:quick_success", kwargs={
+            "course_id": course.id,
+            "email": email,
+            "tracking_code": reservation.tracking_code,  # Generar un UUID para el tracking_code
+            }))
+            cancel_url = request.build_absolute_uri(reverse("cart:quick_cancel"))
 
             # Crear sesión de Stripe Checkout
             session = stripe.checkout.Session.create(
@@ -125,6 +137,7 @@ class QuickPurchaseView(View):
             return JsonResponse({"id": session.id})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
+
 
 
 # Vista para la compra rápida en efectivo
@@ -361,8 +374,41 @@ def cash_success(request, course_id, email, tracking_code):
     enviar_notificacion_email(destinatario, subject, message)
     return render(request, "cart/cash_success.html")
 
-def quick_payment_success(request):
+from django.shortcuts import render, get_object_or_404
+from home.models import Reservation
+from courses.models import Course
+from home.mail import enviar_notificacion_email
+
+def quick_payment_success(request, course_id, email, tracking_code):
+    course = get_object_or_404(Course, id=course_id)
+    reservation = get_object_or_404(Reservation, tracking_code=tracking_code)
+
+    destinatario = email
+    subject = "Confirmación de compra en ReservaTuFuturo"
+    message = f"Gracias por confiar en ReservaTuFuturo para tu formación.\n\n"
+    message += "Has adquirido los siguientes cursos:\n"
+    tasas = 5 if course.price <= 150 else 0
+    message += f"- {course.name}\n"
+    message += f"     - Precio: {course.price} €\n"
+    message += f"     - Gastos de gestión: {tasas} €\n"
+    message += f"     - Método de pago: Online\n"
+    message += f"     - Estado: Pagado\n"
+    message += f"     - Fecha de inicio: {course.starting_date}\n"
+    message += f"     - Nº seguimiento: {tracking_code}\n\n"
+        
+    message += "Recuerda que debes acudir físicamente a nuestro local para pagar el importe de la compra.\n\n"
+    message += "Puedes realizar un seguimiento de tus cursos en la sección 'Seguimiento' en nuestra web (reservatufuturo.onrender.com).\n\n"
+    message += "¡Esperamos que disfrutes de tus cursos!\n\n"
+    message += "Atentamente,\nEquipo de ReservaTuFuturo."
+    enviar_notificacion_email(destinatario, subject, message)
+
+    # Actualizar la reserva a 'pagado'
+    reservation.cart = False
+    reservation.paymentMethod = "Online"
+    reservation.save()
+
     return render(request, "cart/payment_success.html")
+
 
 def tracking_form(request):
     return render(request, "cart/tracking_form.html")
