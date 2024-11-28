@@ -1366,3 +1366,12 @@ strong {
 .course-box.finished {
   border: 2px solid #cf33e4;
 }
+
+.email-link {
+  color: white;
+  text-decoration: none;
+}
+
+.email-link:hover {
+  color: #007BFF;
+}
