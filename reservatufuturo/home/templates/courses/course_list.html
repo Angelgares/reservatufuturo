@@ -33,44 +33,64 @@
       </select>
       <input type="date" name="date_search" placeholder="Fecha de Inicio/Fin" value="{{ request.GET.date_search }}">
       <button type="submit" class="btn btn-search">Buscar</button>
-  </form>
+    </form>
 
-  {% if courses_grouped %}
-      <div class="course-container">
-          {% for type, courses in courses_grouped.items %}
-              <h2>{{ type }}</h2>
-              <div class="type-group">
-                  {% for course in courses %}
-                      <div class="course-box {% if course.id in cart_course_ids %}in-cart{% elif course.id in enrolled_course_ids %}enrolled{% endif %}">
-                          <div class="course-row">
-                              <div class="course-image-column">
-                                  {% if course.image_url %}
-                                      <a href="{% url 'course_detail' course.id %}">
-                                          <img class="course-detail-img" src="{{ course.image_url }}" alt="Imagen de {{ course.name }}" />
-                                      </a>
-                                  {% else %}
-                                      <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible" />
-                                  {% endif %}
-                              </div>
-                              <div class="course-details-column">
-                                  <h3>
-                                      <a href="{% url 'course_detail' course.id %}" class="course-name">
-                                          {{ course.name }}
-                                      </a>
-                                  </h3>
-                                  <p><strong>Profesor:</strong> {{ course.teacher }}</p>
-                                  <p><strong>Precio:</strong> {{ course.price }}€</p>
-                                  <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
-                                  <p><strong>Fecha de finalización:</strong> {{ course.ending_date }}</p>
-                                  <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
+    {% if courses_grouped %}
+        <div class="course-container">
+            {% for type, courses in courses_grouped.items %}
+                <h2>{{ type }}</h2>
+                <div class="type-group">
+                    {% for course in courses %}
+                    <div class="course-box
+                        {% if course.id in cart_course_ids %}in-cart
+                        {% elif course.id in enrolled_course_ids %}enrolled
+                        {% elif course.available_slots == 0 %}full
+                        {% endif %}
+                        {% if course.starting_date < today %} past
+                        {% endif %}
+                        {% if course.ending_date < today %} finished
+                        {% endif %}">
+                            <div class="course-row">
+                                <div class="course-image-column">
+                                    {% if course.image_url %}
+                                        <a href="{% url 'course_detail' course.id %}">
+                                            <img class="course-detail-img" src="{{ course.image_url }}" alt="Imagen de {{ course.name }}" />
+                                        </a>
+                                    {% else %}
+                                        <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible" />
+                                    {% endif %}
+                                </div>
+                                <div class="course-details-column">
+                                    <h3>
+                                        <a href="{% url 'course_detail' course.id %}" class="course-name">
+                                            {{ course.name }}
+                                        </a>
+                                    </h3>
+                                    <p><strong>Profesor:</strong> {{ course.teacher }}</p>
+                                    <p><strong>Precio:</strong> {{ course.price }}€</p>
+                                    <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
+                                    <p><strong>Fecha de finalización:</strong> {{ course.ending_date }}</p>
+                                    <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
 
-                                  {% if user.is_authenticated %}
-                                      {% if course.id in cart_course_ids %}
-                                          <span class="badge in-cart-badge">En el Carrito</span>
-                                      {% elif course.id in enrolled_course_ids %}
-                                          <span class="badge enrolled-badge">Inscrito</span>
-                                      {% endif %}
-                                  {% endif %}
+                                    {% if user.is_authenticated %}
+                                        {% if course.id in cart_course_ids %}
+                                            <span class="badge in-cart-badge">En el Carrito</span>
+                                        {% elif course.id in enrolled_course_ids %}
+                                            <span class="badge enrolled-badge">Inscrito</span>
+                                        {% elif course.available_slots == 0 %}
+                                            <span class="badge full-badge">Completo</span>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if course.available_slots == 0 %}
+                                            <span class="badge full-badge">Completo</span>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if course.ending_date < today %}
+                                        <span class="badge finished-badge">Terminado</span>
+                                    {% elif course.starting_date < today %}
+                                        <span class="badge past-badge">Comenzado</span>
+                                    {% endif %}
                               </div>
                           </div>
                       </div>

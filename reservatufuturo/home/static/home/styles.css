@@ -1324,6 +1324,11 @@ strong {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.full-badge {
+  background-color: #d9534f;
+  color: black;
+}
+
 .in-cart-badge {
   background-color: #ffcc00;
   color: black;
@@ -1334,10 +1339,30 @@ strong {
   color: black;
 }
 
+.past-badge {
+  background-color: #17a2b8;
+}
+
+.finished-badge {
+  background-color: #cf33e4;
+}
+
+.course-box.full {
+  border: 2px solid #d9534f;
+}
+
 .course-box.in-cart {
   border: 2px solid #ffcc00;
 }
 
 .course-box.enrolled {
   border: 2px solid #28a745;
+}
+
+.course-box.past {
+  border: 2px solid #17a2b8;
+}
+
+.course-box.finished {
+  border: 2px solid #cf33e4;
 }
