@@ -1384,3 +1384,55 @@ strong {
 .email-link:hover {
   color: #007BFF;
 }
+
+.btn-update-payment {
+  width: 150px;
+  height: 40px;
+  font-size: 1em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-update-payment:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-remove {
+  width: 150px;
+  height: 40px;
+  font-size: 1em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-remove:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-remove:active,
+.btn-update-payment:active {
+  transform: scale(1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}

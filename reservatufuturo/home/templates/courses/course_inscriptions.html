@@ -3,7 +3,7 @@
 {% block title %}Inscritos - {{ course.name }}{% endblock %}
 
 {% block content %}
-<div class="form-container">
+<div class="form-container" style="max-width: 1000px;">
     <h1 class="form-title">Inscritos en el curso: {{ course.name }}</h1>
 
     {% if inscriptions %}
@@ -45,31 +45,40 @@
                 </td>
                     
                 </p>
-                <td>{{ inscription.get_paymentMethod_display }}</td>
+                <td>
+                    {% if inscription.paymentMethod == 'Pending' %}
+                        Pendiente
+                    {% elif inscription.paymentMethod == 'Online' %}
+                        Online
+                    {% elif inscription.paymentMethod == 'Cash' %}
+                        Efectivo
+                    {% else %}
+                        {{ inscription.get_paymentMethod_display }}
+                    {% endif %}
+                </td>
                 <td>
                     {% if inscription.paymentMethod == "Pending" %}
                         <!-- Botón para actualizar el método de pago -->
                         <form method="post" action="{% url 'update_payment_method' course.pk inscription.pk %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger">Cambiar a pagado</button>
+                            <button type="submit" class="btn btn-danger btn-update-payment">Pagado</button>
                         </form>
                         <br>
                     {% endif %}
                     <!-- Botón para eliminar la inscripción -->
                     <form method="post" action="{% url 'remove_user_from_course' course.pk inscription.pk %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn btn-danger btn-remove">Eliminar</button>
                     </form>
-                
-                    
                 </td>
-                
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% else %}
-    <p>No hay inscritos en este curso.</p>
+    </br>
+    <p style="text-align: center;">No hay inscritos en este curso.</p>
+    </br>
     {% endif %}
 
     <div class="button-container">
