@@ -6,71 +6,71 @@
             "name": "academy"
         }
     },
-{
-    "model": "auth.user",
-    "pk": 1,
-    "fields": {
-        "username": "user1",
-        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
-        "first_name": "John",
-        "last_name": "Doe",
-        "email": "user1@example.com"
-    }
-},
-{
-    "model": "auth.user",
-    "pk": 2,
-    "fields": {
-        "username": "user2",
-        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
-        "first_name": "Jane",
-        "last_name": "Doe",
-        "email": "user2@example.com"
-    }
-},
-{
-    "model": "auth.user",
-    "pk": 3,
-    "fields": {
-        "username": "academy1",
-        "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
-        "first_name": "Armando",
-        "last_name": "Paredes",
-        "email": "academy1@example.com"
-    }
-},
-{
-    "model": "auth.user_groups",
-    "pk": 1,
-    "fields": {
-        "user": 3,
-        "group": 1
-    }
-},
-{
-    "model": "home.profile",
-    "pk": 1,
-    "fields": {
-        "user": 1,
-        "phone_number": 1234567890
-    }
-},
-{
-    "model": "home.profile",
-    "pk": 2,
-    "fields": {
-        "user": 2,
-        "phone_number": 9876543210
-    }
-},
-{
-    "model": "home.profile",
-    "pk": 3,
-    "fields": {
-        "user": 3,
-        "phone_number": 12121212121
-    }
-},
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "user1",
+            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=", 
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "user1@example.com"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "user2",
+            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "email": "user2@example.com"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "username": "academy1",
+            "password": "pbkdf2_sha256$870000$kwhB1lYEAMEKYQxMnj8Ony$BlG5Dh6mebJlbXQhiSKQ49pbBj/XZxsswoT0qpcflMo=",
+            "first_name": "Armando",
+            "last_name": "Paredes",
+            "email": "academy1@example.com"
+        }
+    },
+    {
+        "model": "auth.user_groups",
+        "pk": 1,
+        "fields": {
+            "user": 3,
+            "group": 1
+        }
+    },
+    {
+        "model": "home.profile",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "phone_number": 1234567890
+        }
+    },
+    {
+        "model": "home.profile",
+        "pk": 2,
+        "fields": {
+            "user": 2,
+            "phone_number": 9876543210
+        }
+    },
+    {
+        "model": "home.profile",
+        "pk": 3,
+        "fields": {
+            "user": 3,
+            "phone_number": 12121212121
+        }
+    },
     {
         "model": "courses.course",
         "pk": 1,
@@ -81,8 +81,8 @@
             "teacher": "Juan Pérez",
             "capacity": 20,
             "description": "Curso introductorio para opositores interesados en plazas de la administración pública.",
-            "starting_date": "2021-09-01",
-            "ending_date": "2021-09-30",
+            "starting_date": "2024-09-01",
+            "ending_date": "2024-09-30",
             "type": "Administración General"
         }
     },
@@ -96,8 +96,8 @@
             "teacher": "Ana López",
             "capacity": 1,
             "description": "Curso diseñado para dominar las herramientas informáticas esenciales para oposiciones.",
-            "starting_date": "2021-10-01",
-            "ending_date": "2021-10-30",
+            "starting_date": "2026-10-01",
+            "ending_date": "2027-10-30",
             "type": "Informática"
         }
     },
@@ -111,8 +111,8 @@
             "teacher": "Carlos García",
             "capacity": 25,
             "description": "Curso avanzado para oposiciones en administración pública.",
-            "starting_date": "2021-11-01",
-            "ending_date": "2021-11-30",
+            "starting_date": "2024-11-01",
+            "ending_date": "2024-11-30",
             "type": "Administración General"
         }
     },
@@ -126,8 +126,8 @@
             "teacher": "Laura Méndez",
             "capacity": 20,
             "description": "Curso completo para opositores a técnicos de ayuntamientos.",
-            "starting_date": "2021-12-01",
-            "ending_date": "2021-12-30",
+            "starting_date": "2024-12-01",
+            "ending_date": "2024-12-30",
             "type": "Técnicos de Ayuntamientos"
         }
     },
@@ -141,8 +141,8 @@
             "teacher": "María Fernández",
             "capacity": 30,
             "description": "Curso enfocado en oposiciones al cuerpo de maestros de educación primaria.",
-            "starting_date": "2022-01-10",
-            "ending_date": "2022-02-10",
+            "starting_date": "2025-01-10",
+            "ending_date": "2025-02-10",
             "type": "Educación"
         }
     },
@@ -156,8 +156,8 @@
             "teacher": "Luis Martínez",
             "capacity": 25,
             "description": "Preparación intensiva para oposiciones al cuerpo de Policía Nacional.",
-            "starting_date": "2022-02-15",
-            "ending_date": "2022-03-15",
+            "starting_date": "2025-02-15",
+            "ending_date": "2025-03-15",
             "type": "Policía"
         }
     },
@@ -171,8 +171,8 @@
             "teacher": "Andrea Gómez",
             "capacity": 20,
             "description": "Curso dirigido a opositores del sector sanitario.",
-            "starting_date": "2022-03-01",
-            "ending_date": "2022-03-31",
+            "starting_date": "2025-03-01",
+            "ending_date": "2025-03-31",
             "type": "Sanidad"
         }
     },
@@ -186,8 +186,8 @@
             "teacher": "Elena Morales",
             "capacity": 20,
             "description": "Preparación para plazas relacionadas con tecnologías de la información.",
-            "starting_date": "2022-04-01",
-            "ending_date": "2022-04-30",
+            "starting_date": "2025-04-01",
+            "ending_date": "2025-04-30",
             "type": "Informática"
         }
     },
@@ -201,8 +201,8 @@
             "teacher": "Clara Rojas",
             "capacity": 15,
             "description": "Curso técnico sobre telecomunicaciones enfocado en oposiciones.",
-            "starting_date": "2022-05-01",
-            "ending_date": "2022-05-31",
+            "starting_date": "2025-05-01",
+            "ending_date": "2025-05-31",
             "type": "Telecomunicaciones"
         }
     },
@@ -216,56 +216,9 @@
             "teacher": "Fernando Álvarez",
             "capacity": 20,
             "description": "Preparación completa para oposiciones al cuerpo de inspectores de trabajo.",
-            "starting_date": "2022-06-01",
-            "ending_date": "2022-06-30",
+            "starting_date": "2025-06-01",
+            "ending_date": "2025-06-30",
             "type": "Inspector de Trabajo"
         }
-    },
-    {
-        "model": "home.reservation",
-        "pk": 1,
-        "fields": {
-            "course": 1,
-            "user": 1,
-            "paymentMethod": "Online"
-        }
-    },
-    {
-        "model": "home.reservation",
-        "pk": 2,
-        "fields": {
-            "course": 2,
-            "user": 2,
-            "paymentMethod": "Cash"
-        }
-    },
-    {
-        "model": "home.reservation",
-        "pk": 3,
-        "fields": {
-            "course": 3,
-            "user": 1,
-            "paymentMethod": "Online"
-        }
-    },
-    {
-        "model": "home.reservation",
-        "pk": 4,
-        "fields": {
-            "course": 4,
-            "user": 2,
-            "paymentMethod": "Cash"
-        }
-    },
-    {
-        "model": "home.reservation",
-        "pk": 5,
-        "fields": {
-            "course": 1,
-            "user": 2,
-            "paymentMethod": "Online"
-        }
     }
-
-
 ]

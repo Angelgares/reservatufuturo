@@ -1,5 +1,6 @@
-{% extends 'home/base.html' %} {% block title %}ReservaTuFuturo - Cesta de la
-compra{% endblock %} {% block content %}
+{% extends 'home/base.html' %}
+{% block title %}Cesta de la compra{% endblock %}
+{% block content %}
 <h1 class="cart-title">Cesta de la compra</h1>
 
 {% if reservations %}
@@ -9,32 +10,38 @@ compra{% endblock %} {% block content %}
       <tr>
         <th>Curso</th>
         <th>Precio</th>
+        <th>Gastos de gestión</th>
+        <th>Total</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       {% for reservation in reservations %}
       <tr>
-        <td>{{ reservation.course.name }}</td>
-        <td>{{ reservation.course.price }}€</td>
         <td>
-          <a
-            href="{% url 'cart:remove_from_cart' reservation.id %}"
-            class="btn btn-danger"
-            >Eliminar</a
-          >
+          <a href="{% url 'course_detail' reservation.course.id %}" class="course-link">
+            {{ reservation.course.name }}
+          </a>
+        </td>
+        <td>{{ reservation.course.price }}€</td>
+        <td>{{ reservation.management_fee }}€</td>
+        <td>{{ reservation.course.price|add:reservation.management_fee }}€</td>
+        <td>
+          <a href="{% url 'cart:remove_from_cart' reservation.id %}" class="btn btn-danger">Eliminar</a>
         </td>
       </tr>
       {% endfor %}
     </tbody>
+    
   </table>
   <div class="cart-summary">
     <div class="cart-summary-row">
-      <p class="cart-total">Total: <strong>{{ total_price }}€</strong></p>
-
-      <a href="{% url 'cart:cash' %}" class="btn btn-primary"
-        >Pagar en efectivo</a
-      >
+      <p>Subtotal de cursos: <strong>{{ subtotal_courses }}€</strong></p>
+      <p>Total de gastos de gestión: <strong>{{ total_management_fee }}€</strong></p>
+      <p class="cart-total">Total a pagar: <strong>{{ total_price }}€</strong></p>
+    </div>
+    <div class="cart-summary-row">
+      <a href="{% url 'cart:cash' %}" class="btn btn-primary">Pagar en efectivo</a>
       <form action="{% url 'cart:checkout' %}" method="post" id="payment-form">
         {% csrf_token %}
         <button type="button" id="checkout-button" class="btn btn-primary">
@@ -43,6 +50,7 @@ compra{% endblock %} {% block content %}
       </form>
     </div>
   </div>
+  
 </div>
 {% else %}
 <p class="cart-empty">Tu carrito está vacío.</p>

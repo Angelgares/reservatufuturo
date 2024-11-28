@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from courses.models import Course
+import uuid
 
 
 class Profile(models.Model):
@@ -25,7 +26,26 @@ class Reservation(models.Model):
     email = models.EmailField(null=True, blank=True)  # Email para usuarios anónimos
     paymentMethod = models.CharField(max_length=10, choices=PAYMENT_METHODS, default='Pending')
     cart = models.BooleanField(default=True)
+    management_fee = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=0.0, 
+        null=False, 
+        blank=False, 
+        verbose_name="Gastos de gestión"
+    )
+    tracking_code = models.CharField(max_length=36, default=uuid.uuid4, unique=True)
+
     
+    def save(self, *args, **kwargs):
+        # Calcular automáticamente los gastos de gestión
+        if self.course.price > 150:
+            self.management_fee = 0.0
+        else:
+            self.management_fee = 5.0
+        super().save(*args, **kwargs)
+
     def __str__(self):
         user_display = self.user.username if self.user else self.email
         return f'{user_display} - {self.course.name}'
+

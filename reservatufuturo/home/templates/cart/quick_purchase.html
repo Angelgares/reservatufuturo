@@ -4,7 +4,9 @@
 <div class="quick-purchase-container">
   <h1 class="quick-purchase-title">Compra rápida</h1>
   <p class="quick-purchase-course">Curso: <strong>{{ course.name }}</strong></p>
-  <p class="quick-purchase-price">Precio: <strong>{{ course.price }}€</strong></p>
+  <p class="quick-purchase-price">Precio del curso: <strong>{{ course.price }}€</strong></p>
+  <p class="quick-purchase-price">Gastos de gestión: <strong>{{ management_fee }}€</strong></p>
+  <p class="quick-purchase-price">Total a pagar: <strong>{{ total_price }}€</strong></p>
 
   <!-- Formulario compartido para ambas acciones -->
   <form id="quick-purchase-form" class="quick-purchase-form">
@@ -24,12 +26,14 @@
 
     <!-- Botones separados para cada acción -->
     <button type="button" id="online-payment" class="btn-add-to-cart" style="margin-bottom: 1rem;">Proceder al pago online</button>
-    <br>
+    <div>o</div>
+    </br>
     <button type="button" id="cash-payment" class="btn-add-to-cart">Proceder al pago en efectivo</button>
   </form>
 
   <p class="quick-purchase-disclaimer">
     <strong>Nota:</strong> La compra rápida no vincula el curso a un usuario registrado. Sin embargo, recibirás un correo electrónico con la confirmación de tu compra.
+    <p><strong>*No se admiten devoluciones</strong></p>
   </p>
 </div>
 
@@ -96,6 +100,5 @@
     }
   });
 </script>
-
 
 {% endblock %}

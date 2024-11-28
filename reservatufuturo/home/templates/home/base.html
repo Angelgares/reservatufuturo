@@ -12,20 +12,31 @@
     <header>
       <nav>
         <!-- Nombre de la empresa -->
-        <a href="{% url 'homepage' %}" class="brand">ReservaTuFuturo</a>
-
+        <a href="{% url 'homepage' %}" class="brand">
+          <img src="{% static 'home/logo.png' %}" alt="" class="brand-logo">
+          ReservaTuFuturo
+        </a>
         <!-- Enlaces de navegación -->
         <div class="nav-links">
+          <a href="{% url 'homepage' %}">Inicio</a>
           <a href="{% url 'courses' %}">Catálogo</a>
-          <a href="{% url 'about_us' %}">Sobre nosotros</a>
+          <a href="{% url 'cart:tracking' %}">Seguimiento</a>
           {% if user.is_authenticated %}
             {% if user_in_academy %}
+              <a href="#" class="disabled" title="Los administradores no pueden comprar">
+                Cesta
+              </a>
               <a href="{% url 'create_course' %}">Crear Curso</a>
             {% endif %}
             {% if not user_in_academy %}
-              <a href="{% url 'cart:cart' %}">Cesta</a>
               <a href="{% url 'my_courses' %}">Mis Cursos</a>
-            {% endif %}
+              <a href="{% url 'cart:cart' %}">
+                Cesta
+                {% if cart_item_count > 0 %}
+                    <span class="cart-count">{{ cart_item_count }}</span>
+                {% endif %}
+            </a>            {% endif %}
+            <a href="{% url 'about_us' %}">Sobre nosotros</a>
             <a href="{% url 'profile' %}">Mi Perfil</a>
             <a href="#" onclick="document.getElementById('logout-form').submit();">
               Cerrar sesión
@@ -34,6 +45,10 @@
               {% csrf_token %}
             </form>
           {% else %}
+            <a href="{% url 'login' %}" title="Debes iniciar sesión para usar la cesta">
+              Cesta
+            </a>
+            <a href="{% url 'about_us' %}">Sobre nosotros</a>
             <a href="{% url 'login' %}">Iniciar sesión</a>
             <a href="{% url 'register' %}">Registrarse</a>
           {% endif %}

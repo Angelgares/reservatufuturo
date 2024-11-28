@@ -1,5 +1,6 @@
 from django import forms
 from .models import Course
+from django.core.exceptions import ValidationError
 
 class CourseForm(forms.Form):        
     
@@ -18,6 +19,19 @@ class CourseForm(forms.Form):
         ('Telecomunicaciones', 'Telecomunicaciones'),
         ('Tecnología de la Información', 'Tecnologías de la Información'),
     ]
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        starting_date = cleaned_data.get('starting_date')
+        ending_date = cleaned_data.get('ending_date')
+        
+        if starting_date and ending_date and starting_date >= ending_date:
+            raise ValidationError({
+                'starting_date': 'La fecha de inicio debe ser anterior a la fecha de finalización.',
+                'ending_date': 'La fecha de finalización debe ser posterior a la fecha de inicio.',
+            })
+
+        return cleaned_data
     
     name = forms.CharField(required=True, label = "Nombre del curso")
     price = forms.FloatField(required=True, label = "Precio del curso")
