@@ -100,11 +100,9 @@ class QuickPurchaseView(View):
                 reservation.paymentMethod = "Pending"
                 reservation.cart = False
                 reservation.management_fee = management_fee
-                reservation.save()
-            else:
-                # Informar al usuario de que la reserva ya existe
-                messages.info(request, f"Ya tienes una reserva para el curso '{course.name}' con el correo '{email}'.")
-                return redirect("homepage")
+            
+            reservation.save()
+            
                 
             
             success_url = request.build_absolute_uri(reverse("cart:quick_success", kwargs={
@@ -396,7 +394,6 @@ def quick_payment_success(request, course_id, email, tracking_code):
     message += f"     - Fecha de inicio: {course.starting_date}\n"
     message += f"     - Nº seguimiento: {tracking_code}\n\n"
         
-    message += "Recuerda que debes acudir físicamente a nuestro local para pagar el importe de la compra.\n\n"
     message += "Puedes realizar un seguimiento de tus cursos en la sección 'Seguimiento' en nuestra web (reservatufuturo.onrender.com).\n\n"
     message += "¡Esperamos que disfrutes de tus cursos!\n\n"
     message += "Atentamente,\nEquipo de ReservaTuFuturo."
