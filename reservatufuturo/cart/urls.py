@@ -26,7 +26,7 @@ urlpatterns = [
     path("success/", payment_success, name="payment_success"),
     path("cancel/", payment_cancel, name="payment_cancel"),
     path("quick/<int:course_id>/", QuickPurchaseView.as_view(), name="quick_purchase"),
-    path("quick/success/", quick_payment_success, name="quick_success"),
+    path("quick/success/<int:course_id>/<str:email>/<str:tracking_code>/", quick_payment_success, name="quick_success"),
     path(
         "cash/success/<int:course_id>/<str:email>/<str:tracking_code>/", cash_success, name="cash_success"
     ),
