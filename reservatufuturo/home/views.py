@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, authenticate
 from .forms import RegistrationForm, UserUpdateForm, ProfileUpdateForm
@@ -8,6 +8,9 @@ from .models import Reservation, Course
 from django.conf import settings
 from django.utils import timezone
 from django.db.models import Q
+from django.contrib import messages
+from django.contrib.auth.models import User, Group
+from home.mail import enviar_notificacion_email
 
 
 def base_view(request):
@@ -134,3 +137,41 @@ def get_image_url(image):
     if image:
         return f"{settings.MEDIA_URL}{image}"
     return f"{settings.STATIC_URL}home/course_images/default_course_image.jpg"
+
+
+def is_in_academy_group(user):
+    return user.groups.filter(name='academy').exists()
+
+
+def manage_users(request):
+    if not request.user.is_authenticated or not is_in_academy_group(request.user):
+        return redirect('homepage')
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        user_to_delete = get_object_or_404(User, id=user_id)
+        # Verificar que el usuario no pertenece al grupo 'academy'
+        if not user_to_delete.groups.filter(name='academy').exists():
+            try:
+                destinatario = user_to_delete.email
+                subject = "Eliminación de tu cuenta en ReservaTuFuturo"
+                message = f"Hola {user_to_delete.first_name},\n\n"
+                message += "Lamentamos informarte que tu cuenta en ReservaTuFuturo ha sido eliminada.\n\n"
+                message += "Si tienes alguna duda o crees que esto es un error, puedes escribirnos a reservatufuturo@gmx.com o llamarnos al +34 123 456 789.\n\n"
+                message += "Atentamente,\nEquipo de ReservaTuFuturo."
+                enviar_notificacion_email(destinatario, subject, message)
+                
+                user_to_delete.delete()
+                messages.success(request, f'El usuario "{user_to_delete.username}" ha sido eliminado correctamente.')
+            except Exception as e:
+                messages.error(request, f'Error al eliminar el usuario: {e}')
+        else:
+            messages.error(request, 'No puedes eliminar a un usuario que pertenece al grupo "academy".')
+        return redirect('manage_users')
+
+    # Obtener usuarios que no están en el grupo 'academy'
+    academy_group = Group.objects.get(name='academy')
+    users = User.objects.exclude(groups=academy_group).exclude(is_superuser=True).order_by('-date_joined')
+    context = {
+        'users': users
+    }
+    return render(request, 'home/manage_users.html', context)

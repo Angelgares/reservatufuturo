@@ -27,6 +27,7 @@
                 Cesta
               </a>
               <a href="{% url 'create_course' %}">Crear Curso</a>
+              <a href="{% url 'manage_users' %}">Gestionar Usuarios</a>
             {% endif %}
             {% if not user_in_academy %}
               <a href="{% url 'my_courses' %}">Mis Cursos</a>
