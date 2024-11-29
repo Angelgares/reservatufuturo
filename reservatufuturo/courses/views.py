@@ -269,10 +269,10 @@ def remove_user_from_course(request, course_id, inscription_id):
         else:
             destinatario = inscription.email
             
-        asunto = "Eliminación de inscripción"
+        asunto = "Eliminación de inscripción en ReservaTuFuturo"
         mensaje = f"Tu inscripción al curso {course.name} ha sido eliminada."
         mensaje += "\n\nPara más información, contacta con la academia."
-        mensaje += "\n\nEquipo ReservaTuFuturo."
+        mensaje += "\n\nAtentamente,\nEquipo de ReservaTuFuturo."
         enviar_notificacion_email(destinatario, asunto, mensaje)
 
         # Elimina la inscripción

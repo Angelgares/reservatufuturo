@@ -11,12 +11,12 @@ class CustomUserAdmin(admin.ModelAdmin):
     def delete_model(self, request, obj):
         # Antes de eliminar al usuario, envía un correo
         destinatario = obj.email
-        subject = "Cuenta eliminada"
+        subject = "Eliminación de cuenta en ReservaTuFuturo"
         message = (
             f"Hola {obj.first_name},\n\n"
-            "Lamentamos informarte que tu cuenta ha sido eliminada de nuestra plataforma. "
+            "Lamentamos informarle que su cuenta ha sido eliminada de nuestra plataforma. "
             "Si crees que esto fue un error, por favor contáctanos."
-            "\n\nEquipo ReservaTuFuturo."
+            "Atentamente,\nEquipo de ReservaTuFuturo."
         )
 
         enviar_notificacion_email(destinatario, subject, message)
