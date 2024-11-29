@@ -15,6 +15,7 @@ urlpatterns = [
     path('editMyProfile/', views.edit_profile, name='edit_profile'),
     path('myCourses/', views.my_courses, name='my_courses'),
     path('aboutUs/', views.about_us, name='about_us'),
+    path('manageUsers/', views.manage_users, name='manage_users'),
 ]
 
 if settings.DEBUG:

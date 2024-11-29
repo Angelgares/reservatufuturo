@@ -50,15 +50,15 @@
         <p>Ya tienes una reserva para este curso. Estado:
           <strong>
             {% if reservation.cart == True %}
-              En carrito
+              En la cesta.
               </strong>
+              <div>
+                <a href="{% url 'cart:cart' %}" class="btn btn-primary">Ir a la cesta</a>
+              </div>
             {% elif reservation.paymentMethod == 'Pending' %}
               Pendiente de pago.
               </strong>
             </p>
-            <div>
-              <a href="{% url 'cart:cart' %}" class="btn btn-primary">Ir a la cesta</a>
-            </div>
             {% else %}
               Pagado.
               </strong>
