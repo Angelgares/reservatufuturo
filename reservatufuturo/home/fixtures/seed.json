@@ -83,7 +83,7 @@
             "description": "Curso introductorio para opositores interesados en plazas de la administración pública.",
             "starting_date": "2024-09-01",
             "ending_date": "2024-09-30",
-            "type": "Administración General"
+            "type": "Administración"
         }
     },
     {
@@ -113,7 +113,7 @@
             "description": "Curso avanzado para oposiciones en administración pública.",
             "starting_date": "2024-11-01",
             "ending_date": "2024-11-30",
-            "type": "Administración General"
+            "type": "Administración"
         }
     },
     {
@@ -128,7 +128,7 @@
             "description": "Curso completo para opositores a técnicos de ayuntamientos.",
             "starting_date": "2024-12-01",
             "ending_date": "2024-12-30",
-            "type": "Técnicos de Ayuntamientos"
+            "type": "Técnicos"
         }
     },
     {
@@ -218,7 +218,7 @@
             "description": "Preparación completa para oposiciones al cuerpo de inspectores de trabajo.",
             "starting_date": "2025-06-01",
             "ending_date": "2025-06-30",
-            "type": "Inspector de Trabajo"
+            "type": "Inspector"
         }
     }
 ]
