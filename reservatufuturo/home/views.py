@@ -32,6 +32,8 @@ def homepage(request):
     name_query = request.GET.get('name_search', '')
     type_query = request.GET.get('type_search', '')
     date_query = request.GET.get('date_search', '')
+    search = request.GET.get('search', '')
+
 
     # Filtrar cursos cuya fecha de inicio es igual o posterior a la fecha actual
     courses = Course.objects.filter(starting_date__gte=current_date).order_by('-starting_date')
@@ -53,7 +55,11 @@ def homepage(request):
         }
         for course in courses
         if course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count() > 0
-    ][:6]
+    ]
+
+    # Limitar a 6 cursos si no se ha realizado una búsqueda
+    if not (name_query or type_query or date_query or search):
+        courses_with_images = courses_with_images[:6]
 
     context = {
         'courses': courses_with_images,
