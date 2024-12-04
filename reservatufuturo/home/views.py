@@ -125,8 +125,9 @@ def my_courses(request):
         {
             **reserva.course.__dict__,
             'image_url': get_image_url(reserva.course.image),
-            'available_slots': reserva.course.capacity - Reservation.objects
-                            .filter(course=reserva.course).count(),
+            'available_slots': reserva.course.capacity - Reservation.objects.filter(
+                course_id=reserva.course.id
+            ).exclude(paymentMethod='Pending', cart=True).count(),
             'payment_status': 'Pendiente de pago' if reserva.paymentMethod ==
             'Pending' else 'Pagado'
         }
