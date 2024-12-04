@@ -25,6 +25,7 @@
               </select>
               <input type="date" name="date_search" placeholder="Fecha de Inicio/Fin" value="{{ date_query }}">
               <button type="submit" class="btn btn-search">Buscar</button>
+              <input type="hidden" name="search" value="1">
             </form>
             <div class="courses-grid">
               {% if courses %}
