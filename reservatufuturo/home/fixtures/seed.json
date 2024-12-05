@@ -81,8 +81,8 @@
             "teacher": "Juan Pérez",
             "capacity": 20,
             "description": "Curso introductorio para opositores interesados en plazas de la administración pública.",
-            "starting_date": "2024-09-01",
-            "ending_date": "2024-09-30",
+            "starting_date": "2025-02-01",
+            "ending_date": "2025-09-30",
             "type": "Administración"
         }
     },
@@ -126,7 +126,7 @@
             "teacher": "Laura Méndez",
             "capacity": 20,
             "description": "Curso completo para opositores a técnicos de ayuntamientos.",
-            "starting_date": "2024-12-01",
+            "starting_date": "2025-01-01",
             "ending_date": "2024-12-30",
             "type": "Técnicos"
         }
@@ -218,6 +218,96 @@
             "description": "Preparación completa para oposiciones al cuerpo de inspectores de trabajo.",
             "starting_date": "2025-06-01",
             "ending_date": "2025-06-30",
+            "type": "Inspector"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 11,
+        "fields": {
+            "name": "Oposiciones para el Cuerpo de Justicia",
+            "price": 160.0,
+            "image": "course_images/justicia.jpg",
+            "teacher": "Marta Ruiz",
+            "capacity": 20,
+            "description": "Curso completo para preparar oposiciones al Cuerpo de Justicia, abarcando legislación y procedimientos judiciales.",
+            "starting_date": "2025-07-01",
+            "ending_date": "2025-07-31",
+            "type": "Justicia"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 12,
+        "fields": {
+            "name": "Formación Integral para Bomberos",
+            "price": 180.0,
+            "image": "course_images/bomberos.jpg",
+            "teacher": "José Martínez",
+            "capacity": 25,
+            "description": "Preparación intensiva para oposiciones al cuerpo de Bomberos, incluyendo técnicas de extinción y rescate.",
+            "starting_date": "2025-08-01",
+            "ending_date": "2025-08-31",
+            "type": "Bomberos"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 13,
+        "fields": {
+            "name": "Oposiciones para Prisiones: Gestión y Seguridad",
+            "price": 170.0,
+            "image": "course_images/prisiones.jpg",
+            "teacher": "Michael Scofield",
+            "capacity": 8,
+            "description": "Curso especializado en la preparación para oposiciones al cuerpo de Prisiones, enfocándose en gestión penitenciaria y seguridad.",
+            "starting_date": "2025-09-01",
+            "ending_date": "2025-09-30",
+            "type": "Prisiones"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 14,
+        "fields": {
+            "name": "Hacienda Pública: Preparación para Oposiciones",
+            "price": 190.0,
+            "image": "course_images/hacienda.jpg",
+            "teacher": "Antonio López",
+            "capacity": 22,
+            "description": "Curso completo para opositores al Ministerio de Hacienda, cubriendo fiscalidad y gestión financiera pública.",
+            "starting_date": "2025-10-01",
+            "ending_date": "2025-10-31",
+            "type": "Hacienda"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 15,
+        "fields": {
+            "name": "Tecnologías de la Información para Oposiciones TIC",
+            "price": 140.0,
+            "image": "course_images/tecnologias.jpg",
+            "teacher": "Sofía González",
+            "capacity": 20,
+            "description": "Preparación avanzada en tecnologías de la información para oposiciones en el sector TIC, incluyendo programación y redes.",
+            "starting_date": "2025-11-01",
+            "ending_date": "2025-11-30",
+            "type": "Tecnologías"
+        }
+    },
+    {
+        "model": "courses.course",
+        "pk": 16,
+        "fields": {
+            "name": "Oposiciones para Inspectores de Hacienda",
+            "price": 210.0,
+            "image": "course_images/inspectores_hacienda.jpg",
+            "teacher": "Fernando Sánchez",
+            "capacity": 15,
+            "description": "Curso especializado en la preparación para oposiciones al cuerpo de Inspectores de Hacienda, abarcando auditoría y normativa fiscal.",
+            "starting_date": "2025-12-01",
+            "ending_date": "2025-12-31",
             "type": "Inspector"
         }
     }

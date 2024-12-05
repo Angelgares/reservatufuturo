@@ -344,7 +344,7 @@ strong {
 .course-image-column {
     flex: 2;
     margin-left: 10px;
-    max-width: 280px;
+    max-width: 290px;
     display: flex;
     justify-content: center;
     align-items: center;
