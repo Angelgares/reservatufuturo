@@ -200,6 +200,7 @@ def delete_course(request, pk):
     course.delete()
     return redirect('courses')
 
+
 @login_required
 def update_course(request, pk):
     if not request.user.groups.filter(name='academy').exists():
@@ -208,38 +209,17 @@ def update_course(request, pk):
     course = get_object_or_404(Course, pk=pk)
 
     if request.method == 'POST':
-        form = CourseForm(request.POST, request.FILES)
+        form = CourseForm(request.POST, request.FILES, instance=course)
         if form.is_valid():
-            # Actualizar los campos manualmente
-            course.name = form.cleaned_data['name']
-            course.price = form.cleaned_data['price']
-            if 'image' in request.FILES:
-                course.image = request.FILES['image']
-            course.teacher = form.cleaned_data['teacher']
-            course.capacity = form.cleaned_data['capacity']
-            course.description = form.cleaned_data['description']
-            course.starting_date = form.cleaned_data['starting_date']
-            course.ending_date = form.cleaned_data['ending_date']
-            course.type = form.cleaned_data['type']
-            course.save()
-            
+            form.save()
+            messages.success(request, 'El curso ha sido actualizado exitosamente.')
             return redirect('course_detail', pk=course.pk)
         else:
-            return render(request, 'courses/update_course.html', {'form': form, 'course': course, 'error': "Formulario inválido"})
-
-    # Poblar el formulario con los valores actuales del curso
-    form = CourseForm(initial={
-        'name': course.name,
-        'price': course.price,
-        'image': course.image,
-        'teacher': course.teacher,
-        'capacity': course.capacity,
-        'description': course.description,
-        'starting_date': course.starting_date,
-        'ending_date': course.ending_date,
-        'type': course.type,
-    })
-    return render(request, 'courses/update_course.html', {'form': form, 'course': course})
+            messages.error(request, "Formulario inválido. Por favor, corrige los errores.")
+            return render(request, 'courses/update_course.html', {'form': form, 'course': course})
+    else:
+        form = CourseForm(instance=course)  # Inicializa el formulario con los datos existentes
+        return render(request, 'courses/update_course.html', {'form': form, 'course': course})
 
 @login_required
 def course_inscriptions(request, pk):
@@ -296,9 +276,9 @@ def update_payment_method(request, course_id, inscription_id):
     if inscription.paymentMethod == 'Pending':
         inscription.paymentMethod = 'Cash'
         inscription.save()
-        messages.success(request, f"El método de pago para {inscription.user or inscription.email} ha sido actualizado a 'Cash'.")
+        messages.success(request, f"El método de pago para {inscription.user or inscription.email} ha sido actualizado a 'Efectivo'.")
     else:
-        messages.warning(request, f"El método de pago no se puede actualizar porque no está en estado 'Pending'.")
+        messages.warning(request, f"El método de pago no se puede actualizar porque no está en estado 'Pendiente de pago'.")
 
     # Redirigir de vuelta a la lista de inscritos
     return redirect('course_inscriptions', pk=course_id)

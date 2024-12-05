@@ -1474,10 +1474,28 @@ strong {
   transform: scale(0.95);
 }
 
+/* Estilo para la imagen por defecto */
+.default-img {
+  height: 225px;
+  width: 225px;  /* Mantiene la proporción de la imagen */
+}
+
+
 @media (max-width: 576px) {
   .btn-icon {
       padding: 8px;
       font-size: 1rem;
       margin-left: 10px;
   }
+}
+
+.image-preview-group {
+  text-align: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  margin: 20px auto;
 }

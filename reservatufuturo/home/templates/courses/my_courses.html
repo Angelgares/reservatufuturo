@@ -12,11 +12,13 @@
                     <div class="course-box">
                         <div class="course-row">
                             <div class="course-my-image-column">
-                                {% if curso.image %}
-                                    <a href="{% url 'course_detail' curso.id %}" class="course-name">
-                                        <img class="course-img" src="{{ curso.image_url }}" alt="Imagen de {{ curso.name }}">
-                                    </a>
-                                {% endif %}
+                                <a href="{% url 'course_detail' curso.id %}">
+                                    {% if curso.image %}
+                                            <img class="course-detail-img" src="{{ curso.image_url }}" alt="Imagen de {{ curso.name }}" />
+                                    {% else %}
+                                        <img src="{% static 'home/logo.png' %}" alt="" class="default-img" >
+                                    {% endif %}
+                                </a>
                             </div>
                             <div class="course-details-column">
                                 <h2>
