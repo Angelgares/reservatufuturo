@@ -22,8 +22,9 @@
                 {% endif %}
             </div>
             <div class="form-group image-preview-group">
+                <img id="image-preview" class="image-preview" style="display: none;" />
                 <label for="id_image" class="image-label">Subir imagen</label>
-                <input type="file" name="image" id="id_image" class="file-input">
+                <input type="file" name="image" id="id_image" class="file-input" onchange="previewImage(event)">
             </div>
             <div class="form-group">
                 {{ form.teacher.label_tag }}
@@ -62,9 +63,21 @@
 
         <!-- Botones de acción -->
         <div class="button-container">
-            <button type="submit" class="btn btn-primary">Crear Curso</button>
             <a href="{% url 'homepage' %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Crear Curso</button>
         </div>
     </form>
 </div>
+
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('image-preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 {% endblock %}

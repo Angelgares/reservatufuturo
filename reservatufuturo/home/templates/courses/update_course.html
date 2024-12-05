@@ -7,13 +7,9 @@
 {% block content %}
 <div class="form-container">
     <h1 class="form-title">Editar Curso: {{ course.name }}</h1>
-
-    {% if error %}
-        <p class="error-message">{{ error }}</p>
-    {% endif %}
-
     <form method="post" enctype="multipart/form-data" class="edit-course-form">
         {% csrf_token %}
+        
         <div class="form-grid">
             <div class="form-group">
                 {{ form.name.label_tag }}
@@ -22,17 +18,21 @@
             <div class="form-group">
                 {{ form.price.label_tag }}
                 {{ form.price }}
+                {% if form.price.errors %}
+                    <div class="error-message">{{ form.price.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group image-preview-group">
-                <label for="id_image">Imagen actual</label>
                 {% if course.image %}
-                    <img src="{{ course.image.url }}" alt="Imagen actual" class="image-preview">
+                    <label for="id_image" id="current-image-label">Imagen actual</label>
+                    <img src="{{ course.image.url }}" alt="Imagen actual" class="image-preview" id="current-image-preview">
                 {% else %}
-                    <p class="no-image">No hay imagen disponible</p>
+                    <p class="no-image" id="no-image-text">No hay imagen disponible</p>
                 {% endif %}
                 <div class="form-group">
+                    <img id="new-image-preview" class="image-preview" style="display: none;" />
                     <label for="id_image" class="image-label">Subir nueva imagen</label>
-                    <input type="file" name="image" id="id_image" class="file-input">
+                    <input type="file" name="image" id="id_image" class="file-input" onchange="previewImage(event)">
                 </div>
             </div>
             <div class="form-group">
@@ -42,6 +42,9 @@
             <div class="form-group">
                 {{ form.capacity.label_tag }}
                 {{ form.capacity }}
+                {% if form.capacity.errors %}
+                    <div class="error-message">{{ form.capacity.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form.description.label_tag }}
@@ -50,10 +53,16 @@
             <div class="form-group">
                 {{ form.starting_date.label_tag }}
                 {{ form.starting_date }}
+                {% if form.starting_date.errors %}
+                    <div class="error-message">{{ form.starting_date.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form.ending_date.label_tag }}
                 {{ form.ending_date }}
+                {% if form.ending_date.errors %}
+                    <div class="error-message">{{ form.ending_date.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form.type.label_tag }}
@@ -62,9 +71,47 @@
         </div>
 
         <div class="button-container">
-            <button type="submit" class="btn btn-primary">Guardar cambios</button>
             <a href="{% url 'course_detail' course.pk %}" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var startingDateField = document.getElementById('id_starting_date');
+        var endingDateField = document.getElementById('id_ending_date');
+        var startingDateValue = "{{ course.starting_date|date:'Y-m-d' }}";
+        var endingDateValue = "{{ course.ending_date|date:'Y-m-d' }}";
+        if (startingDateField) {
+            startingDateField.value = startingDateValue;
+        }
+        if (endingDateField) {
+            endingDateField.value = endingDateValue;
+        }
+    });
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function(){
+            var output = document.getElementById('new-image-preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+            // Ocultar la imagen actual si se selecciona una nueva
+            var currentImage = document.getElementById('current-image-preview');
+            var currentImageLabel = document.getElementById('current-image-label');
+            if (currentImage) {
+                currentImage.style.display = 'none';
+            }
+            if (currentImageLabel) {
+                currentImageLabel.style.display = 'none';
+            }
+            // Ocultar el texto "No hay imagen disponible" si se selecciona una nueva imagen
+            var noImageText = document.getElementById('no-image-text');
+            if (noImageText) {
+                noImageText.style.display = 'none';
+            }
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 {% endblock %}

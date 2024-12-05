@@ -1488,3 +1488,14 @@ strong {
       margin-left: 10px;
   }
 }
+
+.image-preview-group {
+  text-align: center;
+}
+
+.image-preview {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+  margin: 20px auto;
+}
