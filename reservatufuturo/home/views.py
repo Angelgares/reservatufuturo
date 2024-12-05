@@ -7,7 +7,7 @@ from .forms import EmailAuthenticationForm
 from .models import Reservation, Course
 from django.conf import settings
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from home.mail import enviar_notificacion_email
@@ -33,10 +33,18 @@ def homepage(request):
     type_query = request.GET.get('type_search', '')
     date_query = request.GET.get('date_search', '')
     search = request.GET.get('search', '')
+    
+    user = request.user
+    user_in_academy = user.groups.filter(name='academy').exists() if user.is_authenticated else False
 
+    # Filtrar cursos
+    if user_in_academy:
+        courses = Course.objects.all()
+    else:
+        courses = Course.objects.filter(starting_date__gte=current_date)
 
-    # Filtrar cursos cuya fecha de inicio es igual o posterior a la fecha actual
-    courses = Course.objects.filter(starting_date__gte=current_date).order_by('-starting_date')
+    courses = courses.order_by('-starting_date')
+
 
     # Aplicar filtros
     if name_query:
@@ -66,8 +74,35 @@ def homepage(request):
         'name_query': name_query,
         'type_query': type_query,
         'date_query': date_query,
-        'type_choices': Course.TYPE_CHOICES
+        'type_choices': Course.TYPE_CHOICES,
+        'today': current_date
     }
+    
+    if user.is_authenticated:
+        # Obtener las reservas que están en el carrito
+        cart_reservations = Reservation.objects.filter(user=user, cart=True, paymentMethod='Pending')
+        cart_item_count = cart_reservations.count()
+        cart_course_ids = cart_reservations.values_list('course_id', flat=True)
+
+        # Obtener los cursos ya inscritos
+        enrolled_reservations = Reservation.objects.filter(user=user, cart=False).exclude(paymentMethod='Pending')
+        enrolled_course_ids = enrolled_reservations.values_list('course_id', flat=True)
+
+        pending_reservations = Reservation.objects.filter(user=user, cart=False, paymentMethod='Pending')
+        pending_course_ids = pending_reservations.values_list('course_id', flat=True)
+
+        context['cart_item_count'] = cart_item_count
+        context['cart_courses'] = cart_reservations.annotate(name=F('course__name')).values('name')
+        context['cart_course_ids'] = list(cart_course_ids)
+        context['enrolled_course_ids'] = list(enrolled_course_ids)
+        context['pending_course_ids'] = list(pending_course_ids)
+    else:
+        context['cart_item_count'] = 0
+        context['cart_courses'] = []
+        context['cart_course_ids'] = []
+        context['enrolled_course_ids'] = []
+        context['pending_course_ids'] = []
+
     return render(request, template_name, context)
 
 

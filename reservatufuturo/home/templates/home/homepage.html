@@ -30,7 +30,16 @@
             <div class="courses-grid">
               {% if courses %}
                 {% for course in courses %}
-                <div class="course-box">
+                <div class="course-box
+                        {% if course.id in cart_course_ids %}in-cart
+                        {% elif course.id in pending_course_ids %}pending
+                        {% elif course.id in enrolled_course_ids %}enrolled
+                        {% elif course.available_slots == 0 %}full
+                        {% endif %}
+                        {% if course.starting_date < today %} past
+                        {% endif %}
+                        {% if course.ending_date < today %} finished
+                        {% endif %}">
                     <div class="course-row">
                       <div class="course-image-home-column">
                         <a href="{% url 'course_detail' course.id %}">
@@ -60,6 +69,28 @@
                         <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
                         <p><strong>Fecha de finalización:</strong> {{ course.ending_date }}</p>
                         <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
+
+                        {% if user.is_authenticated %}
+                                        {% if course.id in cart_course_ids %}
+                                            <span class="badge in-cart-badge">En el Carrito</span>
+                                        {% elif course.id in pending_course_ids %}
+                                            <span class="badge pending-badge">Pendiente de Pago</span>
+                                        {% elif course.id in enrolled_course_ids %}
+                                            <span class="badge enrolled-badge">Inscrito</span>
+                                        {% elif course.available_slots == 0 %}
+                                            <span class="badge full-badge">Completo</span>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if course.available_slots == 0 %}
+                                            <span class="badge full-badge">Completo</span>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if course.ending_date < today %}
+                                        <span class="badge finished-badge">Terminado</span>
+                                    {% elif course.starting_date < today %}
+                                        <span class="badge past-badge">Comenzado</span>
+                                    {% endif %}
                       </div>
                     </div>
                   </div>
