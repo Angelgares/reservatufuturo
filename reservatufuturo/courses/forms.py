@@ -1,12 +1,12 @@
 from django import forms
 from .models import Course
-from django.core.exceptions import ValidationError
 from datetime import date
 
-class CourseForm(forms.Form):
+
+class CourseForm(forms.ModelForm):
     
     TYPE_CHOICES = [
-        ('Admnistrición', 'Administración'),
+        ('Administración', 'Administración'),
         ('Justicia', 'Justicia'),
         ('Educación', 'Educación'),
         ('Sanidad', 'Sanidad'),
@@ -45,6 +45,24 @@ class CourseForm(forms.Form):
         label="Categoría"
     )
     
+    class Meta:
+        model = Course
+        fields = [
+            'name',
+            'price',
+            'image',
+            'teacher',
+            'capacity',
+            'description',
+            'starting_date',
+            'ending_date',
+            'type',
+        ]
+        widgets = {
+            'starting_date': forms.DateInput(attrs={'type': 'date'}),
+            'ending_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+    
     def clean(self):
         cleaned_data = super().clean()
         starting_date = cleaned_data.get('starting_date')
@@ -56,7 +74,7 @@ class CourseForm(forms.Form):
                 self.add_error('starting_date', 'La fecha de inicio no puede ser anterior a la fecha actual.')
 
         if starting_date and ending_date:
-            if ending_date <= starting_date:
-                self.add_error('ending_date', 'La fecha de finalización debe ser posterior a la fecha de inicio.')
+            if ending_date < starting_date:
+                self.add_error('ending_date', 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.')
         
         return cleaned_data
