@@ -296,9 +296,9 @@ def update_payment_method(request, course_id, inscription_id):
     if inscription.paymentMethod == 'Pending':
         inscription.paymentMethod = 'Cash'
         inscription.save()
-        messages.success(request, f"El método de pago para {inscription.user or inscription.email} ha sido actualizado a 'Cash'.")
+        messages.success(request, f"El método de pago para {inscription.user or inscription.email} ha sido actualizado a 'Efectivo'.")
     else:
-        messages.warning(request, f"El método de pago no se puede actualizar porque no está en estado 'Pending'.")
+        messages.warning(request, f"El método de pago no se puede actualizar porque no está en estado 'Pendiente de pago'.")
 
     # Redirigir de vuelta a la lista de inscritos
     return redirect('course_inscriptions', pk=course_id)
