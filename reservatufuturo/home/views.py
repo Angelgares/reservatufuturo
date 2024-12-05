@@ -11,6 +11,8 @@ from django.db.models import Q, F
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from home.mail import enviar_notificacion_email
+import stripe
+
 
 
 def base_view(request):
@@ -157,6 +159,7 @@ def edit_profile(request):
 
 @login_required
 def my_courses(request):
+    stripe_publishable_key = settings.STRIPE_PUBLISHABLE_KEY
     reservas = Reservation.objects.filter(user=request.user, cart=False)
     cursos = [
         {
@@ -171,7 +174,7 @@ def my_courses(request):
         for reserva in reservas
     ]
 
-    return render(request, 'courses/my_courses.html', {'cursos': cursos})
+    return render(request, 'courses/my_courses.html', {'cursos': cursos, 'stripe_publishable_key': stripe_publishable_key})
 
 
 def get_image_url(image):
