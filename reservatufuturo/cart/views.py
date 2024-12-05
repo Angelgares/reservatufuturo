@@ -512,6 +512,34 @@ def pay_course(request, course_id):
 
 def update_payment_success(request, reservation_id):
     reservation = get_object_or_404(Reservation, id=reservation_id)
+
+    course = reservation.course
+    user = reservation.user
+    email = user.email
+    
+    # Crear el mensaje de correo electrónico
+    destinatario = email
+    subject = "Confirmación de compra en ReservaTuFuturo"
+    message = f"Hola {user.first_name},\n\n"
+    message += "Gracias por confiar en ReservaTuFuturo para tu formación.\n\n"
+    message += "Has adquirido los siguientes cursos:\n"
+    
+    tasas = 5 if course.price <= 150 else 0
+    message += f"- {course.name}\n"
+    message += f"     - Precio: {course.price} €\n"
+    message += f"     - Gastos de gestión: {tasas} €\n"
+    message += f"     - Método de pago: Online\n"
+    message += f"     - Estado: Pagado\n"
+    message += f"     - Fecha de inicio: {course.starting_date}\n"
+    message += "Puedes acceder a tus cursos en la sección 'Mis cursos' después de iniciar sesión en nuestra web (reservatufuturo.onrender.com).\n\n"    
+    message += "¡Esperamos que disfrutes de tus cursos!\n\n"
+    message += "Atentamente,\nEquipo de ReservaTuFuturo."
+    
+    # Enviar el correo electrónico
+    enviar_notificacion_email(destinatario, subject, message)
+    
+    # Actualizar la reserva a 'pagado'
+    reservation.cart = False
     reservation.paymentMethod = "Online"
     reservation.save()
 
