@@ -2,7 +2,7 @@ from django import forms
 from .models import Course
 from django.core.exceptions import ValidationError
 
-class CourseForm(forms.Form):        
+class CourseForm(forms.Form):
     
     TYPE_CHOICES = [
         ('Admnistrición General', 'Administración General'),
@@ -13,7 +13,7 @@ class CourseForm(forms.Form):
         ('Bomberos', 'Bomberos'),
         ('Prisiones', 'Prisiones'),
         ('Hacienda', 'Hacienda'),
-        ('Inspecto de Trabajo', 'Inspector de Trabajo'),
+        ('Inspector de Trabajo', 'Inspector de Trabajo'),
         ('Técnicos de Ayuntamientos', 'Técnicos de Ayuntamientos'),
         ('Informática', 'Informática'),
         ('Telecomunicaciones', 'Telecomunicaciones'),

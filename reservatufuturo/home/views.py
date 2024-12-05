@@ -7,7 +7,7 @@ from .forms import EmailAuthenticationForm
 from .models import Reservation, Course
 from django.conf import settings
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
 from home.mail import enviar_notificacion_email
@@ -33,10 +33,18 @@ def homepage(request):
     type_query = request.GET.get('type_search', '')
     date_query = request.GET.get('date_search', '')
     search = request.GET.get('search', '')
+    
+    user = request.user
+    user_in_academy = user.groups.filter(name='academy').exists() if user.is_authenticated else False
 
+    # Filtrar cursos
+    if user_in_academy:
+        courses = Course.objects.all()
+    else:
+        courses = Course.objects.filter(starting_date__gte=current_date)
 
-    # Filtrar cursos cuya fecha de inicio es igual o posterior a la fecha actual
-    courses = Course.objects.filter(starting_date__gte=current_date).order_by('-starting_date')
+    courses = courses.order_by('-starting_date')
+
 
     # Aplicar filtros
     if name_query:
@@ -46,28 +54,57 @@ def homepage(request):
     if type_query:
         courses = courses.filter(Q(type__icontains=type_query))
 
-    # Excluir cursos sin plazas disponibles y limitar a 6 cursos al final
+    # Generar la lista base de cursos con imágenes y plazas disponibles
     courses_with_images = [
         {
             **course.__dict__,
             'image_url': get_image_url(course.image),
-            'available_slots': course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending', cart=True).count()
+            'available_slots': max(0, course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending', cart=True).count())
         }
         for course in courses
-        if course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count() > 0
     ]
 
-    # Limitar a 6 cursos si no se ha realizado una búsqueda
+    # Si no se ha realizado una búsqueda, excluir cursos sin plazas y limitar a 6
     if not (name_query or type_query or date_query or search):
-        courses_with_images = courses_with_images[:6]
+        courses_with_images = [
+            course for course in courses_with_images
+            if course['available_slots'] > 0
+        ][:6]
 
     context = {
         'courses': courses_with_images,
         'name_query': name_query,
         'type_query': type_query,
         'date_query': date_query,
-        'type_choices': Course.TYPE_CHOICES
+        'type_choices': Course.TYPE_CHOICES,
+        'today': current_date
     }
+    
+    if user.is_authenticated:
+        # Obtener las reservas que están en el carrito
+        cart_reservations = Reservation.objects.filter(user=user, cart=True, paymentMethod='Pending')
+        cart_item_count = cart_reservations.count()
+        cart_course_ids = cart_reservations.values_list('course_id', flat=True)
+
+        # Obtener los cursos ya inscritos
+        enrolled_reservations = Reservation.objects.filter(user=user, cart=False).exclude(paymentMethod='Pending')
+        enrolled_course_ids = enrolled_reservations.values_list('course_id', flat=True)
+
+        pending_reservations = Reservation.objects.filter(user=user, cart=False, paymentMethod='Pending')
+        pending_course_ids = pending_reservations.values_list('course_id', flat=True)
+
+        context['cart_item_count'] = cart_item_count
+        context['cart_courses'] = cart_reservations.annotate(name=F('course__name')).values('name')
+        context['cart_course_ids'] = list(cart_course_ids)
+        context['enrolled_course_ids'] = list(enrolled_course_ids)
+        context['pending_course_ids'] = list(pending_course_ids)
+    else:
+        context['cart_item_count'] = 0
+        context['cart_courses'] = []
+        context['cart_course_ids'] = []
+        context['enrolled_course_ids'] = []
+        context['pending_course_ids'] = []
+
     return render(request, template_name, context)
 
 
@@ -125,9 +162,9 @@ def my_courses(request):
         {
             **reserva.course.__dict__,
             'image_url': get_image_url(reserva.course.image),
-            'available_slots': reserva.course.capacity - Reservation.objects.filter(
+            'available_slots': max(0, reserva.course.capacity - Reservation.objects.filter(
                 course_id=reserva.course.id
-            ).exclude(paymentMethod='Pending', cart=True).count(),
+            ).exclude(paymentMethod='Pending', cart=True).count()),
             'payment_status': 'Pendiente de pago' if reserva.paymentMethod ==
             'Pending' else 'Pagado'
         }

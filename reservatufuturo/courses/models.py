@@ -14,7 +14,7 @@ class Course(models.Model):
         ('Bomberos', 'Bomberos'),
         ('Prisiones', 'Prisiones'),
         ('Hacienda', 'Hacienda'),
-        ('Inspecto', 'Inspector'),
+        ('Inspector', 'Inspector'),
         ('Técnicos', 'Técnicos'),
         ('Informática', 'Informática'),
         ('Telecomunicaciones', 'Telecomunicaciones'),
