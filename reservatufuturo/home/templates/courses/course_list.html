@@ -53,12 +53,12 @@
                         {% endif %}">
                             <div class="course-row">
                                 <div class="course-image-column">
-                                    {% if course.image_url %}
+                                    {% if course.image %}
                                         <a href="{% url 'course_detail' course.id %}">
                                             <img class="course-detail-img" src="{{ course.image_url }}" alt="Imagen de {{ course.name }}" />
                                         </a>
                                     {% else %}
-                                        <img class="course-detail-img" src="{% static 'home/course_images/default_course_image.jpg' %}" alt="Imagen no disponible" />
+                                        <img src="{% static 'home/logo.png' %}" alt="" class="default-img" >
                                     {% endif %}
                                 </div>
                                 <div class="course-details-column">

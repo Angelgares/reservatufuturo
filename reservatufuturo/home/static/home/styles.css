@@ -1474,6 +1474,13 @@ strong {
   transform: scale(0.95);
 }
 
+/* Estilo para la imagen por defecto */
+.default-img {
+  height: 225px;
+  width: 225px;  /* Mantiene la proporción de la imagen */
+}
+
+
 @media (max-width: 576px) {
   .btn-icon {
       padding: 8px;

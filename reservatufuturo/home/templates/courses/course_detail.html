@@ -11,13 +11,13 @@
 
   <div class="course-detail-grid">
     <div class="course-detail-image">
-      <img
-        class="course-detail-img"
-        src="{{ course.image.url}}"
-        alt="Imagen de {{ course.name }}"
-      />
+      {% if course.image and course.image.name %}
+        <img class="course-detail-img" src="{{ course.image.url }}" alt="Imagen de {{ course.name }}">
+      {% else %}
+        <img src="{% static 'home/logo.png' %}" alt="" class="default-img" >
+      {% endif %}
     </div>
-
+    
     <!-- Columna Derecha: Información del Curso -->
     <div class="course-detail-info">
       <p><strong>Profesor:</strong> {{ course.teacher }}</p>
