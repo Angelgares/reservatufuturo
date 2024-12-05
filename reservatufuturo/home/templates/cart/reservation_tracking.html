@@ -20,7 +20,36 @@
             
             {% if reservation.paymentMethod == 'Pending' %}
                 <p><strong>Método de pago:</strong> Cash</p>
-                <p><strong>Estado de la reserva:</strong> Pendiente</p>
+                <p><strong>Estado de la reserva:</strong> Pendiente
+                    <br><br>
+                    <form action="{% url 'cart:pay_reservation' reservation.id %}" method="post" id="pay-form">
+                        {% csrf_token %}
+                        <button type="button" id="checkout-button-{{ reservation.id }}" class="btn btn-primary">
+                          Pagar online
+                        </button>
+                      </form>
+
+                    <script src="https://js.stripe.com/v3/"></script>
+                    <script>
+                      const stripe = Stripe("{{ stripe_publishable_key }}");
+
+                      document
+                        .getElementById("checkout-button-{{ reservation.id }}")
+                        .addEventListener("click", function () {
+                          fetch("{% url 'cart:pay_reservation' reservation.id %}", {
+                            method: "POST",
+                            headers: {
+                              "X-CSRFToken": "{{ csrf_token }}",
+                            },
+                          })
+                            .then((response) => response.json())
+                            .then((data) => {
+                              stripe.redirectToCheckout({ sessionId: data.id });
+                            })
+                            .catch((error) => console.error("Error:", error));
+                        });
+                    </script>
+                </p>
             {% else %}
                 <p><strong>Método de pago:</strong> {{ reservation.paymentMethod }}</p>
                 <p><strong>Estado de la reserva:</strong> Pagado</p>
