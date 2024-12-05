@@ -62,9 +62,9 @@ class CourseListView(generic.ListView):
                 {
                     **course,
                     'image_url': self.get_image_url(course['image']),
-                    'available_slots': course['capacity'] - Reservation.objects.filter(
-                        course_id=course['id']
-                    ).exclude(paymentMethod='Pending', cart=True).count()
+                    'available_slots': max(0, course['capacity'] - Reservation.objects.filter(
+                            course_id=course['id']
+                        ).exclude(paymentMethod='Pending', cart=True).count()),
                 }
                 for course in group
             ]
@@ -73,6 +73,7 @@ class CourseListView(generic.ListView):
         context['search_query'] = self.request.GET.get('search', '')
         context['type_choices'] = Course.TYPE_CHOICES
         context['today'] = timezone.now().date()
+        context['user_in_academy'] = user_in_academy
 
         
         # Añadir información del carrito y cursos inscritos si el usuario está autenticado
@@ -135,7 +136,7 @@ class CourseDetailView(generic.DetailView):
         # Calcular las plazas disponibles
         reserved_count = Reservation.objects.filter(course=self.object)\
             .exclude(paymentMethod='Pending', cart=True).count()
-        available_slots = self.object.capacity - reserved_count
+        available_slots = max(0, self.object.capacity - reserved_count)
 
         context['user_in_academy'] = user_in_academy
         context['has_reservation'] = has_reservation

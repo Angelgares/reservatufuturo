@@ -61,7 +61,7 @@
                         <!-- Botón para actualizar el método de pago -->
                         <form method="post" action="{% url 'update_payment_method' course.pk inscription.pk %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-update-payment">Pagado</button>
+                            <button type="submit" class="btn btn-danger btn-update-payment">Pagar</button>
                         </form>
                         <br>
                     {% endif %}

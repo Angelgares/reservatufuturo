@@ -344,7 +344,7 @@ strong {
 .course-image-column {
     flex: 2;
     margin-left: 10px;
-    max-width: 280px;
+    max-width: 290px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1435,4 +1435,49 @@ strong {
 .table td {
     text-align: center;
     vertical-align: middle;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-icon {
+  background: none;
+  border: 2px solid #ffffff;
+  border-radius: 20%;
+  cursor: pointer;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-left: 20px;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:hover {
+  background-color: #007bff;
+  color: #ffffff;
+  border-color: #007bff;
+  transform: scale(1.1);
+}
+
+.btn-icon:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.btn-icon:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 576px) {
+  .btn-icon {
+      padding: 8px;
+      font-size: 1rem;
+      margin-left: 10px;
+  }
 }

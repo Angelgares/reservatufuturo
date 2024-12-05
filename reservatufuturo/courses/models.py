@@ -6,7 +6,7 @@ from django.conf import settings
 
 class Course(models.Model):
     TYPE_CHOICES = [
-        ('Admnistrición General', 'Administración General'),
+        ('Administración', 'Administración'),
         ('Justicia', 'Justicia'),
         ('Educación', 'Educación'),
         ('Sanidad', 'Sanidad'),
@@ -14,11 +14,11 @@ class Course(models.Model):
         ('Bomberos', 'Bomberos'),
         ('Prisiones', 'Prisiones'),
         ('Hacienda', 'Hacienda'),
-        ('Inspecto de Trabajo', 'Inspector de Trabajo'),
-        ('Técnicos de Ayuntamientos', 'Técnicos de Ayuntamientos'),
+        ('Inspector', 'Inspector'),
+        ('Técnicos', 'Técnicos'),
         ('Informática', 'Informática'),
         ('Telecomunicaciones', 'Telecomunicaciones'),
-        ('Tecnología de la Información', 'Tecnologías de la Información'),
+        ('Tecnología', 'Tecnologías'),
     ]
 
 
