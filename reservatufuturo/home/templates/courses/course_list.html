@@ -6,12 +6,12 @@
 {% block content %}
 <div class="container">
 
-  <!-- Alerta del carrito cuando el usuario está autenticado y tiene productos -->
+  <!-- Alerta de la cesta cuando el usuario está autenticado y tiene productos -->
   {% if user.is_authenticated and cart_item_count > 0 %}
     <div class="cart-alert">
         <div class="cart-header">
-            <p style="color: #856404;">Tienes {{ cart_item_count }} producto(s) en tu carrito:</p>
-            <a href="{% url 'cart:cart' %}" class="btn btn-view-cart">Ver Carrito</a>
+            <p style="color: #856404;">Tienes {{ cart_item_count }} producto(s) en tu cesta:</p>
+            <a href="{% url 'cart:cart' %}" class="btn btn-view-cart">Ver Cesta</a>
         </div>
         <div class="cart-courses">
             {% for course in cart_courses %}
@@ -62,11 +62,21 @@
                                     {% endif %}
                                 </div>
                                 <div class="course-details-column">
-                                    <h3>
-                                        <a href="{% url 'course_detail' course.id %}" class="course-name">
-                                            {{ course.name }}
-                                        </a>
-                                    </h3>
+                                    <div class="flex-container">
+                                        <h3 class="mb-0">
+                                            <a href="{% url 'course_detail' course.id %}" class="course-name">
+                                                {{ course.name }}
+                                            </a>
+                                        </h3>
+                                        {% if course.available_slots > 0 and not user_in_academy and user.is_authenticated and course.id not in cart_course_ids and course.id not in enrolled_course_ids and course.id not in pending_course_ids %}
+                                            <form action="{% url 'cart:add_to_cart' course.id %}" method="post">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-icon" aria-label="Añadir a la cesta">
+                                                    <i class="fas fa-cart-plus"></i>
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
                                     <p><strong>Profesor:</strong> {{ course.teacher }}</p>
                                     <p><strong>Precio:</strong> {{ course.price }}€</p>
                                     <p><strong>Fecha de inicio:</strong> {{ course.starting_date }}</p>
@@ -74,8 +84,12 @@
                                     <p><strong>Plazas disponibles:</strong> {{ course.available_slots }} estudiantes</p>
 
                                     {% if user.is_authenticated %}
-                                        {% if course.id in cart_course_ids %}
-                                            <span class="badge in-cart-badge">En el Carrito</span>
+                                        {% if course.ending_date < today %}
+                                            <span class="badge finished-badge">Terminado</span>
+                                        {% elif course.starting_date < today %}
+                                            <span class="badge past-badge">Comenzado</span>
+                                        {% elif course.id in cart_course_ids %}
+                                            <span class="badge in-cart-badge">En la Cesta</span>
                                         {% elif course.id in pending_course_ids %}
                                             <span class="badge pending-badge">Pendiente de Pago</span>
                                         {% elif course.id in enrolled_course_ids %}
@@ -87,12 +101,6 @@
                                         {% if course.available_slots == 0 %}
                                             <span class="badge full-badge">Completo</span>
                                         {% endif %}
-                                    {% endif %}
-
-                                    {% if course.ending_date < today %}
-                                        <span class="badge finished-badge">Terminado</span>
-                                    {% elif course.starting_date < today %}
-                                        <span class="badge past-badge">Comenzado</span>
                                     {% endif %}
                               </div>
                           </div>

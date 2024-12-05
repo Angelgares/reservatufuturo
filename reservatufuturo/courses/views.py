@@ -73,6 +73,7 @@ class CourseListView(generic.ListView):
         context['search_query'] = self.request.GET.get('search', '')
         context['type_choices'] = Course.TYPE_CHOICES
         context['today'] = timezone.now().date()
+        context['user_in_academy'] = user_in_academy
 
         
         # Añadir información del carrito y cursos inscritos si el usuario está autenticado
