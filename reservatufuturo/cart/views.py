@@ -208,17 +208,22 @@ class QuickCashPurchaseView(View):
 # Eliminar un curso del carrito
 @login_required
 def remove_from_cart(request, reservation_id):
-    # Obtener la reserva por ID y asegurar que pertenece al usuario autenticado
-    reservation = get_object_or_404(
-        Reservation, id=reservation_id, user=request.user, cart=True
-    )
+    try:
+        # Obtener la reserva por ID y asegurar que pertenece al usuario autenticado
+        reservation = Reservation.objects.get(
+            id=reservation_id, user=request.user, cart=True
+        )
+        course_name = reservation.course.name
 
-    # Eliminar la reserva del carrito
-    reservation.delete()
+        # Eliminar la reserva del carrito
+        reservation.delete()
 
-    messages.success(
-        request, f'El curso "{reservation.course.name}" ha sido eliminado del carrito.'
-    )
+        messages.success(
+            request, f'El curso "{course_name}" ha sido eliminado del carrito.'
+        )
+
+    except Reservation.DoesNotExist:
+        messages.warning(request, "La reserva ya ha sido eliminada o no existe.")
 
     # Redirigir al carrito
     return redirect("cart:cart")
