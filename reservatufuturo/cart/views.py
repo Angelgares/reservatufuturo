@@ -451,6 +451,7 @@ def tracking_form(request):
 
 
 def reservation_tracking(request, tracking_code):
+    stripe_publishable_key = settings.STRIPE_PUBLISHABLE_KEY
     if not tracking_code:
         raise Http404("Código de seguimiento no proporcionado.")
 
@@ -463,7 +464,7 @@ def reservation_tracking(request, tracking_code):
         - Reservation.objects.filter(course=course).count(),
     }
     return render(
-        request, "cart/reservation_tracking.html", {"reservation": reservation}
+        request, "cart/reservation_tracking.html", {"reservation": reservation, 'stripe_publishable_key': stripe_publishable_key}
     )
 
 
@@ -515,3 +516,41 @@ def update_payment_success(request, reservation_id):
     reservation.save()
 
     return render(request, "cart/payment_success.html")
+
+def pay_reservation(request, reservation_id):
+    reservation = get_object_or_404(
+        Reservation,
+        id=reservation_id,
+    )
+    try:
+        total_price = Decimal(reservation.course.price) + reservation.management_fee
+
+        # URLs de éxito y cancelación
+        success_url = request.build_absolute_uri(
+            reverse(
+                "cart:update_payment_success", kwargs={"reservation_id": reservation_id}
+            )
+        )
+        cancel_url = request.build_absolute_uri(reverse("cart:payment_cancel"))
+
+        # Crear una sesión de Stripe Checkout
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "eur",
+                        "product_data": {"name": "Curso"},
+                        "unit_amount": int(total_price * 100),  # Convertir a céntimos
+                    },
+                    "quantity": 1,
+                }
+            ],
+            mode="payment",
+            success_url=success_url,
+            cancel_url=cancel_url,
+        )
+        return JsonResponse({"id": session.id})
+    except Exception as e:
+        print(f"Error en checkout: {e}")
+        return JsonResponse({"error": str(e)}, status=400)

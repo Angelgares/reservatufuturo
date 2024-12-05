@@ -14,7 +14,8 @@ from .views import (
     tracking_form,
     reservation_tracking,
     update_payment_success,
-    pay_course
+    pay_course,
+    pay_reservation,
 )
 
 app_name = "cart"
@@ -42,4 +43,5 @@ urlpatterns = [
     path("tracking", tracking_form, name="tracking"),
     path("tracking/<str:tracking_code>/", reservation_tracking, name="reservation_tracking"),
     path("pay/<int:course_id>/", pay_course, name="pay_course"),
+    path("pay/reservation/<int:reservation_id>/", pay_reservation, name="pay_reservation"),
 ]
