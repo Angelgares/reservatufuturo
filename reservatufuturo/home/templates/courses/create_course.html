@@ -6,14 +6,9 @@
 {% block content %}
 <div class="form-container">
     <h1 class="form-title">Crear un Nuevo Curso</h1>
-
-    <!-- Mostrar errores si existen -->
-    {% if error %}
-        <p class="error-message">{{ error }}</p>
-    {% endif %}
-
     <form action="" method="post" enctype="multipart/form-data" class="create-course-form">
         {% csrf_token %}
+
         <div class="form-grid">
             <div class="form-group">
                 {{ form.name.label_tag }}
@@ -22,6 +17,9 @@
             <div class="form-group">
                 {{ form.price.label_tag }}
                 {{ form.price }}
+                {% if form.price.errors %}
+                    <div class="error-message">{{ form.price.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group image-preview-group">
                 <label for="id_image" class="image-label">Subir imagen</label>
@@ -34,6 +32,9 @@
             <div class="form-group">
                 {{ form.capacity.label_tag }}
                 {{ form.capacity }}
+                {% if form.capacity.errors %}
+                    <div class="error-message">{{ form.capacity.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form.description.label_tag }}
@@ -42,10 +43,16 @@
             <div class="form-group">
                 {{ form.starting_date.label_tag }}
                 {{ form.starting_date }}
+                {% if form.starting_date.errors %}
+                    <div class="error-message">{{ form.starting_date.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form.ending_date.label_tag }}
                 {{ form.ending_date }}
+                {% if form.ending_date.errors %}
+                    <div class="error-message">{{ form.ending_date.errors.0 }}</div>
+                {% endif %}
             </div>
             <div class="form-group">
                 {{ form.type.label_tag }}
