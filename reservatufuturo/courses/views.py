@@ -62,9 +62,9 @@ class CourseListView(generic.ListView):
                 {
                     **course,
                     'image_url': self.get_image_url(course['image']),
-                    'available_slots': course['capacity'] - Reservation.objects.filter(
-                        course_id=course['id']
-                    ).exclude(paymentMethod='Pending', cart=True).count()
+                    'available_slots': max(0, course['capacity'] - Reservation.objects.filter(
+                            course_id=course['id']
+                        ).exclude(paymentMethod='Pending', cart=True).count()),
                 }
                 for course in group
             ]
@@ -135,7 +135,7 @@ class CourseDetailView(generic.DetailView):
         # Calcular las plazas disponibles
         reserved_count = Reservation.objects.filter(course=self.object)\
             .exclude(paymentMethod='Pending', cart=True).count()
-        available_slots = self.object.capacity - reserved_count
+        available_slots = max(0, self.object.capacity - reserved_count)
 
         context['user_in_academy'] = user_in_academy
         context['has_reservation'] = has_reservation

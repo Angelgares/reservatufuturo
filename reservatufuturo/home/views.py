@@ -54,20 +54,22 @@ def homepage(request):
     if type_query:
         courses = courses.filter(Q(type__icontains=type_query))
 
-    # Excluir cursos sin plazas disponibles y limitar a 6 cursos al final
+    # Generar la lista base de cursos con imágenes y plazas disponibles
     courses_with_images = [
         {
             **course.__dict__,
             'image_url': get_image_url(course.image),
-            'available_slots': course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending', cart=True).count()
+            'available_slots': max(0, course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending', cart=True).count())
         }
         for course in courses
-        if course.capacity - Reservation.objects.filter(course=course).exclude(paymentMethod='Pending').count() > 0
     ]
 
-    # Limitar a 6 cursos si no se ha realizado una búsqueda
+    # Si no se ha realizado una búsqueda, excluir cursos sin plazas y limitar a 6
     if not (name_query or type_query or date_query or search):
-        courses_with_images = courses_with_images[:6]
+        courses_with_images = [
+            course for course in courses_with_images
+            if course['available_slots'] > 0
+        ][:6]
 
     context = {
         'courses': courses_with_images,
@@ -160,9 +162,9 @@ def my_courses(request):
         {
             **reserva.course.__dict__,
             'image_url': get_image_url(reserva.course.image),
-            'available_slots': reserva.course.capacity - Reservation.objects.filter(
+            'available_slots': max(0, reserva.course.capacity - Reservation.objects.filter(
                 course_id=reserva.course.id
-            ).exclude(paymentMethod='Pending', cart=True).count(),
+            ).exclude(paymentMethod='Pending', cart=True).count()),
             'payment_status': 'Pendiente de pago' if reserva.paymentMethod ==
             'Pending' else 'Pagado'
         }
