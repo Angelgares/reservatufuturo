@@ -19,8 +19,8 @@
             <p><strong>Tasas de gestión:</strong> {{ reservation.management_fee }}€</p>
             
             {% if reservation.paymentMethod == 'Pending' %}
-                <p><strong>Método de pago:</strong> Cash</p>
-                <p><strong>Estado de la reserva:</strong> Pendiente
+                <p><strong>Método de pago:</strong> Efectivo</p>
+                <p><strong>Estado de la reserva:</strong> Pendiente de pago</p>
                     <br><br>
                     <form action="{% url 'cart:pay_reservation' reservation.id %}" method="post" id="pay-form">
                         {% csrf_token %}
@@ -51,8 +51,16 @@
                     </script>
                 </p>
             {% else %}
-                <p><strong>Método de pago:</strong> {{ reservation.paymentMethod }}</p>
-                <p><strong>Estado de la reserva:</strong> Pagado</p>
+              <p><strong>Método de pago:</strong>
+                {% if reservation.paymentMethod == "Cash" %}
+                    Efectivo
+                {% elif reservation.paymentMethod == "Online" %}
+                    Online
+                {% else %}
+                    {{ reservation.paymentMethod }}
+                {% endif %}
+              </p>
+              <p><strong>Estado de la reserva:</strong> Pagado</p>
             {% endif %}
             
             
