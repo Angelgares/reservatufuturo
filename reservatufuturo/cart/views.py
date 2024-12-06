@@ -63,7 +63,7 @@ class QuickPurchaseForm(forms.Form):
 
 # Vista para la compra rápida (Stripe)
 import uuid
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 
 
 class QuickPurchaseView(View):
@@ -516,9 +516,20 @@ def pay_course(request, course_id):
 
 
 def update_payment_success(request, reservation_id):
-    reservation = get_object_or_404(Reservation, id=reservation_id)
+    
+    try:
+        reservation = Reservation.objects.get(id=reservation_id)
+    except Reservation.DoesNotExist:
+        return HttpResponseNotFound("Reserva no encontrada")
 
     course = reservation.course
+    
+    if reservation.user is None:
+        reservation.cart = False
+        reservation.paymentMethod = "Online"
+        reservation.save()
+        return render(request, "cart/payment_success.html")
+    
     user = reservation.user
     email = user.email
     
